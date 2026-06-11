@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Dashboard Leads</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0f172a;color:#e2e8f0;font-family:Inter,system-ui,sans-serif}
+  input,select,button{font-family:inherit}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:#0f172a}
+  ::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useMemo } = React;
+
+const raw = [
+  {c:"2W",seg:"Energia",val:3543.72,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"A5X",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ACCERT",seg:"Indústria / Manufatura",val:324986.50,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
+  {c:"AGE TELECOM",seg:"Telecom",val:38164.61,status:"",curva:"A",cloud:9952.24,lic:15904,addon:7859.90,sup:3953.20,prazo:"12 meses",venc:"2026-09-23",deadline:"2026-08-24"},
+  {c:"AGUAS DO GAMA",seg:"Construção / Infraestrutura",val:4129.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
+  {c:"ALLREDE",seg:"Telecom",val:38111.75,status:"",curva:"A",cloud:10800,lic:16580,addon:8109,sup:0,prazo:"36 meses",venc:"2026-12-19",deadline:"2026-09-05"},
+  {c:"ALPITEL",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ANIMA",seg:"Educação / Pesquisa",val:84028.26,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-03-31",deadline:"2026-12-31"},
+  {c:"AQUI E BRASIL",seg:"Artes",val:17151.95,status:"",curva:"A",cloud:2700,lic:3852,addon:7282.20,sup:945,prazo:"36 meses",venc:"2026-11-29",deadline:"2026-08-29"},
+  {c:"AR 70",seg:"Comércio atacadista",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ARGO",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ARTRANS",seg:"Indústria Metalmecânica",val:1981.01,status:"",curva:"A",cloud:0,lic:1084.20,addon:626.40,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ATLANTA",seg:"Comércio de Peças",val:694.85,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BANCO BTG",seg:"Banco",val:19339.89,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BARRACAO",seg:"Comércio Varejista",val:11994.96,status:"",curva:"B",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BASE GAS",seg:"Comércio Varejista",val:43346.94,status:"",curva:"A",cloud:7074,lic:21612.90,addon:8049.14,sup:2084.53,prazo:"48 meses",venc:"2026-11-14",deadline:"2026-08-14"},
+  {c:"BBCE",seg:"Energia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BCS",seg:"Armazens Gerais",val:1552.98,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BEP ENERGIA",seg:"Energia",val:13938.04,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BIOREN",seg:"Indústria / Instalações",val:1658.54,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CALDEX",seg:"Indústria Metalmecânica",val:20763.94,status:"",curva:"A",cloud:7680,lic:8041.80,addon:870.34,sup:1600,prazo:"48 meses",venc:"2027-10-30",deadline:"2027-07-30"},
+  {c:"CAMBRIDGE",seg:"Consultoria / Serviços",val:22494.50,status:"",curva:"A",cloud:6390,lic:8784,addon:4463.40,sup:2547.77,prazo:"48 meses",venc:"2026-08-28",deadline:"2026-05-28"},
+  {c:"CAMPANA",seg:"Financeiro / Investimentos",val:852.35,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CASAMAX",seg:"Construção e Engenharia",val:1100.17,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CEDRS",seg:"Consultoria / Serviços",val:179,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CJI",seg:"Comércio",val:286.05,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"COLORMIX",seg:"Outros",val:46127.72,status:"",curva:"A",cloud:13579.05,lic:14629,addon:10007,sup:1870,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-09-26"},
+  {c:"CONSORCIO RENOVAR SBC",seg:"Engenharia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CONSORCIO VIA FACIL",seg:"Energia",val:1100.17,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"COPARR",seg:"Comércio",val:7326.93,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-01-24",deadline:"2028-10-26"},
+  {c:"COPASA",seg:"Distribuição",val:4129.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
+  {c:"COPROSUL",seg:"Indústria / Manufatura",val:1144.18,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CS GLOBAL",seg:"Tecnologia / TI",val:48165.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2025-06-25",deadline:"2025-03-27"},
+  {c:"DAFONTE",seg:"",val:8259.47,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-06-22",deadline:null},
+  {c:"DAI BRASIL",seg:"Indústria / Manufatura",val:809.73,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-05-18",deadline:"2027-02-17"},
+  {c:"DENTAL CAPIXABA",seg:"Comércio",val:347.42,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"DUXTENO",seg:"",val:463.23,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ELETRON ENERGY",seg:"Energia",val:24326.81,status:"PRAZO PERDIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-05-22",deadline:"2026-02-21"},
+  {c:"ELOS",seg:"Indústria / Manufatura",val:41557.57,status:"",curva:"A",cloud:10700.50,lic:14538.40,addon:11275.78,sup:2455.47,prazo:"36 meses",venc:"2026-12-07",deadline:"2026-09-07"},
+  {c:"EMBRAPII",seg:"Outros",val:21477.71,status:"",curva:"A",cloud:4560,lic:6120,addon:9026,sup:4169.08,prazo:"36 meses",venc:"2027-11-04",deadline:"2027-08-04"},
+  {c:"ENERZEE",seg:"Energia",val:22647.72,status:"",curva:"A",cloud:0,lic:8586.31,addon:6020.32,sup:2547.77,prazo:"36 meses",venc:"2029-01-01",deadline:null},
+  {c:"ESKALA",seg:"Comércio Varejista",val:6712.22,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ESTUDIOS FLOW",seg:"",val:347.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-03-04",deadline:"2027-12-05"},
+  {c:"EUROIMMUN",seg:"Comércio",val:10280.30,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"EXA",seg:"Fintech",val:3007.53,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"EXAME",seg:"Tecnologia / TI",val:30804.96,status:"",curva:"A",cloud:2090,lic:6006,addon:15482.93,sup:3300,prazo:"12 meses",venc:"2027-06-13",deadline:"2027-03-13"},
+  {c:"EXED",seg:"",val:305.73,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2025-09-29",deadline:"2025-07-01"},
+  {c:"FGE",seg:"Outros",val:754.46,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"FIORDE",seg:"Transporte / Logística",val:101631.08,status:"",curva:"A",cloud:22866.53,lic:25837.20,addon:29618.66,sup:6482.23,prazo:"48 meses",venc:"2027-06-18",deadline:"2027-03-13"},
+  {c:"FNR",seg:"Construção / Infraestrutura",val:6559.35,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-02-28",deadline:null},
+  {c:"FOCALDATA",seg:"Tecnologia / TI",val:84528.89,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-07-31",deadline:"2027-05-02"},
+  {c:"FORCON",seg:"Indústria / Manufatura",val:1250.72,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"FRESADORA",seg:"Indústria Metalmecânica",val:272148.23,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-18",deadline:"2027-09-18"},
+  {c:"G5 PARTNERS",seg:"Financeiro / Investimentos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"G5 SOLUCOES",seg:"Transporte / Logística",val:416.91,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GENCO ENERGIA",seg:"Energia",val:789.11,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GLOBEX",seg:"Armazens Gerais",val:6262.07,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-06-27",deadline:"2025-03-29"},
+  {c:"GOLDEN",seg:"",val:674,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GOLGRAN",seg:"Indústria / Manufatura",val:1548.99,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GPA_CHEFTIME",seg:"",val:17530.75,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2022-08-16",deadline:"2022-05-18"},
+  {c:"GPA_JAMES",seg:"",val:4545.04,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GREENCARE",seg:"Comércio atacadista",val:2299.94,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GREENPASS",seg:"Tecnologia / TI",val:405.33,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GUEP",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GlobalSAT",seg:"Telecom",val:2356.69,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"HDT ENERGY",seg:"Energia",val:24498.15,status:"",curva:"A",cloud:4939.70,lic:11739,addon:2094,sup:2332.72,prazo:"A verificar",venc:null,deadline:null},
+  {c:"IMPECAVEL",seg:"Comércio Varejista",val:2800.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-11",deadline:"2024-08-13"},
+  {c:"INAFLEX",seg:"Indústria / Manufatura",val:537.81,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INCOTERMO",seg:"Indústria / Manufatura",val:3536.65,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INDFLUX",seg:"Comércio Varejista",val:298.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INSOLO",seg:"Agro",val:146532.91,status:"",curva:"A",cloud:0,lic:34348.17,addon:0,sup:10805.44,prazo:"48 meses",venc:"2027-12-19",deadline:"2027-09-19"},
+  {c:"INSTITUTO TEATRO BRASILEIRO",seg:"Artes",val:16217.95,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INTELI+",seg:"Tecnologia / TI",val:2093.80,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2028-01-24",deadline:"2027-10-26"},
+  {c:"INTERBRILHO",seg:"Indústria / Manufatura",val:15919.05,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"IRECE",seg:"Agro",val:120315.34,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2029-12-06",deadline:"2029-09-07"},
+  {c:"JACARÉ",seg:"Meio Ambiente",val:260706,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"24 meses",venc:"2027-10-24",deadline:"2027-07-26"},
+  {c:"JUS CAPITAL",seg:"Fintech",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"KUARA",seg:"Agro",val:400,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MAIS CAFÉ",seg:"Agro",val:147406.25,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-09-15",deadline:"2030-06-17"},
+  {c:"MAIS DADOS",seg:"Tecnologia / TI",val:298.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MARIA LAVADEIRA",seg:"Outros",val:137277.77,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-04-30",deadline:"2030-01-30"},
+  {c:"MAXPRO",seg:"Comércio Varejista",val:6096.07,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MILAGRO",seg:"Tecnologia / TI",val:29989.38,status:"",curva:"A",cloud:5700,lic:16410,addon:5660,sup:1208.90,prazo:"60 meses",venc:"2030-08-01",deadline:"2030-05-01"},
+  {c:"MONKEY",seg:"Fintech",val:2464.04,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MR PAY",seg:"Fintech",val:7161.55,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2022-12-07",deadline:"2022-09-08"},
+  {c:"NIDALA",seg:"Indústria / Manufatura",val:4167.46,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:null,deadline:null},
+  {c:"NITROQUIMICA",seg:"Indústria / Manufatura",val:6435.56,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-04-30",deadline:"2027-01-30"},
+  {c:"NOJA POWER",seg:"",val:11,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-12",deadline:"2024-08-14"},
+  {c:"OPTIMUS PHARMA",seg:"Indústria / Manufatura",val:330.05,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-08",deadline:"2027-11-10"},
+  {c:"OSB SOFTWARE",seg:"Tecnologia / TI",val:19987.75,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-04-08",deadline:"2029-01-08"},
+  {c:"PEC",seg:"Consultoria / Serviços",val:53538.10,status:"",curva:"A",cloud:10825,lic:18125,addon:24588.10,sup:1900,prazo:"36 meses",venc:"2026-05-23",deadline:"2029-05-23"},
+  {c:"PHX",seg:"Indústria / Manufatura",val:7407.06,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"PLENUM",seg:"Indústria / Manufatura",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"PLUGIFY",seg:"Locação de equipamentos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"POPULOS",seg:"Tecnologia / TI",val:2113.49,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"PROPAV",seg:"Construção / Infraestrutura",val:3925.88,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-03-16",deadline:"2024-12-16"},
+  {c:"RG SOLUÇÕES",seg:"Comércio Varejista",val:776.93,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"RV MAIS",seg:"Eventos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"S.R COMERCIO",seg:"Indústria / Manufatura",val:1563.40,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SEBASTIAO GIACHETO",seg:"Agro",val:196517.43,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-02-20",deadline:"2029-11-22"},
+  {c:"SERGIPETEC",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SHEMPO",seg:"Indústria / Manufatura",val:324986.50,status:"OK",curva:"",cloud:3402,lic:4239.26,addon:0,sup:0,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
+  {c:"SHOPMODE",seg:"Comércio Varejista",val:7817.02,status:"URGENTE",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-08-14",deadline:"2026-05-16"},
+  {c:"SILCON AMBIENTAL",seg:"Meio Ambiente",val:36964.72,status:"",curva:"A",cloud:6513,lic:14341.10,addon:16402.31,sup:4331.21,prazo:"36 meses",venc:null,deadline:null},
+  {c:"SITAWI",seg:"Outros",val:324.25,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SMART RJ",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SPOBRAS",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"STIX",seg:"Tecnologia / TI",val:3945.57,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TACHAO DE UBATUBA",seg:"Alimentação",val:96797.07,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-03-28",deadline:"2027-12-29"},
+  {c:"TAMADA",seg:"Transporte / Logística",val:234304.35,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-05",deadline:"2028-06-07"},
+  {c:"TAVOLA",seg:"Alimentação",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TBX INDUSTRIA",seg:"Indústria / Manufatura",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TMNH PARTICIPACOES",seg:"Holding",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TRAUEN",seg:"Indústria / Manufatura",val:309959.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2029-02-23",deadline:"2028-11-25"},
+  {c:"TUTORS",seg:"Fintech",val:115022.35,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-05-20",deadline:"2028-02-20"},
+  {c:"UNITEC",seg:"Indústria / Manufatura",val:6865.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"VENTOS",seg:"Energia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"VEXA",seg:"Transporte / Logística",val:14084.54,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-07-26",deadline:"2028-04-27"},
+  {c:"VIALASER",seg:"Saúde",val:23164.28,status:"",curva:"A",cloud:4029,lic:7680.60,addon:6691.62,sup:1632.75,prazo:"12 meses",venc:"2027-02-23",deadline:"2027-02-23"},
+  {c:"VIZZELA",seg:"Indústria / Manufatura",val:298.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"WE CONSULTORIA",seg:"Comércio atacadista",val:2039.37,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"WS SOLUTIONS",seg:"",val:6199.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-01-26",deadline:"2024-10-28"},
+  {c:"ZEECO",seg:"Comércio atacadista",val:568.62,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+];
+
+const fmt  = v => v>0?`R$ ${v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}`:"—";
+const fmtK = v => v>=1000?`R$ ${(v/1000).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0})}k`:fmt(v);
+const fmtD = d => new Date(d+"T12:00:00").toLocaleDateString("pt-BR");
+const TODAY = new Date();
+const diffDays = d => Math.round((new Date(d+"T12:00:00")-TODAY)/864e5);
+
+const SC = {"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","":"#3b82f6"};
+const SB = {"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","":"#dbeafe"};
+const GRUPOS = [
+  {label:"Vencido / Prazo perdido",     min:-9999,max:-1,  color:"#dc2626",bg:"#fee2e2"},
+  {label:"Notificar AGORA (0–30d)",     min:0,   max:30,   color:"#ea580c",bg:"#ffedd5"},
+  {label:"Notificar em breve (31–90d)", min:31,  max:90,   color:"#d97706",bg:"#fef3c7"},
+  {label:"Atenção (91–180d)",           min:91,  max:180,  color:"#2563eb",bg:"#dbeafe"},
+  {label:"OK (181–365d)",               min:181, max:365,  color:"#16a34a",bg:"#dcfce7"},
+  {label:"Seguro (>365d)",              min:366, max:9999, color:"#6b7280",bg:"#f1f5f9"},
+];
+
+function App() {
+  const [auth,setAuth]=useState(false);
+  const [user,setUser]=useState("");
+  const [pass,setPass]=useState("");
+  const [err,setErr]=useState(false);
+  const [tab,setTab]=useState("overview");
+  const [search,setSearch]=useState("");
+  const [filtStatus,setFiltStatus]=useState("Todos");
+
+  const doLogin=()=>{
+    if(user.trim().toLowerCase()==="bos"&&pass==="bos")setAuth(true);
+    else{setErr(true);setTimeout(()=>setErr(false),2000);}
+  };
+
+  const totalRec=useMemo(()=>raw.reduce((s,r)=>s+r.val,0),[]);
+  const comValor=raw.filter(r=>r.val>0).length;
+  const vencidos=raw.filter(r=>r.status==="VENCIDO").length;
+  const curvaA=raw.filter(r=>r.curva==="A").length;
+  const porSeg=useMemo(()=>{const m={};raw.forEach(r=>{const s=r.seg||"Sem segmento";if(!m[s])m[s]={seg:s,val:0,count:0};m[s].val+=r.val;m[s].count++;});return Object.values(m).sort((a,b)=>b.val-a.val).slice(0,10);},[]);
+  const maxSeg=porSeg[0]?.val||1;
+  const statusCount=useMemo(()=>{const m={};raw.forEach(r=>{const s=r.status||"Ativo";m[s]=(m[s]||0)+1;});return m;},[]);
+  const topC=useMemo(()=>[...raw].filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,10),[]);
+  const dlData=useMemo(()=>raw.filter(r=>r.deadline).map(r=>({...r,ddDias:diffDays(r.deadline),vencDias:r.venc?diffDays(r.venc):null})).sort((a,b)=>a.ddDias-b.ddDias),[]);
+  const proximos=useMemo(()=>dlData.filter(r=>r.ddDias>=-60).slice(0,20),[dlData]);
+  const lista=useMemo(()=>raw.filter(r=>{
+    const ms=search===''||r.c.toLowerCase().includes(search.toLowerCase())||r.seg.toLowerCase().includes(search.toLowerCase());
+    const mf=filtStatus==="Todos"||r.status===filtStatus||(filtStatus==="Ativo"&&r.status==="");
+    return ms&&mf;
+  }),[search,filtStatus]);
+
+  const tabs=[{id:"overview",label:"Visão Geral"},{id:"deadlines",label:"Deadlines"},{id:"segments",label:"Segmentos"},{id:"status",label:"Status"},{id:"lista",label:"Clientes"}];
+
+  if(!auth) return (
+    <div style={{minHeight:"100vh",background:"#0f172a",display:"flex",alignItems:"center",justifyContent:"center"}}>
+      <div style={{background:"#1e293b",borderRadius:14,padding:"36px 32px",width:300,border:"1px solid #334155"}}>
+        <div style={{textAlign:"center",marginBottom:28}}>
+          <div style={{fontSize:32,marginBottom:8}}>🔒</div>
+          <div style={{fontWeight:700,fontSize:18,color:"#fff"}}>Dashboard Leads</div>
+          <div style={{fontSize:12,color:"#64748b",marginTop:4}}>Acesso restrito</div>
+        </div>
+        <div style={{marginBottom:12}}>
+          <div style={{fontSize:11,color:"#94a3b8",marginBottom:5}}>USUÁRIO</div>
+          <input value={user} onChange={e=>setUser(e.target.value)} placeholder="usuário"
+            style={{width:"100%",padding:"9px 12px",borderRadius:8,border:`1px solid ${err?"#dc2626":"#334155"}`,background:"#0f172a",color:"#e2e8f0",fontSize:13,outline:"none",boxSizing:"border-box"}}/>
+        </div>
+        <div style={{marginBottom:20}}>
+          <div style={{fontSize:11,color:"#94a3b8",marginBottom:5}}>SENHA</div>
+          <input type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="senha"
+            onKeyDown={e=>e.key==="Enter"&&doLogin()}
+            style={{width:"100%",padding:"9px 12px",borderRadius:8,border:`1px solid ${err?"#dc2626":"#334155"}`,background:"#0f172a",color:"#e2e8f0",fontSize:13,outline:"none",boxSizing:"border-box"}}/>
+        </div>
+        {err&&<div style={{fontSize:12,color:"#dc2626",marginBottom:12,textAlign:"center"}}>Usuário ou senha incorretos</div>}
+        <button onClick={doLogin} style={{width:"100%",padding:"10px",borderRadius:8,border:"none",background:"#3b82f6",color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer"}}>Entrar</button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{background:"#0f172a",minHeight:"100vh",color:"#e2e8f0"}}>
+      <div style={{borderBottom:"1px solid #1e293b",padding:"16px 24px"}}>
+        <div style={{fontWeight:700,fontSize:16,color:"#fff"}}>Dashboard Leads</div>
+        <div style={{fontSize:11,color:"#64748b"}}>{raw.length} clientes</div>
+      </div>
+      <div style={{display:"flex",gap:4,padding:"12px 24px 0",borderBottom:"1px solid #1e293b",flexWrap:"wrap"}}>
+        {tabs.map(t=>(
+          <button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"8px 16px",borderRadius:"6px 6px 0 0",border:"none",cursor:"pointer",fontWeight:600,fontSize:13,
+            background:tab===t.id?"#1e293b":"transparent",color:tab===t.id?"#3b82f6":"#64748b",borderBottom:tab===t.id?"2px solid #3b82f6":"2px solid transparent"}}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div style={{padding:"20px 24px"}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:12,marginBottom:20}}>
+          {[
+            {label:"MRR Total",val:fmtK(totalRec),color:"#3b82f6",icon:"💰"},
+            {label:"Com Valor",val:`${comValor}`,sub:`de ${raw.length}`,color:"#06b6d4",icon:"📋"},
+            {label:"Curva A",val:`${curvaA}`,color:"#8b5cf6",icon:"⭐"},
+            {label:"Vencidos",val:`${vencidos}`,color:"#ef4444",icon:"⚠️"},
+            {label:"Clientes",val:`${raw.length}`,color:"#f59e0b",icon:"🏢"},
+          ].map((k,i)=>(
+            <div key={i} style={{background:"#1e293b",borderRadius:10,padding:"14px 16px",borderLeft:`3px solid ${k.color}`}}>
+              <div style={{fontSize:18,marginBottom:4}}>{k.icon}</div>
+              <div style={{fontSize:20,fontWeight:700,color:k.color}}>{k.val}</div>
+              {k.sub&&<div style={{fontSize:11,color:"#64748b"}}>{k.sub}</div>}
+              <div style={{fontSize:11,color:"#94a3b8",marginTop:2}}>{k.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {tab==="overview"&&(
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🏆 Top 10 por MRR</div>
+              {topC.map((r,i)=>(
+                <div key={r.c} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                  <div style={{width:20,fontSize:11,color:"#64748b",textAlign:"right"}}>{i+1}</div>
+                  <div style={{flex:1}}>
+                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
+                      <span style={{fontSize:12,fontWeight:600,color:"#e2e8f0"}}>{r.c}</span>
+                      <span style={{fontSize:12,color:"#3b82f6",fontWeight:700}}>{fmtK(r.val)}</span>
+                    </div>
+                    <div style={{height:4,background:"#0f172a",borderRadius:2}}>
+                      <div style={{height:4,borderRadius:2,background:"#3b82f6",width:`${(r.val/topC[0].val)*100}%`}}/>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🔥 Componentes (Curva A)</div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:8}}>
+                {["Cloud","Lic.","Addon","Sup."].map(l=>(
+                  <div key={l} style={{textAlign:"center",fontSize:11,color:"#64748b",fontWeight:600}}>{l}</div>
+                ))}
+              </div>
+              {raw.filter(r=>r.cloud>0||r.lic>0||r.addon>0||r.sup>0).slice(0,12).map(r=>{
+                const mx=Math.max(r.cloud,r.lic,r.addon,r.sup,1);
+                return(
+                  <div key={r.c} style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:6}}>
+                    {[r.cloud,r.lic,r.addon,r.sup].map((v,i)=>(
+                      <div key={i} style={{background:v===0?"#0f172a":`rgba(59,130,246,${0.15+(v/mx)*0.85})`,borderRadius:6,padding:"5px 4px",textAlign:"center",fontSize:10,color:v>0?"#fff":"#334155",fontWeight:600}}>
+                        {v>0?fmtK(v):"—"}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {tab==="deadlines"&&(
+          <div style={{display:"flex",flexDirection:"column",gap:16}}>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:4,color:"#fff",fontSize:14}}>🗓 Mapa de Calor — Deadline de Notificação</div>
+              <div style={{fontSize:11,color:"#64748b",marginBottom:14}}>Calculado dinamicamente pela data de hoje</div>
+              {GRUPOS.map(g=>{
+                const cl=dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
+                if(!cl.length)return null;
+                return(
+                  <div key={g.label} style={{marginBottom:14}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+                      <div style={{width:12,height:12,borderRadius:"50%",background:g.color,flexShrink:0}}/>
+                      <span style={{fontSize:12,fontWeight:700,color:g.color}}>{g.label}</span>
+                      <span style={{fontSize:11,color:"#64748b"}}>({cl.length})</span>
+                    </div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                      {cl.map(r=>(
+                        <div key={r.c} style={{background:g.bg,border:`1px solid ${g.color}40`,borderRadius:8,padding:"6px 10px",minWidth:110}}>
+                          <div style={{fontSize:11,fontWeight:700,color:"#1e293b"}}>{r.c}</div>
+                          <div style={{fontSize:10,color:"#475569"}}>Deadline: {fmtD(r.deadline)}</div>
+                          <div style={{fontSize:10,color:g.color,fontWeight:600}}>{r.ddDias<0?`Atrasado ${Math.abs(r.ddDias)}d`:`${r.ddDias}d p/ notif.`}</div>
+                          {r.venc&&<div style={{fontSize:10,color:"#64748b"}}>Vence: {fmtD(r.venc)}</div>}
+                          {r.val>0&&<div style={{fontSize:10,color:"#64748b"}}>{fmtK(r.val)}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🎯 Próximos a Atacar</div>
+              <div style={{overflowX:"auto"}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
+                  <thead>
+                    <tr style={{background:"#0f172a"}}>
+                      {["#","Cliente","MRR","Deadline","Dias","Vencimento","Urgência"].map(h=>(
+                        <th key={h} style={{padding:"8px 10px",textAlign:"left",color:"#64748b",fontSize:11,fontWeight:700,whiteSpace:"nowrap"}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {proximos.map((r,i)=>{
+                      const nc=r.ddDias<=0?"#dc2626":r.ddDias<=30?"#ea580c":r.ddDias<=90?"#d97706":"#16a34a";
+                      const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
+                      return(
+                        <tr key={r.c} style={{borderBottom:"1px solid #0f172a20",background:i%2===0?"#1e293b":"#172033"}}>
+                          <td style={{padding:"8px 10px",color:"#64748b"}}>{i+1}</td>
+                          <td style={{padding:"8px 10px",fontWeight:700,color:"#e2e8f0"}}>{r.c}</td>
+                          <td style={{padding:"8px 10px",color:"#3b82f6",fontWeight:700}}>{r.val>0?fmtK(r.val):"—"}</td>
+                          <td style={{padding:"8px 10px",color:"#94a3b8"}}>{fmtD(r.deadline)}</td>
+                          <td style={{padding:"8px 10px",color:g.color,fontWeight:700}}>{r.ddDias<0?`-${Math.abs(r.ddDias)}d`:`${r.ddDias}d`}</td>
+                          <td style={{padding:"8px 10px",color:"#94a3b8"}}>{r.venc?fmtD(r.venc):"—"}</td>
+                          <td style={{padding:"8px 10px"}}>
+                            <span style={{fontSize:11,fontWeight:700,color:nc,background:`${nc}20`,padding:"2px 8px",borderRadius:20}}>{r.ddDias<=0?"⚡ AGORA":`${r.ddDias}d`}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab==="segments"&&(
+          <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+            <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>📊 MRR por Segmento</div>
+            {porSeg.map((s,i)=>(
+              <div key={s.seg} style={{marginBottom:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+                  <span style={{fontSize:13,color:"#e2e8f0",fontWeight:600}}>{s.seg}</span>
+                  <div style={{display:"flex",gap:16}}>
+                    <span style={{fontSize:11,color:"#64748b"}}>{s.count} clientes</span>
+                    <span style={{fontSize:13,color:"#3b82f6",fontWeight:700}}>{fmtK(s.val)}</span>
+                  </div>
+                </div>
+                <div style={{height:8,background:"#0f172a",borderRadius:4}}>
+                  <div style={{height:8,borderRadius:4,width:`${(s.val/maxSeg)*100}%`,background:`hsl(${210+i*15},80%,${55-i*3}%)`}}/>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tab==="status"&&(
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>📌 Por Status</div>
+              {Object.entries(statusCount).map(([s,n])=>(
+                <div key={s} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 12px",borderRadius:8,marginBottom:8,
+                  background:SB[s]||"#0f172a",border:`1px solid ${SC[s]||"#334155"}40`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <div style={{width:10,height:10,borderRadius:"50%",background:SC[s]||"#3b82f6"}}/>
+                    <span style={{fontSize:13,color:"#1e293b",fontWeight:600}}>{s||"Ativo"}</span>
+                  </div>
+                  <span style={{fontSize:16,fontWeight:700,color:SC[s]||"#3b82f6"}}>{n}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>🚨 Atenção Imediata</div>
+              {raw.filter(r=>r.status==="VENCIDO"||r.status==="URGENTE"||r.status==="PRAZO PERDIDO").map(r=>(
+                <div key={r.c} style={{padding:"10px 12px",borderRadius:8,marginBottom:8,background:SB[r.status],border:`1px solid ${SC[r.status]}40`}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontSize:13,fontWeight:700,color:"#1e293b"}}>{r.c}</span>
+                    <span style={{fontSize:11,fontWeight:700,color:SC[r.status],background:`${SC[r.status]}20`,padding:"2px 8px",borderRadius:20}}>{r.status}</span>
+                  </div>
+                  <div style={{fontSize:11,color:"#475569",marginTop:2}}>{r.val>0?fmt(r.val):"Sem valor"} · {r.seg||"—"}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab==="lista"&&(
+          <div>
+            <div style={{display:"flex",gap:10,marginBottom:14}}>
+              <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 Buscar..."
+                style={{flex:1,padding:"8px 12px",borderRadius:8,border:"1px solid #334155",background:"#1e293b",color:"#e2e8f0",fontSize:13,outline:"none"}}/>
+              <select value={filtStatus} onChange={e=>setFiltStatus(e.target.value)}
+                style={{padding:"8px 12px",borderRadius:8,border:"1px solid #334155",background:"#1e293b",color:"#e2e8f0",fontSize:13,outline:"none"}}>
+                <option>Todos</option><option>OK</option><option>VENCIDO</option><option>URGENTE</option><option>PRAZO PERDIDO</option><option>Ativo</option>
+              </select>
+            </div>
+            <div style={{background:"#1e293b",borderRadius:10,overflow:"hidden"}}>
+              <div style={{display:"grid",gridTemplateColumns:"2fr 2fr 1.5fr 1fr 1fr 1.5fr",padding:"10px 14px",background:"#0f172a",fontSize:11,fontWeight:700,color:"#64748b",gap:8}}>
+                <span>CLIENTE</span><span>SEGMENTO</span><span>MRR</span><span>CURVA</span><span>STATUS</span><span>DEADLINE</span>
+              </div>
+              <div style={{maxHeight:"60vh",overflowY:"auto"}}>
+                {lista.map((r,i)=>(
+                  <div key={r.c} style={{display:"grid",gridTemplateColumns:"2fr 2fr 1.5fr 1fr 1fr 1.5fr",padding:"9px 14px",gap:8,alignItems:"center",
+                    borderBottom:"1px solid #0f172a20",background:i%2===0?"#1e293b":"#172033",fontSize:12}}>
+                    <span style={{fontWeight:600,color:"#e2e8f0"}}>{r.c}</span>
+                    <span style={{color:"#94a3b8"}}>{r.seg||"—"}</span>
+                    <span style={{color:"#3b82f6",fontWeight:700}}>{r.val>0?fmtK(r.val):"—"}</span>
+                    <span style={{color:"#8b5cf6",fontWeight:700}}>{r.curva||"—"}</span>
+                    <span style={{fontSize:10,fontWeight:700,color:SC[r.status]||"#3b82f6",background:`${SC[r.status]||"#3b82f6"}20`,padding:"2px 8px",borderRadius:20,display:"inline-block"}}>{r.status||"Ativo"}</span>
+                    <span style={{color:"#f59e0b",fontSize:11}}>{r.deadline?fmtD(r.deadline):"—"}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{padding:"8px 14px",fontSize:11,color:"#475569",background:"#0f172a"}}>{lista.length} registros</div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>

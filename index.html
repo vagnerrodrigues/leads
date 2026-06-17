@@ -86,7 +86,7 @@ const raw=[
   {c:"BARRACAO",seg:"Comércio Varejista",val:42663.28,status:"PRAZO PERDIDO",curva:"A",cloud:0,lic:13459.13,addon:27183.74,sup:2020.41,prazo:"36 meses",venc:"2029-02-28",deadline:"2028-11-30"},
   {c:"BASE GAS",seg:"Comércio Varejista",val:43346.94,status:"",curva:"A",cloud:7074,lic:21612.90,addon:8049.14,sup:2084.53,prazo:"48 meses",venc:"2026-11-14",deadline:"2026-08-14"},
   {c:"BBCE",seg:"Energia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"BCS",seg:"Armazens Gerais",val:1552.98,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BCS",seg:"Armazens Gerais",val:1552.98,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-06-28",deadline:"2028-03-29"},
   {c:"BEP ENERGIA",seg:"Energia",val:10507.95,status:"OK",curva:"A",cloud:2844.96,lic:1520.14,addon:4437.29,sup:1705.56,prazo:"36 meses",venc:"2028-07-17",deadline:"2028-05-18"},
   {c:"BIOREN",seg:"Indústria / Instalações",val:1658.54,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"CALDEX",seg:"Indústria Metalmecânica",val:20763.94,status:"",curva:"A",cloud:7680,lic:8041.80,addon:870.34,sup:1600,prazo:"48 meses",venc:"2027-10-30",deadline:"2027-07-30"},
@@ -137,7 +137,7 @@ const raw=[
   {c:"HDT ENERGY",seg:"Energia",val:24498.15,status:"",curva:"A",cloud:4939.70,lic:11739,addon:2094,sup:2332.72,prazo:"A verificar",venc:null,deadline:null},
   {c:"IMPECAVEL",seg:"Comércio Varejista",val:2800.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-11",deadline:"2024-08-13"},
   {c:"INAFLEX",seg:"Indústria / Manufatura",val:537.81,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"INCOTERMO",seg:"Indústria / Manufatura",val:3536.65,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INCOTERMO",seg:"Indústria / Manufatura",val:3536.65,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-06-27"},
   {c:"INDFLUX",seg:"Comércio Varejista",val:4958.77,status:"",curva:"",cloud:948.50,lic:2218.40,addon:2198,sup:825,prazo:"48 meses",venc:"2028-10-05",deadline:"2028-07-05"},
   {c:"INSOLO",seg:"Agro",val:146532.91,status:"",curva:"A",cloud:0,lic:34348.17,addon:0,sup:10805.44,prazo:"48 meses",venc:"2027-12-19",deadline:"2027-09-19"},
   {c:"INSTITUTO TEATRO BRASILEIRO",seg:"Artes",val:16217.95,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
@@ -194,13 +194,11 @@ const raw=[
   {c:"WS SOLUTIONS",seg:"",val:6199.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-01-26",deadline:"2024-10-28"},
   {c:"ZEECO",seg:"Comércio atacadista",val:10718.47,status:"PRAZO PERDIDO",curva:"A",cloud:1900,lic:4708.40,addon:1602,sup:1045,prazo:"24 meses",venc:"2027-03-27",deadline:"2026-12-27"},
 ];
-
 const fmt=v=>v>0?'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
 const fmtK=v=>v>=1000?'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})+'k':fmt(v);
 const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
 const TODAY=new Date();
 const diffDays=d=>Math.round((new Date(d+'T12:00:00')-TODAY)/864e5);
-
 const SC={"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","":"#3b82f6"};
 const SB={"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","":"#dbeafe"};
 const GRUPOS=[
@@ -211,11 +209,7 @@ const GRUPOS=[
   {label:"OK (181–365d)",min:181,max:365,color:"#16a34a",bg:"#dcfce7"},
   {label:"Seguro (>365d)",min:366,max:9999,color:"#6b7280",bg:"#f1f5f9"},
 ];
-
-// --- STATE ---
-let auth=false, tab='overview', search='', filtStatus='Todos';
-
-// --- COMPUTED ---
+let auth=false,tab='overview',search='',filtStatus='Todos';
 function getData(){
   const totalRec=raw.reduce((s,r)=>s+r.val,0);
   const comValor=raw.filter(r=>r.val>0).length;
@@ -234,8 +228,6 @@ function getData(){
   });
   return{totalRec,comValor,vencidos,curvaA,porSeg,maxSeg,statusCount,topC,dlData,proximos,lista};
 }
-
-// --- RENDER ---
 function render(){
   const root=document.getElementById('root');
   if(!auth){root.innerHTML=renderLogin();bindLogin();return;}
@@ -243,7 +235,6 @@ function render(){
   root.innerHTML=renderApp(d);
   bindApp();
 }
-
 function renderLogin(err){
   return `
   <div class="login-wrap">
@@ -264,9 +255,7 @@ function renderLogin(err){
     </div>
   </div>`;
 }
-
 function bindLogin(){
-  let err=false;
   function doLogin(){
     const u=document.getElementById('inp-user').value.trim().toLowerCase();
     const p=document.getElementById('inp-pass').value;
@@ -276,7 +265,6 @@ function bindLogin(){
   document.getElementById('btn-login').addEventListener('click',doLogin);
   document.getElementById('inp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 }
-
 function kpiCards(d){
   const items=[
     {label:'MRR Total',val:fmtK(d.totalRec),color:'#3b82f6',icon:'💰'},
@@ -293,12 +281,10 @@ function kpiCards(d){
       <div class="kpi-label">${k.label}</div>
     </div>`).join('');
 }
-
 function tabButtons(){
   const tabs=[{id:'overview',label:'Visão Geral'},{id:'deadlines',label:'Deadlines'},{id:'segments',label:'Segmentos'},{id:'status',label:'Status'},{id:'lista',label:'Clientes'}];
   return tabs.map(t=>`<button class="tab-btn${tab===t.id?' active':''}" data-tab="${t.id}">${t.label}</button>`).join('');
 }
-
 function renderOverview(d){
   const topCRows=d.topC.map((r,i)=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -311,7 +297,6 @@ function renderOverview(d){
         <div class="bar-track"><div class="bar-fill" style="width:${(r.val/d.topC[0].val)*100}%;background:#3b82f6"></div></div>
       </div>
     </div>`).join('');
-
   const compRows=raw.filter(r=>r.cloud>0||r.lic>0||r.addon>0||r.sup>0).slice(0,12).map(r=>{
     const mx=Math.max(r.cloud,r.lic,r.addon,r.sup,1);
     return [r.cloud,r.lic,r.addon,r.sup].map(v=>`
@@ -319,7 +304,6 @@ function renderOverview(d){
         ${v>0?fmtK(v):'—'}
       </div>`).join('');
   }).map(cells=>`<div class="comp-grid">${cells}</div>`).join('');
-
   return `<div class="grid2">
     <div class="card"><div class="card-title">🏆 Top 10 por MRR</div>${topCRows}</div>
     <div class="card">
@@ -331,7 +315,6 @@ function renderOverview(d){
     </div>
   </div>`;
 }
-
 function renderDeadlines(d){
   const heatmap=GRUPOS.map(g=>{
     const cl=d.dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
@@ -353,7 +336,6 @@ function renderDeadlines(d){
       <div class="hm-cards">${cards}</div>
     </div>`;
   }).join('');
-
   const tableRows=d.proximos.map((r,i)=>{
     const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
     const nc=r.ddDias<=0?'#dc2626':r.ddDias<=30?'#ea580c':r.ddDias<=90?'#d97706':'#16a34a';
@@ -367,7 +349,6 @@ function renderDeadlines(d){
       <td><span class="badge" style="color:${nc};background:${nc}20">${r.ddDias<=0?'⚡ AGORA':r.ddDias+'d'}</span></td>
     </tr>`;
   }).join('');
-
   return `<div style="display:flex;flex-direction:column;gap:16px">
     <div class="card">
       <div class="card-title">🗓 Mapa de Calor — Deadline de Notificação</div>
@@ -385,7 +366,6 @@ function renderDeadlines(d){
     </div>
   </div>`;
 }
-
 function renderSegments(d){
   const bars=d.porSeg.map((s,i)=>`
     <div style="margin-bottom:14px">
@@ -402,7 +382,6 @@ function renderSegments(d){
     </div>`).join('');
   return `<div class="card"><div class="card-title">📊 MRR por Segmento</div>${bars}</div>`;
 }
-
 function renderStatus(d){
   const statusItems=Object.entries(d.statusCount).map(([s,n])=>`
     <div class="status-item" style="background:${SB[s]||'#0f172a'};border:1px solid ${SC[s]||'#334155'}40">
@@ -412,7 +391,6 @@ function renderStatus(d){
       </div>
       <span style="font-size:16px;font-weight:700;color:${SC[s]||'#3b82f6'}">${n}</span>
     </div>`).join('');
-
   const attnItems=raw.filter(r=>r.status==='VENCIDO'||r.status==='URGENTE'||r.status==='PRAZO PERDIDO').map(r=>`
     <div class="attn-item" style="background:${SB[r.status]};border:1px solid ${SC[r.status]}40">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -421,13 +399,11 @@ function renderStatus(d){
       </div>
       <div style="font-size:11px;color:#475569;margin-top:2px">${r.val>0?fmt(r.val):'Sem valor'} · ${r.seg||'—'}</div>
     </div>`).join('');
-
   return `<div class="grid2">
     <div class="card"><div class="card-title">📌 Por Status</div>${statusItems}</div>
     <div class="card"><div class="card-title">🚨 Atenção Imediata</div>${attnItems}</div>
   </div>`;
 }
-
 function renderLista(d){
   const rows=d.lista.map((r,i)=>`
     <div class="table-row" style="background:${i%2===0?'#1e293b':'#172033'}">
@@ -438,7 +414,6 @@ function renderLista(d){
       <span class="badge" style="color:${SC[r.status]||'#3b82f6'};background:${SC[r.status]||'#3b82f6'}20">${r.status||'Ativo'}</span>
       <span style="color:#f59e0b;font-size:11px">${r.deadline?fmtD(r.deadline):'—'}</span>
     </div>`).join('');
-
   return `<div>
     <div class="search-row">
       <input id="inp-search" class="search-input" placeholder="🔍 Buscar..." value="${search}"/>
@@ -458,7 +433,6 @@ function renderLista(d){
     </div>
   </div>`;
 }
-
 function renderApp(d){
   let tabContent='';
   if(tab==='overview')tabContent=renderOverview(d);
@@ -466,7 +440,6 @@ function renderApp(d){
   else if(tab==='segments')tabContent=renderSegments(d);
   else if(tab==='status')tabContent=renderStatus(d);
   else if(tab==='lista')tabContent=renderLista(d);
-
   return `<div class="app">
     <div class="header">
       <div class="header-title">Dashboard Leads</div>
@@ -479,7 +452,6 @@ function renderApp(d){
     </div>
   </div>`;
 }
-
 function bindApp(){
   document.querySelectorAll('.tab-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{tab=btn.dataset.tab;render();});
@@ -489,8 +461,8 @@ function bindApp(){
   const ss=document.getElementById('sel-status');
   if(ss)ss.addEventListener('change',e=>{filtStatus=e.target.value;render();});
 }
-
 render();
+
 </script>
 </body>
 </html>

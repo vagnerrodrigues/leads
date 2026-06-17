@@ -4,9 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Dashboard Leads</title>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:#0f172a;color:#e2e8f0;font-family:Inter,system-ui,sans-serif}
@@ -14,14 +11,64 @@
   ::-webkit-scrollbar{width:6px;height:6px}
   ::-webkit-scrollbar-track{background:#0f172a}
   ::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+  .login-wrap{min-height:100vh;background:#0f172a;display:flex;align-items:center;justify-content:center}
+  .login-box{background:#1e293b;border-radius:14px;padding:36px 32px;width:300px;border:1px solid #334155}
+  .login-icon{text-align:center;font-size:32px;margin-bottom:8px}
+  .login-title{text-align:center;font-weight:700;font-size:18px;color:#fff}
+  .login-sub{text-align:center;font-size:12px;color:#64748b;margin-top:4px;margin-bottom:28px}
+  .field-label{font-size:11px;color:#94a3b8;margin-bottom:5px;display:block}
+  .field-wrap{margin-bottom:12px}
+  .field-input{width:100%;padding:9px 12px;border-radius:8px;background:#0f172a;color:#e2e8f0;font-size:13px;outline:none;border:1px solid #334155}
+  .field-input.err{border-color:#dc2626}
+  .field-wrap-last{margin-bottom:20px}
+  .login-err{font-size:12px;color:#dc2626;margin-bottom:12px;text-align:center}
+  .btn-login{width:100%;padding:10px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+  .app{background:#0f172a;min-height:100vh;color:#e2e8f0}
+  .header{border-bottom:1px solid #1e293b;padding:16px 24px}
+  .header-title{font-weight:700;font-size:16px;color:#fff}
+  .header-sub{font-size:11px;color:#64748b}
+  .tabs{display:flex;gap:4px;padding:12px 24px 0;border-bottom:1px solid #1e293b;flex-wrap:wrap}
+  .tab-btn{padding:8px 16px;border-radius:6px 6px 0 0;border:none;cursor:pointer;font-weight:600;font-size:13px;background:transparent;color:#64748b;border-bottom:2px solid transparent}
+  .tab-btn.active{background:#1e293b;color:#3b82f6;border-bottom:2px solid #3b82f6}
+  .content{padding:20px 24px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+  .kpi{background:#1e293b;border-radius:10px;padding:14px 16px}
+  .kpi-icon{font-size:18px;margin-bottom:4px}
+  .kpi-val{font-size:20px;font-weight:700}
+  .kpi-sub{font-size:11px;color:#64748b}
+  .kpi-label{font-size:11px;color:#94a3b8;margin-top:2px}
+  .card{background:#1e293b;border-radius:10px;padding:16px}
+  .card-title{font-weight:700;margin-bottom:12px;color:#fff;font-size:14px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{padding:8px 10px;text-align:left;color:#64748b;font-size:11px;font-weight:700;white-space:nowrap;background:#0f172a}
+  td{padding:8px 10px}
+  .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block}
+  .search-row{display:flex;gap:10px;margin-bottom:14px}
+  .search-input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:13px;outline:none}
+  .filter-sel{padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:13px;outline:none}
+  .table-wrap{background:#1e293b;border-radius:10px;overflow:hidden}
+  .table-head{display:grid;grid-template-columns:2fr 2fr 1.5fr 1fr 1fr 1.5fr;padding:10px 14px;background:#0f172a;font-size:11px;font-weight:700;color:#64748b;gap:8px}
+  .table-body{max-height:60vh;overflow-y:auto}
+  .table-row{display:grid;grid-template-columns:2fr 2fr 1.5fr 1fr 1fr 1.5fr;padding:9px 14px;gap:8px;align-items:center;border-bottom:1px solid #0f172a20;font-size:12px}
+  .table-foot{padding:8px 14px;font-size:11px;color:#475569;background:#0f172a}
+  .bar-track{height:8px;background:#0f172a;border-radius:4px}
+  .bar-fill{height:8px;border-radius:4px}
+  .hm-group{margin-bottom:14px}
+  .hm-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+  .hm-cards{display:flex;flex-wrap:wrap;gap:6px}
+  .hm-card{border-radius:8px;padding:6px 10px;min-width:110px}
+  .comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+  .comp-cell{border-radius:6px;padding:5px 4px;text-align:center;font-size:10px;font-weight:600}
+  .status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:8px}
+  .attn-item{padding:10px 12px;border-radius:8px;margin-bottom:8px}
 </style>
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const { useState, useMemo } = React;
-
-const raw = [
+<script>
+const raw=[
   {c:"2W",seg:"Energia",val:3543.72,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"A5X",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"ACCERT",seg:"Indústria / Manufatura",val:16999.72,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
@@ -148,307 +195,302 @@ const raw = [
   {c:"ZEECO",seg:"Comércio atacadista",val:10718.47,status:"PRAZO PERDIDO",curva:"A",cloud:1900,lic:4708.40,addon:1602,sup:1045,prazo:"24 meses",venc:"2027-03-27",deadline:"2026-12-27"},
 ];
 
-const fmt  = v => v>0?`R$ ${v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}`:"—";
-const fmtK = v => v>=1000?`R$ ${(v/1000).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0})}k`:fmt(v);
-const fmtD = d => new Date(d+"T12:00:00").toLocaleDateString("pt-BR");
-const TODAY = new Date();
-const diffDays = d => Math.round((new Date(d+"T12:00:00")-TODAY)/864e5);
+const fmt=v=>v>0?'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
+const fmtK=v=>v>=1000?'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})+'k':fmt(v);
+const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
+const TODAY=new Date();
+const diffDays=d=>Math.round((new Date(d+'T12:00:00')-TODAY)/864e5);
 
-const SC = {"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","":"#3b82f6"};
-const SB = {"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","":"#dbeafe"};
-const GRUPOS = [
-  {label:"Vencido / Prazo perdido",     min:-9999,max:-1,  color:"#dc2626",bg:"#fee2e2"},
-  {label:"Notificar AGORA (0–30d)",     min:0,   max:30,   color:"#ea580c",bg:"#ffedd5"},
-  {label:"Notificar em breve (31–90d)", min:31,  max:90,   color:"#d97706",bg:"#fef3c7"},
-  {label:"Atenção (91–180d)",           min:91,  max:180,  color:"#2563eb",bg:"#dbeafe"},
-  {label:"OK (181–365d)",               min:181, max:365,  color:"#16a34a",bg:"#dcfce7"},
-  {label:"Seguro (>365d)",              min:366, max:9999, color:"#6b7280",bg:"#f1f5f9"},
+const SC={"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","":"#3b82f6"};
+const SB={"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","":"#dbeafe"};
+const GRUPOS=[
+  {label:"Vencido / Prazo perdido",min:-9999,max:-1,color:"#dc2626",bg:"#fee2e2"},
+  {label:"Notificar AGORA (0–30d)",min:0,max:30,color:"#ea580c",bg:"#ffedd5"},
+  {label:"Notificar em breve (31–90d)",min:31,max:90,color:"#d97706",bg:"#fef3c7"},
+  {label:"Atenção (91–180d)",min:91,max:180,color:"#2563eb",bg:"#dbeafe"},
+  {label:"OK (181–365d)",min:181,max:365,color:"#16a34a",bg:"#dcfce7"},
+  {label:"Seguro (>365d)",min:366,max:9999,color:"#6b7280",bg:"#f1f5f9"},
 ];
 
-function App() {
-  const [auth,setAuth]=useState(false);
-  const [user,setUser]=useState("");
-  const [pass,setPass]=useState("");
-  const [err,setErr]=useState(false);
-  const [tab,setTab]=useState("overview");
-  const [search,setSearch]=useState("");
-  const [filtStatus,setFiltStatus]=useState("Todos");
+// --- STATE ---
+let auth=false, tab='overview', search='', filtStatus='Todos';
 
-  const doLogin=()=>{
-    if(user.trim().toLowerCase()==="bos"&&pass==="bos")setAuth(true);
-    else{setErr(true);setTimeout(()=>setErr(false),2000);}
-  };
-
-  const totalRec=useMemo(()=>raw.reduce((s,r)=>s+r.val,0),[]);
+// --- COMPUTED ---
+function getData(){
+  const totalRec=raw.reduce((s,r)=>s+r.val,0);
   const comValor=raw.filter(r=>r.val>0).length;
-  const vencidos=raw.filter(r=>r.status==="VENCIDO").length;
-  const curvaA=raw.filter(r=>r.curva==="A").length;
-  const porSeg=useMemo(()=>{const m={};raw.forEach(r=>{const s=r.seg||"Sem segmento";if(!m[s])m[s]={seg:s,val:0,count:0};m[s].val+=r.val;m[s].count++;});return Object.values(m).sort((a,b)=>b.val-a.val).slice(0,10);},[]);
+  const vencidos=raw.filter(r=>r.status==='VENCIDO').length;
+  const curvaA=raw.filter(r=>r.curva==='A').length;
+  const porSeg=(()=>{const m={};raw.forEach(r=>{const s=r.seg||'Sem segmento';if(!m[s])m[s]={seg:s,val:0,count:0};m[s].val+=r.val;m[s].count++;});return Object.values(m).sort((a,b)=>b.val-a.val).slice(0,10);})();
   const maxSeg=porSeg[0]?.val||1;
-  const statusCount=useMemo(()=>{const m={};raw.forEach(r=>{const s=r.status||"Ativo";m[s]=(m[s]||0)+1;});return m;},[]);
-  const topC=useMemo(()=>[...raw].filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,10),[]);
-  const dlData=useMemo(()=>raw.filter(r=>r.deadline).map(r=>({...r,ddDias:diffDays(r.deadline),vencDias:r.venc?diffDays(r.venc):null})).sort((a,b)=>a.ddDias-b.ddDias),[]);
-  const proximos=useMemo(()=>dlData.filter(r=>r.ddDias>=-60).slice(0,20),[dlData]);
-  const lista=useMemo(()=>raw.filter(r=>{
-    const ms=search===''||r.c.toLowerCase().includes(search.toLowerCase())||r.seg.toLowerCase().includes(search.toLowerCase());
-    const mf=filtStatus==="Todos"||r.status===filtStatus||(filtStatus==="Ativo"&&r.status==="");
+  const statusCount=(()=>{const m={};raw.forEach(r=>{const s=r.status||'Ativo';m[s]=(m[s]||0)+1;});return m;})();
+  const topC=[...raw].filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,10);
+  const dlData=raw.filter(r=>r.deadline).map(r=>({...r,ddDias:diffDays(r.deadline),vencDias:r.venc?diffDays(r.venc):null})).sort((a,b)=>a.ddDias-b.ddDias);
+  const proximos=dlData.filter(r=>r.ddDias>=-60).slice(0,20);
+  const lista=raw.filter(r=>{
+    const ms=search===''||r.c.toLowerCase().includes(search.toLowerCase())||(r.seg||'').toLowerCase().includes(search.toLowerCase());
+    const mf=filtStatus==='Todos'||r.status===filtStatus||(filtStatus==='Ativo'&&r.status==='');
     return ms&&mf;
-  }),[search,filtStatus]);
-
-  const tabs=[{id:"overview",label:"Visão Geral"},{id:"deadlines",label:"Deadlines"},{id:"segments",label:"Segmentos"},{id:"status",label:"Status"},{id:"lista",label:"Clientes"}];
-
-  if(!auth) return (
-    <div style={{minHeight:"100vh",background:"#0f172a",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <div style={{background:"#1e293b",borderRadius:14,padding:"36px 32px",width:300,border:"1px solid #334155"}}>
-        <div style={{textAlign:"center",marginBottom:28}}>
-          <div style={{fontSize:32,marginBottom:8}}>🔒</div>
-          <div style={{fontWeight:700,fontSize:18,color:"#fff"}}>Dashboard Leads</div>
-          <div style={{fontSize:12,color:"#64748b",marginTop:4}}>Acesso restrito</div>
-        </div>
-        <div style={{marginBottom:12}}>
-          <div style={{fontSize:11,color:"#94a3b8",marginBottom:5}}>USUÁRIO</div>
-          <input value={user} onChange={e=>setUser(e.target.value)} placeholder="usuário"
-            style={{width:"100%",padding:"9px 12px",borderRadius:8,border:`1px solid ${err?"#dc2626":"#334155"}`,background:"#0f172a",color:"#e2e8f0",fontSize:13,outline:"none",boxSizing:"border-box"}}/>
-        </div>
-        <div style={{marginBottom:20}}>
-          <div style={{fontSize:11,color:"#94a3b8",marginBottom:5}}>SENHA</div>
-          <input type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="senha"
-            onKeyDown={e=>e.key==="Enter"&&doLogin()}
-            style={{width:"100%",padding:"9px 12px",borderRadius:8,border:`1px solid ${err?"#dc2626":"#334155"}`,background:"#0f172a",color:"#e2e8f0",fontSize:13,outline:"none",boxSizing:"border-box"}}/>
-        </div>
-        {err&&<div style={{fontSize:12,color:"#dc2626",marginBottom:12,textAlign:"center"}}>Usuário ou senha incorretos</div>}
-        <button onClick={doLogin} style={{width:"100%",padding:"10px",borderRadius:8,border:"none",background:"#3b82f6",color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer"}}>Entrar</button>
-      </div>
-    </div>
-  );
-
-  return (
-    <div style={{background:"#0f172a",minHeight:"100vh",color:"#e2e8f0"}}>
-      <div style={{borderBottom:"1px solid #1e293b",padding:"16px 24px"}}>
-        <div style={{fontWeight:700,fontSize:16,color:"#fff"}}>Dashboard Leads</div>
-        <div style={{fontSize:11,color:"#64748b"}}>{raw.length} clientes</div>
-      </div>
-      <div style={{display:"flex",gap:4,padding:"12px 24px 0",borderBottom:"1px solid #1e293b",flexWrap:"wrap"}}>
-        {tabs.map(t=>(
-          <button key={t.id} onClick={()=>setTab(t.id)} style={{padding:"8px 16px",borderRadius:"6px 6px 0 0",border:"none",cursor:"pointer",fontWeight:600,fontSize:13,
-            background:tab===t.id?"#1e293b":"transparent",color:tab===t.id?"#3b82f6":"#64748b",borderBottom:tab===t.id?"2px solid #3b82f6":"2px solid transparent"}}>
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div style={{padding:"20px 24px"}}>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:12,marginBottom:20}}>
-          {[
-            {label:"MRR Total",val:fmtK(totalRec),color:"#3b82f6",icon:"💰"},
-            {label:"Com Valor",val:`${comValor}`,sub:`de ${raw.length}`,color:"#06b6d4",icon:"📋"},
-            {label:"Curva A",val:`${curvaA}`,color:"#8b5cf6",icon:"⭐"},
-            {label:"Vencidos",val:`${vencidos}`,color:"#ef4444",icon:"⚠️"},
-            {label:"Clientes",val:`${raw.length}`,color:"#f59e0b",icon:"🏢"},
-          ].map((k,i)=>(
-            <div key={i} style={{background:"#1e293b",borderRadius:10,padding:"14px 16px",borderLeft:`3px solid ${k.color}`}}>
-              <div style={{fontSize:18,marginBottom:4}}>{k.icon}</div>
-              <div style={{fontSize:20,fontWeight:700,color:k.color}}>{k.val}</div>
-              {k.sub&&<div style={{fontSize:11,color:"#64748b"}}>{k.sub}</div>}
-              <div style={{fontSize:11,color:"#94a3b8",marginTop:2}}>{k.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {tab==="overview"&&(
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🏆 Top 10 por MRR</div>
-              {topC.map((r,i)=>(
-                <div key={r.c} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-                  <div style={{width:20,fontSize:11,color:"#64748b",textAlign:"right"}}>{i+1}</div>
-                  <div style={{flex:1}}>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
-                      <span style={{fontSize:12,fontWeight:600,color:"#e2e8f0"}}>{r.c}</span>
-                      <span style={{fontSize:12,color:"#3b82f6",fontWeight:700}}>{fmtK(r.val)}</span>
-                    </div>
-                    <div style={{height:4,background:"#0f172a",borderRadius:2}}>
-                      <div style={{height:4,borderRadius:2,background:"#3b82f6",width:`${(r.val/topC[0].val)*100}%`}}/>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🔥 Componentes (Curva A)</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:8}}>
-                {["Cloud","Lic.","Addon","Sup."].map(l=>(
-                  <div key={l} style={{textAlign:"center",fontSize:11,color:"#64748b",fontWeight:600}}>{l}</div>
-                ))}
-              </div>
-              {raw.filter(r=>r.cloud>0||r.lic>0||r.addon>0||r.sup>0).slice(0,12).map(r=>{
-                const mx=Math.max(r.cloud,r.lic,r.addon,r.sup,1);
-                return(
-                  <div key={r.c} style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:6,marginBottom:6}}>
-                    {[r.cloud,r.lic,r.addon,r.sup].map((v,i)=>(
-                      <div key={i} style={{background:v===0?"#0f172a":`rgba(59,130,246,${0.15+(v/mx)*0.85})`,borderRadius:6,padding:"5px 4px",textAlign:"center",fontSize:10,color:v>0?"#fff":"#334155",fontWeight:600}}>
-                        {v>0?fmtK(v):"—"}
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {tab==="deadlines"&&(
-          <div style={{display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:4,color:"#fff",fontSize:14}}>🗓 Mapa de Calor — Deadline de Notificação</div>
-              <div style={{fontSize:11,color:"#64748b",marginBottom:14}}>Calculado dinamicamente pela data de hoje</div>
-              {GRUPOS.map(g=>{
-                const cl=dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
-                if(!cl.length)return null;
-                return(
-                  <div key={g.label} style={{marginBottom:14}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-                      <div style={{width:12,height:12,borderRadius:"50%",background:g.color,flexShrink:0}}/>
-                      <span style={{fontSize:12,fontWeight:700,color:g.color}}>{g.label}</span>
-                      <span style={{fontSize:11,color:"#64748b"}}>({cl.length})</span>
-                    </div>
-                    <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                      {cl.map(r=>(
-                        <div key={r.c} style={{background:g.bg,border:`1px solid ${g.color}40`,borderRadius:8,padding:"6px 10px",minWidth:110}}>
-                          <div style={{fontSize:11,fontWeight:700,color:"#1e293b"}}>{r.c}</div>
-                          <div style={{fontSize:10,color:"#475569"}}>Deadline: {fmtD(r.deadline)}</div>
-                          <div style={{fontSize:10,color:g.color,fontWeight:600}}>{r.ddDias<0?`Atrasado ${Math.abs(r.ddDias)}d`:`${r.ddDias}d p/ notif.`}</div>
-                          {r.venc&&<div style={{fontSize:10,color:"#64748b"}}>Vence: {fmtD(r.venc)}</div>}
-                          {r.val>0&&<div style={{fontSize:10,color:"#64748b"}}>{fmtK(r.val)}</div>}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:12,color:"#fff",fontSize:14}}>🎯 Próximos a Atacar</div>
-              <div style={{overflowX:"auto"}}>
-                <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
-                  <thead>
-                    <tr style={{background:"#0f172a"}}>
-                      {["#","Cliente","MRR","Deadline","Dias","Vencimento","Urgência"].map(h=>(
-                        <th key={h} style={{padding:"8px 10px",textAlign:"left",color:"#64748b",fontSize:11,fontWeight:700,whiteSpace:"nowrap"}}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {proximos.map((r,i)=>{
-                      const nc=r.ddDias<=0?"#dc2626":r.ddDias<=30?"#ea580c":r.ddDias<=90?"#d97706":"#16a34a";
-                      const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
-                      return(
-                        <tr key={r.c} style={{borderBottom:"1px solid #0f172a20",background:i%2===0?"#1e293b":"#172033"}}>
-                          <td style={{padding:"8px 10px",color:"#64748b"}}>{i+1}</td>
-                          <td style={{padding:"8px 10px",fontWeight:700,color:"#e2e8f0"}}>{r.c}</td>
-                          <td style={{padding:"8px 10px",color:"#3b82f6",fontWeight:700}}>{r.val>0?fmtK(r.val):"—"}</td>
-                          <td style={{padding:"8px 10px",color:"#94a3b8"}}>{fmtD(r.deadline)}</td>
-                          <td style={{padding:"8px 10px",color:g.color,fontWeight:700}}>{r.ddDias<0?`-${Math.abs(r.ddDias)}d`:`${r.ddDias}d`}</td>
-                          <td style={{padding:"8px 10px",color:"#94a3b8"}}>{r.venc?fmtD(r.venc):"—"}</td>
-                          <td style={{padding:"8px 10px"}}>
-                            <span style={{fontSize:11,fontWeight:700,color:nc,background:`${nc}20`,padding:"2px 8px",borderRadius:20}}>{r.ddDias<=0?"⚡ AGORA":`${r.ddDias}d`}</span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {tab==="segments"&&(
-          <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-            <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>📊 MRR por Segmento</div>
-            {porSeg.map((s,i)=>(
-              <div key={s.seg} style={{marginBottom:14}}>
-                <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-                  <span style={{fontSize:13,color:"#e2e8f0",fontWeight:600}}>{s.seg}</span>
-                  <div style={{display:"flex",gap:16}}>
-                    <span style={{fontSize:11,color:"#64748b"}}>{s.count} clientes</span>
-                    <span style={{fontSize:13,color:"#3b82f6",fontWeight:700}}>{fmtK(s.val)}</span>
-                  </div>
-                </div>
-                <div style={{height:8,background:"#0f172a",borderRadius:4}}>
-                  <div style={{height:8,borderRadius:4,width:`${(s.val/maxSeg)*100}%`,background:`hsl(${210+i*15},80%,${55-i*3}%)`}}/>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {tab==="status"&&(
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16}}>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>📌 Por Status</div>
-              {Object.entries(statusCount).map(([s,n])=>(
-                <div key={s} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 12px",borderRadius:8,marginBottom:8,
-                  background:SB[s]||"#0f172a",border:`1px solid ${SC[s]||"#334155"}40`}}>
-                  <div style={{display:"flex",alignItems:"center",gap:8}}>
-                    <div style={{width:10,height:10,borderRadius:"50%",background:SC[s]||"#3b82f6"}}/>
-                    <span style={{fontSize:13,color:"#1e293b",fontWeight:600}}>{s||"Ativo"}</span>
-                  </div>
-                  <span style={{fontSize:16,fontWeight:700,color:SC[s]||"#3b82f6"}}>{n}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{background:"#1e293b",borderRadius:10,padding:16}}>
-              <div style={{fontWeight:700,marginBottom:16,color:"#fff",fontSize:14}}>🚨 Atenção Imediata</div>
-              {raw.filter(r=>r.status==="VENCIDO"||r.status==="URGENTE"||r.status==="PRAZO PERDIDO").map(r=>(
-                <div key={r.c} style={{padding:"10px 12px",borderRadius:8,marginBottom:8,background:SB[r.status],border:`1px solid ${SC[r.status]}40`}}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <span style={{fontSize:13,fontWeight:700,color:"#1e293b"}}>{r.c}</span>
-                    <span style={{fontSize:11,fontWeight:700,color:SC[r.status],background:`${SC[r.status]}20`,padding:"2px 8px",borderRadius:20}}>{r.status}</span>
-                  </div>
-                  <div style={{fontSize:11,color:"#475569",marginTop:2}}>{r.val>0?fmt(r.val):"Sem valor"} · {r.seg||"—"}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {tab==="lista"&&(
-          <div>
-            <div style={{display:"flex",gap:10,marginBottom:14}}>
-              <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 Buscar..."
-                style={{flex:1,padding:"8px 12px",borderRadius:8,border:"1px solid #334155",background:"#1e293b",color:"#e2e8f0",fontSize:13,outline:"none"}}/>
-              <select value={filtStatus} onChange={e=>setFiltStatus(e.target.value)}
-                style={{padding:"8px 12px",borderRadius:8,border:"1px solid #334155",background:"#1e293b",color:"#e2e8f0",fontSize:13,outline:"none"}}>
-                <option>Todos</option><option>OK</option><option>VENCIDO</option><option>URGENTE</option><option>PRAZO PERDIDO</option><option>Ativo</option>
-              </select>
-            </div>
-            <div style={{background:"#1e293b",borderRadius:10,overflow:"hidden"}}>
-              <div style={{display:"grid",gridTemplateColumns:"2fr 2fr 1.5fr 1fr 1fr 1.5fr",padding:"10px 14px",background:"#0f172a",fontSize:11,fontWeight:700,color:"#64748b",gap:8}}>
-                <span>CLIENTE</span><span>SEGMENTO</span><span>MRR</span><span>CURVA</span><span>STATUS</span><span>DEADLINE</span>
-              </div>
-              <div style={{maxHeight:"60vh",overflowY:"auto"}}>
-                {lista.map((r,i)=>(
-                  <div key={r.c} style={{display:"grid",gridTemplateColumns:"2fr 2fr 1.5fr 1fr 1fr 1.5fr",padding:"9px 14px",gap:8,alignItems:"center",
-                    borderBottom:"1px solid #0f172a20",background:i%2===0?"#1e293b":"#172033",fontSize:12}}>
-                    <span style={{fontWeight:600,color:"#e2e8f0"}}>{r.c}</span>
-                    <span style={{color:"#94a3b8"}}>{r.seg||"—"}</span>
-                    <span style={{color:"#3b82f6",fontWeight:700}}>{r.val>0?fmtK(r.val):"—"}</span>
-                    <span style={{color:"#8b5cf6",fontWeight:700}}>{r.curva||"—"}</span>
-                    <span style={{fontSize:10,fontWeight:700,color:SC[r.status]||"#3b82f6",background:`${SC[r.status]||"#3b82f6"}20`,padding:"2px 8px",borderRadius:20,display:"inline-block"}}>{r.status||"Ativo"}</span>
-                    <span style={{color:"#f59e0b",fontSize:11}}>{r.deadline?fmtD(r.deadline):"—"}</span>
-                  </div>
-                ))}
-              </div>
-              <div style={{padding:"8px 14px",fontSize:11,color:"#475569",background:"#0f172a"}}>{lista.length} registros</div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  });
+  return{totalRec,comValor,vencidos,curvaA,porSeg,maxSeg,statusCount,topC,dlData,proximos,lista};
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+// --- RENDER ---
+function render(){
+  const root=document.getElementById('root');
+  if(!auth){root.innerHTML=renderLogin();bindLogin();return;}
+  const d=getData();
+  root.innerHTML=renderApp(d);
+  bindApp();
+}
+
+function renderLogin(err){
+  return `
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-icon">🔒</div>
+      <div class="login-title">Dashboard Leads</div>
+      <div class="login-sub">Acesso restrito</div>
+      <div class="field-wrap">
+        <span class="field-label">USUÁRIO</span>
+        <input id="inp-user" class="field-input${err?' err':''}" placeholder="usuário"/>
+      </div>
+      <div class="field-wrap field-wrap-last">
+        <span class="field-label">SENHA</span>
+        <input id="inp-pass" type="password" class="field-input${err?' err':''}" placeholder="senha"/>
+      </div>
+      ${err?'<div class="login-err">Usuário ou senha incorretos</div>':''}
+      <button id="btn-login" class="btn-login">Entrar</button>
+    </div>
+  </div>`;
+}
+
+function bindLogin(){
+  let err=false;
+  function doLogin(){
+    const u=document.getElementById('inp-user').value.trim().toLowerCase();
+    const p=document.getElementById('inp-pass').value;
+    if(u==='bos'&&p==='bos'){auth=true;render();}
+    else{document.getElementById('root').innerHTML=renderLogin(true);bindLogin();}
+  }
+  document.getElementById('btn-login').addEventListener('click',doLogin);
+  document.getElementById('inp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+}
+
+function kpiCards(d){
+  const items=[
+    {label:'MRR Total',val:fmtK(d.totalRec),color:'#3b82f6',icon:'💰'},
+    {label:'Com Valor',val:String(d.comValor),sub:`de ${raw.length}`,color:'#06b6d4',icon:'📋'},
+    {label:'Curva A',val:String(d.curvaA),color:'#8b5cf6',icon:'⭐'},
+    {label:'Vencidos',val:String(d.vencidos),color:'#ef4444',icon:'⚠️'},
+    {label:'Clientes',val:String(raw.length),color:'#f59e0b',icon:'🏢'},
+  ];
+  return items.map(k=>`
+    <div class="kpi" style="border-left:3px solid ${k.color}">
+      <div class="kpi-icon">${k.icon}</div>
+      <div class="kpi-val" style="color:${k.color}">${k.val}</div>
+      ${k.sub?`<div class="kpi-sub">${k.sub}</div>`:''}
+      <div class="kpi-label">${k.label}</div>
+    </div>`).join('');
+}
+
+function tabButtons(){
+  const tabs=[{id:'overview',label:'Visão Geral'},{id:'deadlines',label:'Deadlines'},{id:'segments',label:'Segmentos'},{id:'status',label:'Status'},{id:'lista',label:'Clientes'}];
+  return tabs.map(t=>`<button class="tab-btn${tab===t.id?' active':''}" data-tab="${t.id}">${t.label}</button>`).join('');
+}
+
+function renderOverview(d){
+  const topCRows=d.topC.map((r,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <div style="width:20px;font-size:11px;color:#64748b;text-align:right">${i+1}</div>
+      <div style="flex:1">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span style="font-size:12px;font-weight:600;color:#e2e8f0">${r.c}</span>
+          <span style="font-size:12px;color:#3b82f6;font-weight:700">${fmtK(r.val)}</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:${(r.val/d.topC[0].val)*100}%;background:#3b82f6"></div></div>
+      </div>
+    </div>`).join('');
+
+  const compRows=raw.filter(r=>r.cloud>0||r.lic>0||r.addon>0||r.sup>0).slice(0,12).map(r=>{
+    const mx=Math.max(r.cloud,r.lic,r.addon,r.sup,1);
+    return [r.cloud,r.lic,r.addon,r.sup].map(v=>`
+      <div class="comp-cell" style="background:${v===0?'#0f172a':`rgba(59,130,246,${0.15+(v/mx)*0.85})`};color:${v>0?'#fff':'#334155'}">
+        ${v>0?fmtK(v):'—'}
+      </div>`).join('');
+  }).map(cells=>`<div class="comp-grid">${cells}</div>`).join('');
+
+  return `<div class="grid2">
+    <div class="card"><div class="card-title">🏆 Top 10 por MRR</div>${topCRows}</div>
+    <div class="card">
+      <div class="card-title">🔥 Componentes (Curva A)</div>
+      <div class="comp-grid" style="margin-bottom:8px">
+        ${['Cloud','Lic.','Addon','Sup.'].map(l=>`<div style="text-align:center;font-size:11px;color:#64748b;font-weight:600">${l}</div>`).join('')}
+      </div>
+      ${compRows}
+    </div>
+  </div>`;
+}
+
+function renderDeadlines(d){
+  const heatmap=GRUPOS.map(g=>{
+    const cl=d.dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
+    if(!cl.length)return'';
+    const cards=cl.map(r=>`
+      <div class="hm-card" style="background:${g.bg};border:1px solid ${g.color}40">
+        <div style="font-size:11px;font-weight:700;color:#1e293b">${r.c}</div>
+        <div style="font-size:10px;color:#475569">Deadline: ${fmtD(r.deadline)}</div>
+        <div style="font-size:10px;color:${g.color};font-weight:600">${r.ddDias<0?'Atrasado '+Math.abs(r.ddDias)+'d':r.ddDias+'d p/ notif.'}</div>
+        ${r.venc?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.venc)}</div>`:''}
+        ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
+      </div>`).join('');
+    return `<div class="hm-group">
+      <div class="hm-header">
+        <div class="dot" style="background:${g.color}"></div>
+        <span style="font-size:12px;font-weight:700;color:${g.color}">${g.label}</span>
+        <span style="font-size:11px;color:#64748b">(${cl.length})</span>
+      </div>
+      <div class="hm-cards">${cards}</div>
+    </div>`;
+  }).join('');
+
+  const tableRows=d.proximos.map((r,i)=>{
+    const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
+    const nc=r.ddDias<=0?'#dc2626':r.ddDias<=30?'#ea580c':r.ddDias<=90?'#d97706':'#16a34a';
+    return `<tr style="border-bottom:1px solid #0f172a20;background:${i%2===0?'#1e293b':'#172033'}">
+      <td style="color:#64748b">${i+1}</td>
+      <td style="font-weight:700;color:#e2e8f0">${r.c}</td>
+      <td style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</td>
+      <td style="color:#94a3b8">${fmtD(r.deadline)}</td>
+      <td style="color:${g.color};font-weight:700">${r.ddDias<0?'-'+Math.abs(r.ddDias)+'d':r.ddDias+'d'}</td>
+      <td style="color:#94a3b8">${r.venc?fmtD(r.venc):'—'}</td>
+      <td><span class="badge" style="color:${nc};background:${nc}20">${r.ddDias<=0?'⚡ AGORA':r.ddDias+'d'}</span></td>
+    </tr>`;
+  }).join('');
+
+  return `<div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card">
+      <div class="card-title">🗓 Mapa de Calor — Deadline de Notificação</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:14px">Calculado dinamicamente pela data de hoje</div>
+      ${heatmap}
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 Próximos a Atacar</div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>${['#','Cliente','MRR','Deadline','Dias','Vencimento','Urgência'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>${tableRows}</tbody>
+        </table>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderSegments(d){
+  const bars=d.porSeg.map((s,i)=>`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:13px;color:#e2e8f0;font-weight:600">${s.seg}</span>
+        <div style="display:flex;gap:16px">
+          <span style="font-size:11px;color:#64748b">${s.count} clientes</span>
+          <span style="font-size:13px;color:#3b82f6;font-weight:700">${fmtK(s.val)}</span>
+        </div>
+      </div>
+      <div class="bar-track" style="height:8px">
+        <div class="bar-fill" style="height:8px;width:${(s.val/d.maxSeg)*100}%;background:hsl(${210+i*15},80%,${55-i*3}%)"></div>
+      </div>
+    </div>`).join('');
+  return `<div class="card"><div class="card-title">📊 MRR por Segmento</div>${bars}</div>`;
+}
+
+function renderStatus(d){
+  const statusItems=Object.entries(d.statusCount).map(([s,n])=>`
+    <div class="status-item" style="background:${SB[s]||'#0f172a'};border:1px solid ${SC[s]||'#334155'}40">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:10px;height:10px;border-radius:50%;background:${SC[s]||'#3b82f6'}"></div>
+        <span style="font-size:13px;color:#1e293b;font-weight:600">${s||'Ativo'}</span>
+      </div>
+      <span style="font-size:16px;font-weight:700;color:${SC[s]||'#3b82f6'}">${n}</span>
+    </div>`).join('');
+
+  const attnItems=raw.filter(r=>r.status==='VENCIDO'||r.status==='URGENTE'||r.status==='PRAZO PERDIDO').map(r=>`
+    <div class="attn-item" style="background:${SB[r.status]};border:1px solid ${SC[r.status]}40">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:13px;font-weight:700;color:#1e293b">${r.c}</span>
+        <span class="badge" style="color:${SC[r.status]};background:${SC[r.status]}20">${r.status}</span>
+      </div>
+      <div style="font-size:11px;color:#475569;margin-top:2px">${r.val>0?fmt(r.val):'Sem valor'} · ${r.seg||'—'}</div>
+    </div>`).join('');
+
+  return `<div class="grid2">
+    <div class="card"><div class="card-title">📌 Por Status</div>${statusItems}</div>
+    <div class="card"><div class="card-title">🚨 Atenção Imediata</div>${attnItems}</div>
+  </div>`;
+}
+
+function renderLista(d){
+  const rows=d.lista.map((r,i)=>`
+    <div class="table-row" style="background:${i%2===0?'#1e293b':'#172033'}">
+      <span style="font-weight:600;color:#e2e8f0">${r.c}</span>
+      <span style="color:#94a3b8">${r.seg||'—'}</span>
+      <span style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</span>
+      <span style="color:#8b5cf6;font-weight:700">${r.curva||'—'}</span>
+      <span class="badge" style="color:${SC[r.status]||'#3b82f6'};background:${SC[r.status]||'#3b82f6'}20">${r.status||'Ativo'}</span>
+      <span style="color:#f59e0b;font-size:11px">${r.deadline?fmtD(r.deadline):'—'}</span>
+    </div>`).join('');
+
+  return `<div>
+    <div class="search-row">
+      <input id="inp-search" class="search-input" placeholder="🔍 Buscar..." value="${search}"/>
+      <select id="sel-status" class="filter-sel">
+        <option${filtStatus==='Todos'?' selected':''}>Todos</option>
+        <option${filtStatus==='OK'?' selected':''}>OK</option>
+        <option${filtStatus==='VENCIDO'?' selected':''}>VENCIDO</option>
+        <option${filtStatus==='URGENTE'?' selected':''}>URGENTE</option>
+        <option${filtStatus==='PRAZO PERDIDO'?' selected':''}>PRAZO PERDIDO</option>
+        <option${filtStatus==='Ativo'?' selected':''}>Ativo</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <div class="table-head"><span>CLIENTE</span><span>SEGMENTO</span><span>MRR</span><span>CURVA</span><span>STATUS</span><span>DEADLINE</span></div>
+      <div class="table-body">${rows}</div>
+      <div class="table-foot">${d.lista.length} registros</div>
+    </div>
+  </div>`;
+}
+
+function renderApp(d){
+  let tabContent='';
+  if(tab==='overview')tabContent=renderOverview(d);
+  else if(tab==='deadlines')tabContent=renderDeadlines(d);
+  else if(tab==='segments')tabContent=renderSegments(d);
+  else if(tab==='status')tabContent=renderStatus(d);
+  else if(tab==='lista')tabContent=renderLista(d);
+
+  return `<div class="app">
+    <div class="header">
+      <div class="header-title">Dashboard Leads</div>
+      <div class="header-sub">${raw.length} clientes</div>
+    </div>
+    <div class="tabs">${tabButtons()}</div>
+    <div class="content">
+      <div class="kpis">${kpiCards(d)}</div>
+      ${tabContent}
+    </div>
+  </div>`;
+}
+
+function bindApp(){
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{tab=btn.dataset.tab;render();});
+  });
+  const si=document.getElementById('inp-search');
+  if(si)si.addEventListener('input',e=>{search=e.target.value;render();});
+  const ss=document.getElementById('sel-status');
+  if(ss)ss.addEventListener('change',e=>{filtStatus=e.target.value;render();});
+}
+
+render();
 </script>
 </body>
 </html>

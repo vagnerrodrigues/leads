@@ -63,6 +63,18 @@
   .comp-cell{border-radius:6px;padding:5px 4px;text-align:center;font-size:10px;font-weight:600}
   .status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:8px}
   .attn-item{padding:10px 12px;border-radius:8px;margin-bottom:8px}
+  .litigio-banner{background:#1a0a0a;border:2px solid #dc2626;border-radius:12px;padding:16px;margin-bottom:20px}
+  .litigio-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .litigio-icon{font-size:22px}
+  .litigio-title{font-size:15px;font-weight:800;color:#dc2626;letter-spacing:0.5px}
+  .litigio-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dc2626;color:#fff;margin-left:4px}
+  .litigio-card{background:#2d0a0a;border:1px solid #dc262680;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .litigio-card-name{font-size:14px;font-weight:800;color:#fca5a5}
+  .litigio-card-seg{font-size:11px;color:#94a3b8;margin-top:2px}
+  .litigio-card-val{font-size:15px;font-weight:700;color:#dc2626;white-space:nowrap}
+  .litigio-pill{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;white-space:nowrap}
+  @keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 #dc262640}50%{box-shadow:0 0 0 8px #dc262600}}
+  .litigio-banner{animation:pulse-red 2.5s infinite}
 </style>
 </head>
 <body>
@@ -173,7 +185,7 @@ const raw=[
   {c:"SERGIPE PARQUE TECNOLOGICO (SERGIPE TEC)",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"SHEMPO",seg:"Indústria / Manufatura",val:16999.72,status:"OK",curva:"",cloud:3402,lic:4497.26,addon:6780,sup:2119.70,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
   {c:"SHOPMODE",seg:"Comércio Varejista",val:7817.02,status:"URGENTE",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-15",deadline:"2027-07-15"},
-  {c:"SILCON AMBIENTAL",seg:"Meio Ambiente",val:36964.72,status:"OK",curva:"A",cloud:6513,lic:14341.10,addon:16402.31,sup:4331.21,prazo:"36 meses",venc:"2028-01-14",deadline:"2027-10-14"},
+  {c:"SILCON AMBIENTAL",seg:"Meio Ambiente",val:36964.72,status:"OK",curva:"A",cloud:6513,lic:14341.10,addon:16402.31,sup:4331.21,prazo:"36 meses",venc:"2028-01-14",deadline:"2027-10-14",litigio:true},
   {c:"SITAWI",seg:"Outros",val:324.25,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"SMART RJ",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"SPOBRAS",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
@@ -210,6 +222,30 @@ const GRUPOS=[
   {label:"Seguro (>365d)",min:366,max:9999,color:"#6b7280",bg:"#f1f5f9"},
 ];
 let auth=false,tab='overview',search='',filtStatus='Todos';
+function renderLitigioBanner(){
+  const litigios=raw.filter(r=>r.litigio);
+  if(!litigios.length)return'';
+  const cards=litigios.map(r=>`
+    <div class="litigio-card">
+      <div>
+        <div class="litigio-card-name">⚠️ ${r.c}</div>
+        <div class="litigio-card-seg">${r.seg||'—'} · ${r.prazo}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="litigio-card-val">${r.val>0?fmtK(r.val):'—'}</div>
+        <div class="litigio-pill">POSSÍVEL LITÍGIO</div>
+      </div>
+    </div>`).join('');
+  return `<div class="litigio-banner">
+    <div class="litigio-header">
+      <span class="litigio-icon">⚖️</span>
+      <span class="litigio-title">POSSÍVEL LITÍGIO</span>
+      <span class="litigio-badge">${litigios.length}</span>
+      <span style="font-size:11px;color:#64748b;margin-left:8px">Clientes com risco jurídico identificado — atenção redobrada</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">${cards}</div>
+  </div>`;
+}
 function getData(){
   const totalRec=raw.reduce((s,r)=>s+r.val,0);
   const comValor=raw.filter(r=>r.val>0).length;
@@ -316,6 +352,27 @@ function renderOverview(d){
   </div>`;
 }
 function renderDeadlines(d){
+  const litigioSection=(()=>{
+    const cl=raw.filter(r=>r.litigio);
+    if(!cl.length)return'';
+    const cards=cl.map(r=>`
+      <div class="hm-card" style="background:#2d0a0a;border:2px solid #dc2626">
+        <div style="font-size:11px;font-weight:800;color:#fca5a5">⚖️ ${r.c}</div>
+        <div style="font-size:10px;color:#94a3b8">${r.seg||'—'}</div>
+        ${r.deadline?`<div style="font-size:10px;color:#dc2626;font-weight:700">Deadline: ${fmtD(r.deadline)}</div>`:''}
+        ${r.venc?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.venc)}</div>`:''}
+        ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
+        <div style="margin-top:4px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;display:inline-block">POSSÍVEL LITÍGIO</div>
+      </div>`).join('');
+    return `<div class="hm-group">
+      <div class="hm-header">
+        <div class="dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626"></div>
+        <span style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:0.5px">⚖️ Possível Litígio</span>
+        <span style="font-size:11px;color:#64748b">(${cl.length})</span>
+      </div>
+      <div class="hm-cards">${cards}</div>
+    </div>`;
+  })();
   const heatmap=GRUPOS.map(g=>{
     const cl=d.dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
     if(!cl.length)return'';
@@ -353,6 +410,7 @@ function renderDeadlines(d){
     <div class="card">
       <div class="card-title">🗓 Mapa de Calor — Deadline de Notificação</div>
       <div style="font-size:11px;color:#64748b;margin-bottom:14px">Calculado dinamicamente pela data de hoje</div>
+      ${litigioSection}
       ${heatmap}
     </div>
     <div class="card">

@@ -67,7 +67,7 @@
   .modal-box{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;min-width:320px;max-width:420px;width:90%;box-shadow:0 20px 60px #000a}
   .modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
   .modal-title{font-size:16px;font-weight:800;color:#fff}
-  .modal-seg{font-size:11px;color:#64748b;margin-top:2px}
+  .modal-seg{font-size:11px;color:#64748b;margin-top:2py}
   .modal-close{background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1;padding:0}
   .modal-close:hover{color:#e2e8f0}
   .modal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;margin-bottom:6px;background:#0f172a}
@@ -186,7 +186,7 @@ const raw=[
   {c:"NITROQUIMICA",seg:"Indústria / Manufatura",val:6435.56,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-04-30",deadline:"2027-01-30"},
   {c:"NOJA POWER",seg:"",val:11,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-12",deadline:"2024-08-14"},
   {c:"OPTIMUS PHARMA",seg:"Indústria / Manufatura",val:330.05,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-08",deadline:"2027-11-10"},
-  {c:"OSB SOFTWARE",seg:"Tecnologia / TI",val:19987.75,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-04-08",deadline:"2029-01-08"},
+  {c:"OSB SOFTWARE",seg:"Tecnologia / TI",val:19987.76,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-04-08",deadline:"2029-01-08"},
   {c:"PEC",seg:"Consultoria / Serviços",val:53538.10,status:"",curva:"A",cloud:10825,lic:18125,addon:24588.10,sup:1900,prazo:"36 meses",venc:"2026-05-23",deadline:"2029-05-23"},
   {c:"PHX",seg:"Indústria / Manufatura",val:7407.06,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
   {c:"PLENUM",seg:"Indústria / Manufatura",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
@@ -282,7 +282,7 @@ function showClientModal(cname){
   document.getElementById('client-modal').addEventListener('click',e=>{if(e.target.id==='client-modal')document.getElementById('client-modal').remove();});
 }
 function renderLitigioBanner(){
-  const litigios=raw.filter(r=>r.litigio);
+  const litigios:raw.filter(r=>r.litigio);
   if(!litigios.length)return'';
   const cards=litigios.map(r=>`
     <div class="litigio-card">
@@ -473,7 +473,7 @@ function renderDeadlines(d){
   }).join('');
   return `<div style="display:flex;flex-direction:column;gap:16px">
     <div class="card">
-      <div class="card-title">🗓 Mapa de Calor — Deadline de Notificação</div>
+      <div class="card-title">🗓 Mapa de Calor b�� Deadline de Notificação</div>
       <div style="font-size:11px;color:#64748b;margin-bottom:14px">Calculado dinamicamente pela data de hoje</div>
       ${litigioSection}
       ${heatmap}
@@ -586,7 +586,7 @@ function bindApp(){
   document.querySelectorAll('[data-hmg]').forEach(hdr=>{
     hdr.addEventListener('click',()=>{
       const gid=hdr.dataset.hmg;
-      if(!window._hmCollapsed)window._hmCollapsed={};
+      if('window._hmCollapsed)window._hmCollapsed={};
       window._hmCollapsed[gid]=!window._hmCollapsed[gid];
       const body=document.getElementById('hmg-'+gid);
       const arrow=hdr.querySelector('span:last-child');

@@ -31,7 +31,7 @@
   .tab-btn{padding:8px 16px;border-radius:6px 6px 0 0;border:none;cursor:pointer;font-weight:600;font-size:13px;background:transparent;color:#64748b;border-bottom:2px solid transparent}
   .tab-btn.active{background:#1e293b;color:#3b82f6;border-bottom:2px solid #3b82f6}
   .content{padding:20px 24px}
-  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
   .kpi{background:#1e293b;border-radius:10px;padding:14px 16px}
   .kpi-icon{font-size:18px;margin-bottom:4px}
   .kpi-val{font-size:20px;font-weight:700}
@@ -63,6 +63,21 @@
   .comp-cell{border-radius:6px;padding:5px 4px;text-align:center;font-size:10px;font-weight:600}
   .status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:8px}
   .attn-item{padding:10px 12px;border-radius:8px;margin-bottom:8px}
+  .modal-overlay{position:fixed;inset:0;background:#00000090;z-index:1000;display:flex;align-items:center;justify-content:center}
+  .modal-box{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;min-width:320px;max-width:420px;width:90%;box-shadow:0 20px 60px #000a}
+  .modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+  .modal-title{font-size:16px;font-weight:800;color:#fff}
+  .modal-seg{font-size:11px;color:#64748b;margin-top:2px}
+  .modal-close{background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1;padding:0}
+  .modal-close:hover{color:#e2e8f0}
+  .modal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;margin-bottom:6px;background:#0f172a}
+  .modal-row-label{font-size:13px;color:#94a3b8;display:flex;align-items:center;gap:8px}
+  .modal-row-val{font-size:14px;font-weight:700;color:#e2e8f0}
+  .modal-total{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:8px;margin-top:10px;background:#3b82f620;border:1px solid #3b82f640}
+  .modal-total-label{font-size:13px;font-weight:700;color:#3b82f6}
+  .modal-total-val{font-size:18px;font-weight:800;color:#3b82f6}
+  .hm-card{cursor:pointer;transition:opacity .15s}
+  .hm-card:hover{opacity:.85}
   .litigio-banner{background:#1a0a0a;border:2px solid #dc2626;border-radius:12px;padding:16px;margin-bottom:20px}
   .litigio-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .litigio-icon{font-size:22px}
@@ -222,6 +237,50 @@ const GRUPOS=[
   {label:"Seguro (>365d)",min:366,max:9999,color:"#6b7280",bg:"#f1f5f9"},
 ];
 let auth=false,tab='overview',search='',filtStatus='Todos';
+function showClientModal(cname){
+  const r=raw.find(x=>x.c===cname);
+  if(!r)return;
+  const comps=[
+    {label:'☁️ Cloud',val:r.cloud,color:'#06b6d4'},
+    {label:'📄 Licenças SAP',val:r.lic,color:'#8b5cf6'},
+    {label:'🔧 Add-ons',val:r.addon,color:'#f59e0b'},
+    {label:'🛠️ Suporte',val:r.sup,color:'#10b981'},
+  ];
+  const rows=comps.map(c=>`
+    <div class="modal-row">
+      <span class="modal-row-label">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color}"></span>
+        ${c.label}
+      </span>
+      <span class="modal-row-val" style="color:${c.val>0?c.color:'#334155'}">${c.val>0?fmt(c.val):'—'}</span>
+    </div>`).join('');
+  const litigioBadge=r.litigio?`<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;margin-top:4px;display:inline-block">⚖️ POSSÍVEL LITÍGIO</span>`:'';
+  const statusBadge=r.status?`<span class="badge" style="color:${SC[r.status]||'#3b82f6'};background:${SC[r.status]||'#3b82f6'}20;margin-top:4px">${r.status}</span>`:'';
+  const html=`<div class="modal-overlay" id="client-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">${r.c}</div>
+          <div class="modal-seg">${r.seg||'—'} · ${r.prazo}</div>
+          <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${statusBadge}${litigioBadge}</div>
+        </div>
+        <button class="modal-close" id="modal-close-btn">✕</button>
+      </div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Composição do MRR</div>
+      ${rows}
+      <div class="modal-total">
+        <span class="modal-total-label">💰 MRR Total</span>
+        <span class="modal-total-val">${r.val>0?fmt(r.val):'—'}</span>
+      </div>
+      ${r.venc?`<div style="margin-top:12px;font-size:11px;color:#64748b;text-align:center">Vencimento: <strong style="color:#e2e8f0">${fmtD(r.venc)}</strong>${r.deadline?' · Deadline: <strong style="color:#f59e0b">'+fmtD(r.deadline)+'</strong>':''}</div>`:''}
+    </div>
+  </div>`;
+  const el=document.createElement('div');
+  el.innerHTML=html;
+  document.body.appendChild(el.firstElementChild);
+  document.getElementById('modal-close-btn').addEventListener('click',()=>document.getElementById('client-modal').remove());
+  document.getElementById('client-modal').addEventListener('click',e=>{if(e.target.id==='client-modal')document.getElementById('client-modal').remove();});
+}
 function renderLitigioBanner(){
   const litigios=raw.filter(r=>r.litigio);
   if(!litigios.length)return'';
@@ -302,19 +361,21 @@ function bindLogin(){
   document.getElementById('inp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 }
 function kpiCards(d){
+  const litigioCount=raw.filter(r=>r.litigio).length;
   const items=[
     {label:'MRR Total',val:fmtK(d.totalRec),color:'#3b82f6',icon:'💰'},
     {label:'Com Valor',val:String(d.comValor),sub:`de ${raw.length}`,color:'#06b6d4',icon:'📋'},
     {label:'Curva A',val:String(d.curvaA),color:'#8b5cf6',icon:'⭐'},
     {label:'Vencidos',val:String(d.vencidos),color:'#ef4444',icon:'⚠️'},
     {label:'Clientes',val:String(raw.length),color:'#f59e0b',icon:'🏢'},
+    {label:'Litígio',val:String(litigioCount),color:'#dc2626',icon:'⚖️',pulse:true},
   ];
   return items.map(k=>`
-    <div class="kpi" style="border-left:3px solid ${k.color}">
+    <div class="kpi" style="border-left:3px solid ${k.color}${k.pulse?';border:2px solid #dc2626;background:#1a0808;animation:pulse-red 2.5s infinite':''}">
       <div class="kpi-icon">${k.icon}</div>
       <div class="kpi-val" style="color:${k.color}">${k.val}</div>
       ${k.sub?`<div class="kpi-sub">${k.sub}</div>`:''}
-      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-label" style="${k.pulse?'color:#fca5a5;font-weight:700':''}">⚖️ ${k.label}</div>
     </div>`).join('');
 }
 function tabButtons(){
@@ -327,7 +388,7 @@ function renderOverview(d){
       <div style="width:20px;font-size:11px;color:#64748b;text-align:right">${i+1}</div>
       <div style="flex:1">
         <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-          <span style="font-size:12px;font-weight:600;color:#e2e8f0">${r.c}</span>
+          <span style="font-size:12px;font-weight:600;color:#e2e8f0;cursor:pointer" data-client="${r.c}">${r.c}</span>
           <span style="font-size:12px;color:#3b82f6;font-weight:700">${fmtK(r.val)}</span>
         </div>
         <div class="bar-track"><div class="bar-fill" style="width:${(r.val/d.topC[0].val)*100}%;background:#3b82f6"></div></div>
@@ -352,11 +413,25 @@ function renderOverview(d){
   </div>`;
 }
 function renderDeadlines(d){
+  const collapsed=window._hmCollapsed||{};
+  function makeGroup(gid,dotStyle,titleHtml,count,cardsHtml){
+    const isOpen=collapsed[gid]===undefined?true:!collapsed[gid];
+    const arrow=isOpen?'▾':'▸';
+    return `<div class="hm-group">
+      <div class="hm-header" style="cursor:pointer;user-select:none" data-hmg="${gid}">
+        ${dotStyle}
+        ${titleHtml}
+        <span style="font-size:11px;color:#64748b">(${count})</span>
+        <span style="font-size:13px;color:#64748b;margin-left:auto;padding-right:4px">${arrow}</span>
+      </div>
+      <div class="hm-cards" id="hmg-${gid}" style="display:${isOpen?'flex':'none'};flex-wrap:wrap;gap:6px">${cardsHtml}</div>
+    </div>`;
+  }
   const litigioSection=(()=>{
     const cl=raw.filter(r=>r.litigio);
     if(!cl.length)return'';
     const cards=cl.map(r=>`
-      <div class="hm-card" style="background:#2d0a0a;border:2px solid #dc2626">
+      <div class="hm-card" style="background:#2d0a0a;border:2px solid #dc2626" data-client="${r.c}">
         <div style="font-size:11px;font-weight:800;color:#fca5a5">⚖️ ${r.c}</div>
         <div style="font-size:10px;color:#94a3b8">${r.seg||'—'}</div>
         ${r.deadline?`<div style="font-size:10px;color:#dc2626;font-weight:700">Deadline: ${fmtD(r.deadline)}</div>`:''}
@@ -364,41 +439,31 @@ function renderDeadlines(d){
         ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
         <div style="margin-top:4px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;display:inline-block">POSSÍVEL LITÍGIO</div>
       </div>`).join('');
-    return `<div class="hm-group">
-      <div class="hm-header">
-        <div class="dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626"></div>
-        <span style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:0.5px">⚖️ Possível Litígio</span>
-        <span style="font-size:11px;color:#64748b">(${cl.length})</span>
-      </div>
-      <div class="hm-cards">${cards}</div>
-    </div>`;
+    const dot=`<div class="dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626"></div>`;
+    const title=`<span style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:0.5px">⚖️ Possível Litígio</span>`;
+    return makeGroup('litigio',dot,title,cl.length,cards);
   })();
-  const heatmap=GRUPOS.map(g=>{
+  const heatmap=GRUPOS.map((g,gi)=>{
     const cl=d.dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
     if(!cl.length)return'';
     const cards=cl.map(r=>`
-      <div class="hm-card" style="background:${g.bg};border:1px solid ${g.color}40">
+      <div class="hm-card" style="background:${g.bg};border:1px solid ${g.color}40" data-client="${r.c}">
         <div style="font-size:11px;font-weight:700;color:#1e293b">${r.c}</div>
         <div style="font-size:10px;color:#475569">Deadline: ${fmtD(r.deadline)}</div>
         <div style="font-size:10px;color:${g.color};font-weight:600">${r.ddDias<0?'Atrasado '+Math.abs(r.ddDias)+'d':r.ddDias+'d p/ notif.'}</div>
         ${r.venc?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.venc)}</div>`:''}
         ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
       </div>`).join('');
-    return `<div class="hm-group">
-      <div class="hm-header">
-        <div class="dot" style="background:${g.color}"></div>
-        <span style="font-size:12px;font-weight:700;color:${g.color}">${g.label}</span>
-        <span style="font-size:11px;color:#64748b">(${cl.length})</span>
-      </div>
-      <div class="hm-cards">${cards}</div>
-    </div>`;
+    const dot=`<div class="dot" style="background:${g.color}"></div>`;
+    const title=`<span style="font-size:12px;font-weight:700;color:${g.color}">${g.label}</span>`;
+    return makeGroup('g'+gi,dot,title,cl.length,cards);
   }).join('');
   const tableRows=d.proximos.map((r,i)=>{
     const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
     const nc=r.ddDias<=0?'#dc2626':r.ddDias<=30?'#ea580c':r.ddDias<=90?'#d97706':'#16a34a';
     return `<tr style="border-bottom:1px solid #0f172a20;background:${i%2===0?'#1e293b':'#172033'}">
       <td style="color:#64748b">${i+1}</td>
-      <td style="font-weight:700;color:#e2e8f0">${r.c}</td>
+      <td style="font-weight:700;color:#e2e8f0;cursor:pointer" data-client="${r.c}">${r.c}</td>
       <td style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</td>
       <td style="color:#94a3b8">${fmtD(r.deadline)}</td>
       <td style="color:${g.color};font-weight:700">${r.ddDias<0?'-'+Math.abs(r.ddDias)+'d':r.ddDias+'d'}</td>
@@ -465,7 +530,7 @@ function renderStatus(d){
 function renderLista(d){
   const rows=d.lista.map((r,i)=>`
     <div class="table-row" style="background:${i%2===0?'#1e293b':'#172033'}">
-      <span style="font-weight:600;color:#e2e8f0">${r.c}</span>
+      <span style="font-weight:600;color:#e2e8f0;cursor:pointer;text-decoration:underline dotted" data-client="${r.c}">${r.c}</span>
       <span style="color:#94a3b8">${r.seg||'—'}</span>
       <span style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</span>
       <span style="color:#8b5cf6;font-weight:700">${r.curva||'—'}</span>
@@ -518,9 +583,29 @@ function bindApp(){
   if(si)si.addEventListener('input',e=>{search=e.target.value;render();});
   const ss=document.getElementById('sel-status');
   if(ss)ss.addEventListener('change',e=>{filtStatus=e.target.value;render();});
+  document.querySelectorAll('[data-hmg]').forEach(hdr=>{
+    hdr.addEventListener('click',()=>{
+      const gid=hdr.dataset.hmg;
+      if(!window._hmCollapsed)window._hmCollapsed={};
+      window._hmCollapsed[gid]=!window._hmCollapsed[gid];
+      const body=document.getElementById('hmg-'+gid);
+      const arrow=hdr.querySelector('span:last-child');
+      if(body){
+        const open=!window._hmCollapsed[gid];
+        body.style.display=open?'flex':'none';
+        if(arrow)arrow.textContent=open?'▾':'▸';
+      }
+    });
+  });
 }
+// Delegação global — captura cliques em data-client independente de quando o DOM muda
+document.addEventListener('click',function(e){
+  const el=e.target.closest('[data-client]');
+  if(el){e.stopPropagation();showClientModal(el.dataset.client);}
+});
+ 
 render();
-
+ 
 </script>
 </body>
 </html>

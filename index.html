@@ -24,14 +24,14 @@
   .login-err{font-size:12px;color:#dc2626;margin-bottom:12px;text-align:center}
   .btn-login{width:100%;padding:10px;border-radius:8px;border:none;background:#3b82f6;color:#fff;font-weight:700;font-size:14px;cursor:pointer}
   .app{background:#0f172a;min-height:100vh;color:#e2e8f0}
-  .header{border-bottom:1px solid #1e293b;padding:16px 24px}
+  .header{border-bottom:1px solid #1e293b;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .header-title{font-weight:700;font-size:16px;color:#fff}
   .header-sub{font-size:11px;color:#64748b}
   .tabs{display:flex;gap:4px;padding:12px 24px 0;border-bottom:1px solid #1e293b;flex-wrap:wrap}
   .tab-btn{padding:8px 16px;border-radius:6px 6px 0 0;border:none;cursor:pointer;font-weight:600;font-size:13px;background:transparent;color:#64748b;border-bottom:2px solid transparent}
   .tab-btn.active{background:#1e293b;color:#3b82f6;border-bottom:2px solid #3b82f6}
   .content{padding:20px 24px}
-  .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
   .kpi{background:#1e293b;border-radius:10px;padding:14px 16px}
   .kpi-icon{font-size:18px;margin-bottom:4px}
   .kpi-val{font-size:20px;font-weight:700}
@@ -39,240 +39,370 @@
   .kpi-label{font-size:11px;color:#94a3b8;margin-top:2px}
   .card{background:#1e293b;border-radius:10px;padding:16px}
   .card-title{font-weight:700;margin-bottom:12px;color:#fff;font-size:14px}
+  .card-sub{font-size:11px;color:#64748b;margin:-6px 0 12px}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .stack{display:flex;flex-direction:column;gap:16px}
   table{width:100%;border-collapse:collapse;font-size:12px}
   th{padding:8px 10px;text-align:left;color:#64748b;font-size:11px;font-weight:700;white-space:nowrap;background:#0f172a}
-  td{padding:8px 10px}
-  .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block}
-  .search-row{display:flex;gap:10px;margin-bottom:14px}
-  .search-input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:13px;outline:none}
+  td{padding:8px 10px;vertical-align:top}
+  .num{text-align:right;white-space:nowrap}
+  .badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;white-space:nowrap}
+  .search-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .search-input{flex:1;min-width:200px;padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:13px;outline:none}
   .filter-sel{padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font-size:13px;outline:none}
   .table-wrap{background:#1e293b;border-radius:10px;overflow:hidden}
-  .table-head{display:grid;grid-template-columns:2fr 2fr 1.5fr 1fr 1fr 1.5fr;padding:10px 14px;background:#0f172a;font-size:11px;font-weight:700;color:#64748b;gap:8px}
+  .table-head{display:grid;grid-template-columns:2fr 1.6fr 1.1fr .6fr 1.3fr 1fr 1fr .9fr;padding:10px 14px;background:#0f172a;font-size:11px;font-weight:700;color:#64748b;gap:8px}
   .table-body{max-height:60vh;overflow-y:auto}
-  .table-row{display:grid;grid-template-columns:2fr 2fr 1.5fr 1fr 1fr 1.5fr;padding:9px 14px;gap:8px;align-items:center;border-bottom:1px solid #0f172a20;font-size:12px}
-  .table-foot{padding:8px 14px;font-size:11px;color:#475569;background:#0f172a}
+  .table-row{display:grid;grid-template-columns:2fr 1.6fr 1.1fr .6fr 1.3fr 1fr 1fr .9fr;padding:9px 14px;gap:8px;align-items:center;border-bottom:1px solid #0f172a20;font-size:12px}
+  .table-foot{padding:8px 14px;font-size:11px;color:#475569;background:#0f172a;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   .bar-track{height:8px;background:#0f172a;border-radius:4px}
   .bar-fill{height:8px;border-radius:4px}
   .hm-group{margin-bottom:14px}
-  .hm-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .hm-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+  .hm-tot{font-size:11px;color:#94a3b8;background:#0f172a;border-radius:20px;padding:2px 8px}
   .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
   .hm-cards{display:flex;flex-wrap:wrap;gap:6px}
-  .hm-card{border-radius:8px;padding:6px 10px;min-width:110px}
-  .comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+  .hm-card{border-radius:8px;padding:6px 10px;min-width:120px;cursor:pointer;transition:opacity .15s}
+  .hm-card:hover{opacity:.85}
+  .comp-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:6px;margin-bottom:8px}
   .comp-cell{border-radius:6px;padding:5px 4px;text-align:center;font-size:10px;font-weight:600}
-  .status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:8px}
-  .attn-item{padding:10px 12px;border-radius:8px;margin-bottom:8px}
+  .comp-name{font-size:11px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;align-self:center}
+  .status-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:8px;margin-bottom:8px;gap:8px}
+  .attn-item{padding:10px 12px;border-radius:8px;margin-bottom:8px;cursor:pointer}
+  .tot-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .tot-item{background:#0f172a;border-radius:8px;padding:10px 12px}
+  .tot-label{font-size:11px;color:#94a3b8}
+  .tot-val{font-size:16px;font-weight:800;margin-top:2px}
+  .tot-sub{font-size:10px;color:#64748b;margin-top:2px}
   .modal-overlay{position:fixed;inset:0;background:#00000090;z-index:1000;display:flex;align-items:center;justify-content:center}
-  .modal-box{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;min-width:320px;max-width:420px;width:90%;box-shadow:0 20px 60px #000a}
+  .modal-box{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:24px;min-width:320px;max-width:480px;width:92%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px #000a}
   .modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
   .modal-title{font-size:16px;font-weight:800;color:#fff}
-  .modal-seg{font-size:11px;color:#64748b;margin-top:2py}
+  .modal-seg{font-size:11px;color:#64748b;margin-top:2px}
   .modal-close{background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1;padding:0}
   .modal-close:hover{color:#e2e8f0}
-  .modal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;margin-bottom:6px;background:#0f172a}
+  .modal-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;margin-bottom:6px;background:#0f172a;gap:10px}
   .modal-row-label{font-size:13px;color:#94a3b8;display:flex;align-items:center;gap:8px}
-  .modal-row-val{font-size:14px;font-weight:700;color:#e2e8f0}
+  .modal-row-val{font-size:14px;font-weight:700;color:#e2e8f0;text-align:right}
   .modal-total{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:8px;margin-top:10px;background:#3b82f620;border:1px solid #3b82f640}
   .modal-total-label{font-size:13px;font-weight:700;color:#3b82f6}
   .modal-total-val{font-size:18px;font-weight:800;color:#3b82f6}
-  .hm-card{cursor:pointer;transition:opacity .15s}
-  .hm-card:hover{opacity:.85}
+  .modal-sec{font-size:11px;color:#64748b;margin:14px 0 8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .modal-note{font-size:12px;color:#cbd5e1;background:#0f172a;border-radius:8px;padding:10px 12px;line-height:1.45}
   .litigio-banner{background:#1a0a0a;border:2px solid #dc2626;border-radius:12px;padding:16px;margin-bottom:20px}
-  .litigio-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .litigio-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
   .litigio-icon{font-size:22px}
   .litigio-title{font-size:15px;font-weight:800;color:#dc2626;letter-spacing:0.5px}
   .litigio-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dc2626;color:#fff;margin-left:4px}
-  .litigio-card{background:#2d0a0a;border:1px solid #dc262680;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .litigio-card{background:#2d0a0a;border:1px solid #dc262680;border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer}
   .litigio-card-name{font-size:14px;font-weight:800;color:#fca5a5}
   .litigio-card-seg{font-size:11px;color:#94a3b8;margin-top:2px}
   .litigio-card-val{font-size:15px;font-weight:700;color:#dc2626;white-space:nowrap}
   .litigio-pill{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;white-space:nowrap}
   @keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 #dc262640}50%{box-shadow:0 0 0 8px #dc262600}}
   .litigio-banner{animation:pulse-red 2.5s infinite}
+  .clk{cursor:pointer}
+  .clk:hover{text-decoration:underline}
+  @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.table-head,.table-row{grid-template-columns:2fr 1.2fr 1fr 1.2fr}.hide-sm{display:none}}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script>
 const raw=[
-  {c:"2W",seg:"Energia",val:3543.72,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"A5X",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"ACCERT",seg:"Indústria / Manufatura",val:16999.72,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
-  {c:"AGE TELECOM",seg:"Telecom",val:38164.61,status:"",curva:"A",cloud:9952.24,lic:15904,addon:7859.90,sup:3953.20,prazo:"12 meses",venc:"2026-09-23",deadline:"2026-08-24"},
-  {c:"AGUAS DO GAMA",seg:"Construção / Infraestrutura",val:4129.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
-  {c:"ALLREDE",seg:"Telecom",val:38111.75,status:"",curva:"A",cloud:10800,lic:16580,addon:8109,sup:0,prazo:"36 meses",venc:"2026-12-19",deadline:"2026-09-05",litigio:true},
-  {c:"ALPITEL",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"ANIMA",seg:"Educação / Pesquisa",val:84028.26,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-03-31",deadline:"2026-12-31"},
-  {c:"AQUI E BRASIL",seg:"Artes",val:17151.95,status:"",curva:"A",cloud:2700,lic:3852,addon:7282.20,sup:945,prazo:"36 meses",venc:"2026-11-29",deadline:"2026-08-29"},
-  {c:"AR 70",seg:"Comércio atacadista",val:14097.59,status:"OK",curva:"A",cloud:3841.33,lic:7504.31,addon:1646.28,sup:1105.66,prazo:"36 meses",venc:"2028-07-30",deadline:"2028-05-01"},
-  {c:"ARGO",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"ARTRANS",seg:"Indústria Metalmecânica",val:1981.01,status:"",curva:"A",cloud:0,lic:1255.59,addon:725.42,sup:0,prazo:"36 meses",venc:"2027-04-02",deadline:"2027-01-02"},
-  {c:"ATLANTA",seg:"Comércio de Peças",val:23612.66,status:"",curva:"A",cloud:8430.22,lic:9788.07,addon:5394.36,sup:0,prazo:"48 meses",venc:"2027-03-29",deadline:"2026-12-29"},
-  {c:"BANCO BTG",seg:"Banco",val:19339.89,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"BARRACAO",seg:"Comércio Varejista",val:42663.28,status:"PRAZO PERDIDO",curva:"A",cloud:0,lic:13459.13,addon:27183.74,sup:2020.41,prazo:"36 meses",venc:"2029-02-28",deadline:"2028-11-30"},
-  {c:"BASE GAS",seg:"Comércio Varejista",val:43346.94,status:"",curva:"A",cloud:7074,lic:21612.90,addon:8049.14,sup:2084.53,prazo:"48 meses",venc:"2026-11-14",deadline:"2026-08-14"},
-  {c:"BBCE",seg:"Energia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"BCS",seg:"Armazens Gerais",val:1552.98,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-06-28",deadline:"2028-03-29"},
+  {c:"2W",seg:"Energia",val:72034.16,cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-05-09",deadline:"2026-02-08",renov:"aditivo",contrato:"306094 (+ad.01/03) + 306925",litigio:true,litTipo:"Recuperação Judicial 2W Ecobank (proc. 1053172-54.2025.8.26.0100) — ALFA habilitando crédito",obs:"Contrato 306094 cl. 9.1: 36 meses, renovação só por aditivo; cl. 10.1.c permite rescisão imediata em RJ. MRR contratado; faturamento real a confirmar.",fonte:"306094-00/01/03, 306925-00, procuração 21/05/2025"},
+  {c:"A5X",seg:"Tecnologia / TI",val:6246.44,cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-02-28",deadline:"2029-11-30",renov:"auto",contrato:"310914/310918",obs:"Assinatura iniciada em 07/03/2025.",fonte:"310914-00"},
+  {c:"ACCERT",seg:"Indústria / Manufatura",val:16999.72,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
+  {c:"AGE TELECOM",seg:"Telecom",val:38164.61,curva:"A",cloud:9952.24,lic:15904,addon:7859.9,sup:3953.2,prazo:"12 meses",venc:"2026-09-24",deadline:"2026-09-24",renov:"expressa",contrato:"311534",obs:"Cl. 11.1.b: findos 12 meses sem manifestação expressa de renovação, o contrato se encerra automaticamente. Verificar se houve renovação.",fonte:"311534-00"},
+  {c:"AGUAS DO GAMA",seg:"Construção / Infraestrutura",val:4129.42,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
+  {c:"ALLREDE",seg:"Telecom",val:38111.75,curva:"A",cloud:10800,lic:16580,addon:8109,sup:0,prazo:"36 meses",venc:"2026-12-19",deadline:"2026-09-05",litigio:true},
+  {c:"ALPITEL",seg:"Tecnologia / TI",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ANIMA",seg:"Educação / Pesquisa",val:84028.26,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-03-31",deadline:"2026-12-31"},
+  {c:"AQUI E BRASIL",seg:"Artes",val:17151.95,curva:"A",cloud:2700,lic:3852,addon:7282.2,sup:945,prazo:"36 meses",venc:"2026-11-29",deadline:"2026-08-29"},
+  {c:"AR 70",seg:"Comércio atacadista",val:14746.11,status:"OK",curva:"A",cloud:3841.33,lic:7504.31,addon:1646.28,sup:1105.66,prazo:"36 meses",venc:"2028-07-30",deadline:"2028-05-01",renov:"auto",contrato:"311185 (renovação) + 304311 ad.04",obs:"Renovação 311185 (36 meses) + ad.04 de R$ 648,52 desde 15/12/2025.",fonte:"311185, 304311-04"},
+  {c:"ARGO",seg:"Tecnologia / TI",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ARTRANS",seg:"Indústria Metalmecânica",val:1981.01,curva:"A",cloud:0,lic:1255.59,addon:725.42,sup:0,prazo:"36 meses",venc:"2027-04-02",deadline:"2027-01-02"},
+  {c:"ATLANTA",seg:"Comércio de Peças",val:24840.4,curva:"A",cloud:8430.22,lic:9788.07,addon:5394.36,sup:0,prazo:"48 meses",venc:"2027-03-30",deadline:"2026-12-30",renov:"auto",contrato:"305984",obs:"Notificação via AR. Multa 50% do saldo (cl. 10.2). Ver análise detalhada no projeto.",fonte:"305984-00/02/03/04/05"},
+  {c:"BANCO BTG",seg:"Banco",val:19339.89,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BARRACAO",seg:"Comércio Varejista",val:42663.28,status:"PRAZO PERDIDO",curva:"A",cloud:0,lic:13459.13,addon:27183.74,sup:2020.41,prazo:"36 meses",venc:"2029-02-28",deadline:"2028-11-30",renov:"auto",contrato:"305822",fonte:"305822-00..10"},
+  {c:"BASE GAS",seg:"Comércio Varejista",val:49777.6,curva:"A",cloud:7074,lic:21612.9,addon:8049.14,sup:2084.53,prazo:"36 meses",venc:"2026-11-14",deadline:"2026-08-16",renov:"auto",contrato:"308066 + 308823",obs:"Faltam na pasta os aditivos 07–10 e 16–18 do 308066. Prazo é 36 meses (não 48).",fonte:"308066-00..19, 308823-00"},
+  {c:"BBCE",seg:"Energia",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"BCS",seg:"Armazens Gerais",val:12890.9,cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-06-28",deadline:"2028-03-29",renov:"auto",contrato:"309451",obs:"Valor anterior considerava só o aditivo 04.",fonte:"309451-00..04"},
   {c:"BEP ENERGIA",seg:"Energia",val:10507.95,status:"OK",curva:"A",cloud:2844.96,lic:1520.14,addon:4437.29,sup:1705.56,prazo:"36 meses",venc:"2028-07-17",deadline:"2028-05-18"},
-  {c:"BIOREN",seg:"Indústria / Instalações",val:1658.54,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"CALDEX",seg:"Indústria Metalmecânica",val:20763.94,status:"",curva:"A",cloud:7680,lic:8041.80,addon:870.34,sup:1600,prazo:"48 meses",venc:"2027-10-30",deadline:"2027-07-30"},
-  {c:"CAMBRIDGE",seg:"Consultoria / Serviços",val:22494.50,status:"",curva:"A",cloud:6390,lic:8784,addon:4463.40,sup:2547.77,prazo:"48 meses",venc:"2026-08-28",deadline:"2026-05-28"},
-  {c:"CAMPANA",seg:"Financeiro / Investimentos",val:5848.00,status:"PRAZO PERDIDO",curva:"A",cloud:1283.15,lic:2817.60,addon:1215.69,sup:531.56,prazo:"48 meses",venc:"2026-07-26",deadline:"2026-05-27"},
-  {c:"CASAMAX",seg:"Construção e Engenharia",val:71072.51,status:"",curva:"",cloud:10176,lic:28454.05,addon:28642.46,sup:3800,prazo:"72 meses",venc:"2028-03-01",deadline:null},
-  {c:"CEDRS",seg:"Consultoria / Serviços",val:179,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"CJI",seg:"Comércio",val:286.05,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"COLORMIX",seg:"Outros",val:46127.72,status:"",curva:"A",cloud:13579.05,lic:14629,addon:10007,sup:1870,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-09-26"},
-  {c:"CONSORCIO RENOVAR SBC",seg:"Engenharia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"CONSORCIO VIA FACIL",seg:"Energia",val:1100.17,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"COPARR",seg:"Comércio",val:7326.93,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-01-24",deadline:"2028-10-26"},
-  {c:"COPASA",seg:"Distribuição",val:4129.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
-  {c:"COPROSUL",seg:"Indústria / Manufatura",val:3943.72,status:"",curva:"",cloud:792.13,lic:3151.59,addon:0,sup:0,prazo:"48 meses",venc:"2026-11-09",deadline:"2026-08-11"},
-  {c:"CS GLOBAL",seg:"Tecnologia / TI",val:48165.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2025-06-25",deadline:"2025-03-27"},
-  {c:"DAFONTE",seg:"",val:8259.47,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-06-22",deadline:null},
-  {c:"DAI BRASIL",seg:"Indústria / Manufatura",val:809.73,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-05-18",deadline:"2027-02-17"},
-  {c:"DENTAL CAPIXABA",seg:"Comércio",val:11677.24,status:"OK",curva:"A",cloud:2808.36,lic:4796.38,addon:3221.49,sup:851.02,prazo:"48 meses",venc:"2028-07-25",deadline:"2028-04-26"},
-  {c:"DUXTENO",seg:"",val:463.23,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"ELETRON ENERGY",seg:"Energia",val:24326.81,status:"PRAZO PERDIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-05-22",deadline:"2026-02-21"},
-  {c:"ELOS",seg:"Indústria / Manufatura",val:41557.57,status:"",curva:"A",cloud:10700.50,lic:14538.40,addon:11275.78,sup:2455.47,prazo:"36 meses",venc:"2026-12-07",deadline:"2026-09-07"},
-  {c:"EMBRAPII",seg:"Outros",val:21477.71,status:"",curva:"A",cloud:4560,lic:6120,addon:9026,sup:4169.08,prazo:"36 meses",venc:"2027-11-04",deadline:"2027-08-04"},
-  {c:"ENERZEE",seg:"Energia",val:18439.27,status:"OK",curva:"A",cloud:0,lic:9843.65,addon:3500.08,sup:5095.54,prazo:"36 meses",venc:"2029-01-11",deadline:"2028-10-13"},
-  {c:"ESKALA DATA CENTER",seg:"",val:6712.22,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"ESTUDIOS FLOW",seg:"",val:347.42,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-03-04",deadline:"2027-12-05"},
-  {c:"EUROIMMUN",seg:"Comércio",val:10280.30,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"EXA",seg:"Fintech",val:3007.53,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"EXAME",seg:"Tecnologia / TI",val:30804.96,status:"",curva:"A",cloud:2090,lic:6006,addon:15482.93,sup:3300,prazo:"12 meses",venc:"2027-06-13",deadline:"2027-03-13"},
-  {c:"EXED",seg:"",val:305.73,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2025-09-29",deadline:"2025-07-01"},
-  {c:"FGE",seg:"Outros",val:754.46,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"FIORDE",seg:"Transporte / Logística",val:101631.08,status:"",curva:"A",cloud:22866.53,lic:25837.20,addon:29618.66,sup:6482.23,prazo:"48 meses",venc:"2027-06-18",deadline:"2027-03-13"},
-  {c:"FNR",seg:"Construção / Infraestrutura",val:6559.35,status:"",curva:"A",cloud:1140,lic:2760,addon:1764,sup:0,prazo:"36 meses",venc:"2027-02-28",deadline:"2026-11-28"},
-  {c:"FOCALDATA",seg:"Tecnologia / TI",val:84528.89,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-07-31",deadline:"2027-05-02"},
-  {c:"FORCON",seg:"Indústria / Manufatura",val:9935.05,status:"PRAZO PERDIDO",curva:"A",cloud:1883,lic:3112.20,addon:2538.72,sup:1045,prazo:"36 meses",venc:"2026-06-16",deadline:"2026-05-17"},
-  {c:"FRESADORA",seg:"Indústria Metalmecânica",val:0,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-18",deadline:"2027-09-18"},
-  {c:"G5 PARTNERS",seg:"Financeiro / Investimentos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"G5 SOLUCOES",seg:"Transporte / Logística",val:416.91,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"GENCO ENERGIA",seg:"Energia",val:27518.23,status:"OK",curva:"A",cloud:4692.60,lic:7542.44,addon:13263.80,sup:2019.39,prazo:"48 meses",venc:"2028-02-27",deadline:"2027-11-29"},
-  {c:"GLOBEX",seg:"Armazens Gerais",val:6262.07,status:"VENCIDO",curva:"",cloud:1946,lic:2613.20,addon:848.10,sup:848.10,prazo:"36 meses",venc:"2025-06-27",deadline:"2025-03-29"},
-  {c:"GOLDEN",seg:"",val:674,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"GOLGRAN",seg:"Indústria / Manufatura",val:19064.75,status:"OK",curva:"A",cloud:8743.24,lic:7753.88,addon:1339.90,sup:1227.74,prazo:"48 meses",venc:"2027-09-28",deadline:"2027-06-30"},
-  {c:"GPA_CHEFTIME",seg:"",val:17530.75,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2022-08-16",deadline:"2022-05-18"},
-  {c:"GPA_JAMES",seg:"",val:4545.04,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"GC BRASIL",seg:"Comércio atacadista",val:2299.94,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"GREENPASS",seg:"Tecnologia / TI",val:22241.41,status:"OK",curva:"A",cloud:7250.72,lic:7303.18,addon:7687.51,sup:0,prazo:"36 meses",venc:"2027-03-27",deadline:"2026-12-27"},
-  {c:"GUEP",seg:"Tecnologia / TI",val:9023.85,status:"",curva:"A",cloud:2520.50,lic:3416.60,addon:1000,sup:855,prazo:"36 meses",venc:"2028-11-06",deadline:"2028-08-08"},
-  {c:"GlobalSAT",seg:"Telecom",val:2356.69,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"HDT ENERGY",seg:"Energia",val:24498.15,status:"",curva:"A",cloud:4939.70,lic:11739,addon:2094,sup:2332.72,prazo:"A verificar",venc:null,deadline:null},
-  {c:"IMPECAVEL",seg:"Comércio Varejista",val:2800.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-11",deadline:"2024-08-13"},
-  {c:"INAFLEX",seg:"Indústria / Manufatura",val:537.81,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"INCOTERMO",seg:"Indústria / Manufatura",val:3536.65,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-06-27"},
-  {c:"INDFLUX",seg:"Comércio Varejista",val:4958.77,status:"",curva:"",cloud:948.50,lic:2218.40,addon:2198,sup:825,prazo:"48 meses",venc:"2028-10-05",deadline:"2028-07-05"},
-  {c:"INSOLO",seg:"Agro",val:146532.91,status:"",curva:"A",cloud:0,lic:34348.17,addon:0,sup:10805.44,prazo:"48 meses",venc:"2027-12-19",deadline:"2027-09-19"},
-  {c:"INSTITUTO TEATRO BRASILEIRO",seg:"Artes",val:16217.95,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"INTELI+",seg:"Tecnologia / TI",val:2093.80,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2028-01-24",deadline:"2027-10-26"},
-  {c:"INTERBRILHO",seg:"Indústria / Manufatura",val:15919.05,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"LATICINIO BOM SUCESSO",seg:"Alimentação",val:46116.38,status:"",curva:"A",cloud:8111.80,lic:16462.17,addon:17133.61,sup:4400.69,prazo:"36 meses",venc:"2028-06-30",deadline:"2028-04-01"},
-  {c:"IRECE",seg:"Agro",val:120315.34,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2029-12-06",deadline:"2029-09-07"},
-  {c:"JACARÉ",seg:"Meio Ambiente",val:0,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"24 meses",venc:"2027-10-24",deadline:"2027-07-26"},
-  {c:"JUS CAPITAL",seg:"Fintech",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"KUARA",seg:"Agro",val:37231.66,status:"",curva:"",cloud:3230,lic:12860,addon:7292,sup:1100,prazo:"48 meses",venc:"2027-11-05",deadline:"2027-08-05"},
-  {c:"MAIS CAFÉ",seg:"Agro",val:0,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-09-15",deadline:"2030-06-17"},
-  {c:"MAIS DADOS",seg:"Tecnologia / TI",val:298.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"MARIA LAVADEIRA",seg:"Outros",val:8277.19,status:"OK",curva:"A",cloud:2300,lic:1956,addon:2677.42,sup:1208.90,prazo:"60 meses",venc:"2030-04-30",deadline:"2030-01-30"},
-  {c:"MAXPRO",seg:"Comércio Varejista",val:6096.07,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"MILAGRO",seg:"Tecnologia / TI",val:29989.38,status:"",curva:"A",cloud:5700,lic:16410,addon:5660,sup:1208.90,prazo:"60 meses",venc:"2030-08-01",deadline:"2030-05-01"},
-  {c:"MONKEY",seg:"Fintech",val:2464.04,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"MR PAY (MR PAGAMENTOS)",seg:"Fintech",val:7161.55,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2022-12-07",deadline:"2022-09-08"},
-  {c:"NIDALA (TAMPICO)",seg:"Indústria / Manufatura",val:4167.46,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:null,deadline:null},
-  {c:"NITROQUIMICA",seg:"Indústria / Manufatura",val:6435.56,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-04-30",deadline:"2027-01-30"},
-  {c:"NOJA POWER",seg:"",val:11,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-12",deadline:"2024-08-14"},
-  {c:"OPTIMUS PHARMA",seg:"Indústria / Manufatura",val:330.05,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-08",deadline:"2027-11-10"},
-  {c:"OSB SOFTWARE",seg:"Tecnologia / TI",val:19987.76,status:"",curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-04-08",deadline:"2029-01-08"},
-  {c:"PEC",seg:"Consultoria / Serviços",val:53538.10,status:"",curva:"A",cloud:10825,lic:18125,addon:24588.10,sup:1900,prazo:"36 meses",venc:"2026-05-23",deadline:"2029-05-23"},
-  {c:"PHX",seg:"Indústria / Manufatura",val:7407.06,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"PLENUM",seg:"Indústria / Manufatura",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"PLUGIFY",seg:"Locação de equipamentos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"POPULOS",seg:"Tecnologia / TI",val:14719.28,status:"",curva:"",cloud:2528,lic:2614.40,addon:3022.40,sup:2120.30,prazo:"36 meses",venc:"2027-02-09",deadline:"2026-11-09"},
-  {c:"PROPAV",seg:"Construção / Infraestrutura",val:3925.88,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-03-16",deadline:"2024-12-16"},
-  {c:"RG SOLUÇÕES",seg:"Comércio Varejista",val:776.93,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"RV MAIS",seg:"Eventos",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"S.R COMERCIO",seg:"Indústria / Manufatura",val:1563.40,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"SEBASTIAO GIACHETO",seg:"Agro",val:0,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-02-20",deadline:"2029-11-22"},
-  {c:"SERGIPE PARQUE TECNOLOGICO (SERGIPE TEC)",seg:"Tecnologia / TI",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"SHEMPO",seg:"Indústria / Manufatura",val:16999.72,status:"OK",curva:"",cloud:3402,lic:4497.26,addon:6780,sup:2119.70,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
-  {c:"SHOPMODE",seg:"Comércio Varejista",val:7817.02,status:"URGENTE",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-15",deadline:"2027-07-15"},
-  {c:"SILCON AMBIENTAL",seg:"Meio Ambiente",val:36964.72,status:"OK",curva:"A",cloud:6513,lic:14341.10,addon:16402.31,sup:4331.21,prazo:"36 meses",venc:"2028-01-14",deadline:"2027-10-14",litigio:true},
-  {c:"SITAWI",seg:"Outros",val:324.25,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"SMART RJ",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"SPOBRAS",seg:"",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"STIX",seg:"Tecnologia / TI",val:3945.57,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"TACHAO DE UBATUBA",seg:"Alimentação",val:5077.32,status:"OK",curva:"A",cloud:852.35,lic:1638.80,addon:1085.62,sup:1742.64,prazo:"48 meses",venc:"2028-03-28",deadline:"2027-12-29"},
-  {c:"TAMADA",seg:"Transporte / Logística",val:0,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-05",deadline:"2028-06-07"},
-  {c:"TAVOLA",seg:"Alimentação",val:2096.12,status:"OK",curva:"",cloud:950,lic:0,addon:200,sup:660,prazo:"48 meses",venc:"2028-07-10",deadline:"2028-04-11"},
-  {c:"TBX INDUSTRIA",seg:"Indústria / Manufatura",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"TMNH PARTICIPACOES",seg:"Holding",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"TRAUEN",seg:"Indústria / Manufatura",val:20440.07,status:"OK",curva:"",cloud:1900,lic:3482,addon:9722,sup:1208,prazo:"36 meses",venc:"2029-02-23",deadline:"2028-11-25"},
-  {c:"TUTORS (OURO INVESTIMENTOS)",seg:"Fintech",val:115022.35,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-05-20",deadline:"2028-02-20"},
-  {c:"UNITEC",seg:"Indústria / Manufatura",val:6865.78,status:"OK",curva:"A",cloud:894.47,lic:5971.31,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-27",deadline:"2027-11-29"},
-  {c:"VENTOS",seg:"Energia",val:0,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"VEXA",seg:"Transporte / Logística",val:14084.54,status:"OK",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-07-26",deadline:"2028-04-27"},
-  {c:"VIALASER",seg:"Saúde",val:23164.28,status:"",curva:"A",cloud:4029,lic:7680.60,addon:6691.62,sup:1632.75,prazo:"12 meses",venc:"2027-02-23",deadline:"2027-02-23"},
-  {c:"VIZZELA COMÉSTICOS",seg:"Indústria / Manufatura",val:298.78,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"WE CONSULTORIA",seg:"Comércio atacadista",val:2039.37,status:"",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
-  {c:"WS SOLUTIONS",seg:"",val:6199.05,status:"VENCIDO",curva:"",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-01-26",deadline:"2024-10-28"},
-  {c:"ZEECO",seg:"Comércio atacadista",val:10718.47,status:"PRAZO PERDIDO",curva:"A",cloud:1900,lic:4708.40,addon:1602,sup:1045,prazo:"24 meses",venc:"2027-03-27",deadline:"2026-12-27"},
+  {c:"BIOREN",seg:"Indústria / Instalações",val:1658.54,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CALDEX",seg:"Indústria Metalmecânica",val:20763.94,curva:"A",cloud:7680,lic:8041.8,addon:870.34,sup:1600,prazo:"48 meses",venc:"2027-10-30",deadline:"2027-07-30",renov:"auto",contrato:"307451",fonte:"307451-00/02"},
+  {c:"CAMBRIDGE",seg:"Consultoria / Serviços",val:22494.5,curva:"A",cloud:6390,lic:8784,addon:4463.4,sup:2547.77,prazo:"48 meses",venc:"2026-08-28",deadline:"2026-05-28"},
+  {c:"CAMPANA",seg:"Financeiro / Investimentos",val:5848.0,status:"PRAZO PERDIDO",curva:"A",cloud:1283.15,lic:2817.6,addon:1215.69,sup:531.56,prazo:"48 meses",venc:"2026-07-26",deadline:"2026-05-27"},
+  {c:"CASAMAX",seg:"Construção e Engenharia",val:71072.51,cloud:10176,lic:28454.05,addon:28642.46,sup:3800,prazo:"72 meses",venc:"2028-03-01",deadline:"2027-12-02",obs:"Deadline vazio — calculado (−90d)."},
+  {c:"CEDRS",seg:"Consultoria / Serviços",val:179,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CJI",seg:"Comércio",val:286.05,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"COLORMIX",seg:"Outros",val:46127.72,curva:"A",cloud:13579.05,lic:14629,addon:10007,sup:1870,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-06-28",obs:"Deadline estava igual ao vencimento — recalculado (−90d)."},
+  {c:"CONSORCIO RENOVAR SBC",seg:"Engenharia",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"CONSORCIO VIA FACIL",seg:"Energia",val:1100.17,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"COPARR",seg:"Comércio",val:7326.93,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-01-24",deadline:"2028-10-26"},
+  {c:"COPASA",seg:"Distribuição",val:4129.42,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-06-26",deadline:"2027-03-28"},
+  {c:"COPROSUL",seg:"Indústria / Manufatura",val:3943.72,cloud:792.13,lic:3151.59,addon:0,sup:0,prazo:"48 meses",venc:"2026-11-09",deadline:"2026-08-11"},
+  {c:"CS GLOBAL",seg:"Tecnologia / TI",val:48165.05,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2025-06-25",deadline:"2025-03-27"},
+  {c:"DAFONTE",val:8259.47,cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-06-22",deadline:"2026-03-24",obs:"Deadline vazio — calculado (−90d)."},
+  {c:"DAI BRASIL",seg:"Indústria / Manufatura",val:809.73,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-05-18",deadline:"2027-02-17"},
+  {c:"DENTAL CAPIXABA",seg:"Comércio",val:11677.24,status:"OK",curva:"A",cloud:2808.36,lic:4796.38,addon:3221.49,sup:851.02,prazo:"48 meses",venc:"2028-07-25",deadline:"2028-04-26",renov:"auto",contrato:"310070",fonte:"310070-00/01/04"},
+  {c:"DUXTENO",val:463.23,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ELETRON ENERGY",seg:"Energia",val:24326.81,status:"PRAZO PERDIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2026-05-22",deadline:"2026-02-21"},
+  {c:"ELOS",seg:"Indústria / Manufatura",val:41557.57,curva:"A",cloud:10700.5,lic:14538.4,addon:11275.78,sup:2455.47,prazo:"36 meses",venc:"2026-12-07",deadline:"2026-09-07"},
+  {c:"EMBRAPII",seg:"Outros",val:21477.71,curva:"A",cloud:4560,lic:6120,addon:9026,sup:4169.08,prazo:"36 meses",venc:"2027-11-04",deadline:"2027-08-04",renov:"aditivo",contrato:"302947",obs:"Órgão com termo aditivo: vigência 04/05/2022 a 04/11/2027 (66 meses).",fonte:"2º TA 302947"},
+  {c:"ENERZEE",seg:"Energia",val:18439.27,status:"OK",curva:"A",cloud:0,lic:9843.65,addon:3500.08,sup:5095.54,prazo:"36 meses",venc:"2029-01-11",deadline:"2028-10-13",renov:"auto",contrato:"305445",fonte:"305445-00/01/05/06"},
+  {c:"ESKALA DATA CENTER",val:6712.22,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"ESTUDIOS FLOW",val:347.42,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-03-04",deadline:"2027-12-05"},
+  {c:"EUROIMMUN",seg:"Comércio",val:10280.3,cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-09-30",deadline:"2030-07-02",renov:"aditivo",contrato:"311417",obs:"Renovação só por aditivo. Licenciamento começou a faturar em 10/02/2026.",fonte:"311417-00"},
+  {c:"EXA",seg:"Fintech",val:3007.53,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"EXAME",seg:"Tecnologia / TI",val:30804.96,curva:"A",cloud:2090,lic:6006,addon:15482.93,sup:3300,prazo:"12 meses",venc:"2027-06-13",deadline:"2027-03-13"},
+  {c:"EXED",val:305.73,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2025-09-29",deadline:"2025-07-01"},
+  {c:"FGE",seg:"Outros",val:754.46,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"FIORDE",seg:"Transporte / Logística",val:101631.08,curva:"A",cloud:22866.53,lic:25837.2,addon:29618.66,sup:6482.23,prazo:"48 meses",venc:"2027-06-18",deadline:"2027-03-13"},
+  {c:"FNR",seg:"Construção / Infraestrutura",val:6559.35,curva:"A",cloud:1140,lic:2760,addon:1764,sup:0,prazo:"36 meses",venc:"2027-02-28",deadline:"2026-11-28"},
+  {c:"FOCALDATA",seg:"Tecnologia / TI",val:84528.89,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2027-07-31",deadline:"2027-05-02"},
+  {c:"FORCON",seg:"Indústria / Manufatura",val:9935.05,status:"PRAZO PERDIDO",curva:"A",cloud:1883,lic:3112.2,addon:2538.72,sup:1045,prazo:"36 meses",venc:"2026-06-16",deadline:"2026-05-17"},
+  {c:"FRESADORA",seg:"Indústria Metalmecânica",val:0,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-18",deadline:"2027-09-18"},
+  {c:"G5 PARTNERS",seg:"Financeiro / Investimentos",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"G5 SOLUCOES",seg:"Transporte / Logística",val:416.91,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GC BRASIL",seg:"Comércio atacadista",val:2299.94,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GENCO ENERGIA",seg:"Energia",val:27518.23,status:"OK",curva:"A",cloud:4692.6,lic:7542.44,addon:13263.8,sup:2019.39,prazo:"48 meses",venc:"2028-02-27",deadline:"2027-11-29",renov:"auto",contrato:"308384",fonte:"308384-00..09"},
+  {c:"GlobalSAT",seg:"Telecom",val:2356.69,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GLOBEX",seg:"Armazens Gerais",val:6262.07,status:"VENCIDO",cloud:1946,lic:2613.2,addon:848.1,sup:848.1,prazo:"36 meses",venc:"2025-06-27",deadline:"2025-03-29"},
+  {c:"GOLDEN",val:674,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GOLGRAN",seg:"Indústria / Manufatura",val:19504.82,status:"OK",curva:"A",cloud:8743.24,lic:7753.88,addon:1339.9,sup:1227.74,prazo:"48 meses",venc:"2027-09-28",deadline:"2027-06-30",renov:"auto",contrato:"306755 + 206074 ad.09",obs:"Incluído o ad.09 do contrato antigo 206074 (R$ 440,07).",fonte:"306755-00..06, 206074-09"},
+  {c:"GPA_CHEFTIME",val:4924.38,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"SaaS desde 2019 (6º aditivo)",venc:"2026-04-24",deadline:"2026-01-24",renov:"aditivo",contrato:"CBD SaaS 2019 – 6º aditivo",obs:"6º aditivo: R$ 59.092,56/ano sem reajuste até 24/04/2026. Período encerrado: renegociação/reajuste em aberto.",fonte:"6º aditivo 29/05/2024"},
+  {c:"GPA_JAMES",val:4545.04,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"GREENPASS",seg:"Tecnologia / TI",val:22241.41,status:"OK",curva:"A",cloud:7250.72,lic:7303.18,addon:7687.51,sup:0,prazo:"36 meses",venc:"2027-03-27",deadline:"2026-12-27",renov:"auto",contrato:"309162",fonte:"309162-00/01"},
+  {c:"GUEP",seg:"Tecnologia / TI",val:9023.85,curva:"A",cloud:2520.5,lic:3416.6,addon:1000,sup:855,prazo:"36 meses",venc:"2028-11-06",deadline:"2028-08-08"},
+  {c:"HDT ENERGY",seg:"Energia",val:30041.0,curva:"A",cloud:4939.7,lic:11739,addon:2094,sup:2332.72,prazo:"36 meses (prorrogado)",venc:"2027-12-03",deadline:"2027-09-04",contrato:"304904",obs:"Ad.03 (03/12/2024) prorrogou 36 meses e fixou R$ 30.041,00/mês a partir de 20/01/2025.",fonte:"304904-01/03, 310316"},
+  {c:"IMPECAVEL",seg:"Comércio Varejista",val:2800.05,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-11",deadline:"2024-08-13"},
+  {c:"INAFLEX",seg:"Indústria / Manufatura",val:537.81,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INCOTERMO",seg:"Indústria / Manufatura",val:18287.3,cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-26",deadline:"2028-06-27",renov:"auto",contrato:"310328",obs:"Valor anterior considerava só o aditivo 02.",fonte:"310328-00/01/02"},
+  {c:"INDFLUX",seg:"Comércio Varejista",val:4958.77,cloud:948.5,lic:2218.4,addon:2198,sup:825,prazo:"48 meses",venc:"2028-10-05",deadline:"2028-07-05"},
+  {c:"INSOLO",seg:"Agro",val:146532.91,curva:"A",cloud:0,lic:34348.17,addon:0,sup:10805.44,prazo:"48 meses",venc:"2027-12-19",deadline:"2027-09-19"},
+  {c:"INSTITUTO TEATRO BRASILEIRO",seg:"Artes",val:16217.95,curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"INTELI+",seg:"Tecnologia / TI",val:2093.8,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2028-01-24",deadline:"2027-10-26"},
+  {c:"INTERBRILHO",seg:"Indústria / Manufatura",val:15919.05,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"IRECE",seg:"Agro",val:120315.34,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2029-12-06",deadline:"2029-09-07"},
+  {c:"JACARÉ",seg:"Meio Ambiente",val:0,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"24 meses",venc:"2027-10-24",deadline:"2027-07-26"},
+  {c:"JUS CAPITAL",seg:"Fintech",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"KUARA",seg:"Agro",val:37231.66,cloud:3230,lic:12860,addon:7292,sup:1100,prazo:"48 meses",venc:"2027-11-01",deadline:"2027-08-03",renov:"auto",contrato:"307801",obs:"Contrato consolidado com a NOVA NERUDA (Petrolina/PE): R$ 21.578 Kuara + R$ 11.540 Nova Neruda + suporte. Multa 50% do saldo.",fonte:"307801"},
+  {c:"LATICINIO BOM SUCESSO",seg:"Alimentação",val:46116.38,curva:"A",cloud:8111.8,lic:16462.17,addon:17133.61,sup:4400.69,prazo:"36 meses",venc:"2028-06-30",deadline:"2028-04-01",renov:"auto",contrato:"302955",obs:"Cl. 1.1 diz que o suporte de R$ 4.400 já está incluso no rateio — confirmar se o MRR não está duplicado.",fonte:"302955-00/01"},
+  {c:"MAIS CAFÉ",seg:"Agro",val:0,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-09-15",deadline:"2030-06-17"},
+  {c:"MAIS DADOS",seg:"Tecnologia / TI",val:298.78,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MARIA LAVADEIRA",seg:"Outros",val:8277.19,status:"OK",curva:"A",cloud:2300,lic:1956,addon:2677.42,sup:1208.9,prazo:"60 meses",venc:"2030-04-30",deadline:"2030-01-30"},
+  {c:"MAXPRO",seg:"Comércio Varejista",val:6096.07,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MILAGRO",seg:"Tecnologia / TI",val:29989.38,curva:"A",cloud:5700,lic:16410,addon:5660,sup:1208.9,prazo:"60 meses",venc:"2030-07-30",deadline:"2030-05-01",renov:"aditivo",contrato:"311233",fonte:"311233-00"},
+  {c:"MONKEY",seg:"Fintech",val:2464.04,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"MR PAY (MR PAGAMENTOS)",seg:"Fintech",val:7161.55,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:"2022-12-07",deadline:"2022-09-08"},
+  {c:"NIDALA (TAMPICO)",seg:"Indústria / Manufatura",val:4167.46,cloud:0,lic:0,addon:0,sup:0,prazo:"12 meses",venc:null,deadline:null},
+  {c:"NITROQUIMICA",seg:"Indústria / Manufatura",val:6435.56,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-04-30",deadline:"2027-01-30"},
+  {c:"NOJA POWER",val:11,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2024-11-12",deadline:"2024-08-14"},
+  {c:"OPTIMUS PHARMA",seg:"Indústria / Manufatura",val:330.05,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-08",deadline:"2027-11-10"},
+  {c:"OSB SOFTWARE",seg:"Tecnologia / TI",val:19987.76,curva:"A",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2029-04-08",deadline:"2029-01-08"},
+  {c:"PEC",seg:"Consultoria / Serviços",val:53538.1,curva:"A",cloud:10825,lic:18125,addon:24588.1,sup:1900,prazo:"36 meses",venc:"2026-05-23",deadline:"2026-02-22",obs:"Planilha tinha deadline 2029-05-23 com vencimento 2026-05-23 — inconsistente. Validar contrato."},
+  {c:"PHX",seg:"Indústria / Manufatura",val:7407.06,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"PLENUM",seg:"Indústria / Manufatura",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"PLUGIFY",seg:"Locação de equipamentos",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"POPULOS",seg:"Tecnologia / TI",val:14719.28,cloud:2528,lic:2614.4,addon:3022.4,sup:2120.3,prazo:"36 meses",venc:"2027-02-09",deadline:"2026-11-09"},
+  {c:"PROPAV",seg:"Construção / Infraestrutura",val:3925.88,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-03-16",deadline:"2024-12-16"},
+  {c:"RG SOLUÇÕES",seg:"Comércio Varejista",val:776.93,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"RV MAIS",seg:"Eventos",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"S.R COMERCIO",seg:"Indústria / Manufatura",val:1563.4,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SBCP",seg:"Saúde / Associação",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null,contrato:"205240",obs:"Aditivo 01 (17/11/2025): adequação à Reforma Tributária. Base ativa, contrato de licença não está na pasta.",fonte:"205240-01"},
+  {c:"SEBASTIAO GIACHETO",seg:"Agro",val:0,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"60 meses",venc:"2030-02-20",deadline:"2029-11-22"},
+  {c:"SERGIPE PARQUE TECNOLOGICO (SERGIPE TEC)",seg:"Tecnologia / TI",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SERMATEX",seg:"Indústria / Equipamentos elétricos",val:2603.57,cloud:0,lic:0,addon:0,sup:801.25,prazo:"Manutenção anual (on-premise)",venc:"2025-12-31",deadline:"2025-10-02",renov:"aditivo",contrato:"300156 ad.03 (310815)",obs:"On-premise: manutenção SAP 2025 R$ 21.627,85/ano + Suporte Premium 3h/mês R$ 9.614,97/ano (MRR equivalente). Renovação 2026 não localizada. Oportunidade: migração para cloud.",fonte:"310815"},
+  {c:"SHEMPO",seg:"Indústria / Manufatura",val:16999.72,status:"OK",cloud:3402,lic:4497.26,addon:6780,sup:2119.7,prazo:"36 meses",venc:"2027-09-27",deadline:"2027-06-29"},
+  {c:"SHOPMODE",seg:"Comércio Varejista",val:7817.02,status:"URGENTE",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2027-10-15",deadline:"2027-07-15"},
+  {c:"SILCON AMBIENTAL",seg:"Meio Ambiente",val:36964.72,status:"OK",curva:"A",cloud:6513,lic:14341.1,addon:16402.31,sup:4331.21,prazo:"36 meses",venc:"2028-01-14",deadline:"2027-10-14",contrato:"Clicksign (licenças/add-ons/suporte)",litigio:true,fonte:"Clicksign 14/01/2025"},
+  {c:"SITAWI",seg:"Outros",val:324.25,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SMART RJ",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"SPOBRAS",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"STIX",seg:"Tecnologia / TI",val:3945.57,cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2023-04-30",deadline:"2023-01-30",renov:"aditivo",contrato:"206040",obs:"Vigência original (01/05/2020 + 36 meses) encerrada; 9 aditivos de serviço. Operando sem renovação formal localizada.",fonte:"206040, 9º aditivo"},
+  {c:"TACHAO DE UBATUBA",seg:"Alimentação",val:5077.32,status:"OK",curva:"A",cloud:852.35,lic:1638.8,addon:1085.62,sup:1742.64,prazo:"48 meses",venc:"2028-03-28",deadline:"2027-12-29"},
+  {c:"TAMADA",seg:"Transporte / Logística",val:0,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-09-05",deadline:"2028-06-07"},
+  {c:"TAVOLA",seg:"Alimentação",val:2096.12,status:"OK",cloud:950,lic:0,addon:200,sup:660,prazo:"48 meses",venc:"2028-07-10",deadline:"2028-04-11",renov:"auto",contrato:"309985",fonte:"309985-00/02/03"},
+  {c:"TBX INDUSTRIA",seg:"Indústria / Manufatura",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TMNH PARTICIPACOES",seg:"Holding",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"TRAUEN",seg:"Indústria / Manufatura",val:20440.07,status:"OK",cloud:1900,lic:3482,addon:9722,sup:1208,prazo:"36 meses",venc:"2029-02-23",deadline:"2028-11-25"},
+  {c:"TUTORS (OURO INVESTIMENTOS)",seg:"Fintech",val:115022.35,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-05-20",deadline:"2028-02-20"},
+  {c:"UNITEC",seg:"Indústria / Manufatura",val:29521.6,status:"OK",curva:"A",cloud:894.47,lic:5971.31,addon:0,sup:0,prazo:"48 meses",venc:"2028-02-27",deadline:"2027-11-29",renov:"auto",contrato:"308605",obs:"Valor anterior considerava só o aditivo 07. Faltam na pasta os aditivos 04 e 06.",fonte:"308605-00..07"},
+  {c:"VENTOS",seg:"Energia",val:0,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"VEXA",seg:"Transporte / Logística",val:14084.54,status:"OK",cloud:0,lic:0,addon:0,sup:0,prazo:"48 meses",venc:"2028-07-26",deadline:"2028-04-27"},
+  {c:"VIALASER",seg:"Saúde",val:23164.28,curva:"A",cloud:4029,lic:7680.6,addon:6691.62,sup:1632.75,prazo:"12 meses",venc:"2027-02-23",deadline:"2026-11-25",obs:"Deadline estava igual ao vencimento — recalculado (−90d)."},
+  {c:"VIZZELA COMÉSTICOS",seg:"Indústria / Manufatura",val:298.78,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"WE CONSULTORIA",seg:"Comércio atacadista",val:2039.37,cloud:0,lic:0,addon:0,sup:0,prazo:"A verificar",venc:null,deadline:null},
+  {c:"WS SOLUTIONS",val:6199.05,status:"VENCIDO",cloud:0,lic:0,addon:0,sup:0,prazo:"36 meses",venc:"2025-01-26",deadline:"2024-10-28"},
+  {c:"ZEECO",seg:"Comércio atacadista",val:10718.47,status:"PRAZO PERDIDO",curva:"A",cloud:1900,lic:4708.4,addon:1602,sup:1045,prazo:"24 meses",venc:"2027-03-27",deadline:"2026-12-27"},
 ];
+const INATIVOS=[{"c": "CHLORUM", "mrr": 48289.87, "info": "Assinatura cloud 305141 (48 meses, renov. automática, multa 50%) + suporte 10h. 1º pagamento 05/01/2023 → ciclo vence ~jan/2027."}, {"c": "ACOVISA", "mrr": 0, "info": "Consultoria Power BI (304899). Sem recorrência mapeada."}, {"c": "ATOS", "mrr": 0, "info": "Só apresentação comercial na pasta."}, {"c": "BRAZIL PI", "mrr": 0, "info": "Proposta de GAPs (jun/2021)."}, {"c": "H.L.L. EMPREENDIMENTOS", "mrr": 0, "info": "Cotação GAF SAP (exceção de preço)."}, {"c": "LABRUNIER", "mrr": 0, "info": "Aplicações RDP / StartSoft — ambiente legado."}, {"c": "MATRIX", "mrr": 0, "info": "Pasta de 2022 (OneDrive)."}, {"c": "OESTE SOLAR", "mrr": 0, "info": "Sem contrato na pasta."}];
+// ===================== NORMALIZAÇÃO =====================
+raw.forEach(r=>{
+  r.status=r.status||'';r.curva=r.curva||'';
+  ['cloud','lic','addon','sup','val'].forEach(k=>r[k]=Number(r[k])||0);
+});
+const ATUALIZADO='09/11/2026';
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const fmt=v=>v>0?'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
-const fmtK=v=>v>=1000?'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})+'k':fmt(v);
-const fmtD=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR');
-const TODAY=new Date();
+const fmtK=v=>v>=1000?'R$ '+(v/1000).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:v>=100000?0:1})+'k':fmt(v);
+const fmtM=v=>v>=1e6?'R$ '+(v/1e6).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' mi':fmtK(v);
+const fmtD=d=>d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+const TODAY=new Date();TODAY.setHours(12,0,0,0);
 const diffDays=d=>Math.round((new Date(d+'T12:00:00')-TODAY)/864e5);
-const SC={"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","":"#3b82f6"};
-const SB={"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","":"#dbeafe"};
+const iso=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+const addDays=(d,n)=>{const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return iso(x);};
+const addMonths=(d,m)=>{const x=new Date(d+'T12:00:00');const day=x.getDate();x.setDate(1);x.setMonth(x.getMonth()+m);const last=new Date(x.getFullYear(),x.getMonth()+1,0).getDate();x.setDate(Math.min(day,last));return iso(x);};
+const prazoMeses=r=>{const m=/(\d+)\s*meses/.exec(r.prazo||'');return m?+m[1]:null;};
+const RENOV_LBL={auto:'Automática',aditivo:'Só por aditivo',expressa:'Exige manifestação expressa'};
+
+// ===================== MOTOR DE CICLO / STATUS =====================
+// Para renovação automática: se o deadline de notificação já passou, o cliente ficou travado
+// por mais um ciclo; o dashboard projeta o próximo vencimento e a próxima janela.
+function enrich(r){
+  const e={...r};
+  const auto=!r.renov||r.renov==='auto';
+  e.renovPres=!r.renov;           // renovação automática presumida (padrão ALFA), não confirmada no contrato
+  e.vencEf=r.venc;e.dlEf=r.venc?(r.deadline||addDays(r.venc,-90)):null;e.ciclos=0;
+  const pm=prazoMeses(r);
+  const manualVencido=r.status==='VENCIDO'&&!r.renov;
+  if(r.venc&&auto&&pm&&!manualVencido){
+    while(diffDays(e.dlEf)<0&&e.ciclos<12){e.vencEf=addMonths(e.vencEf,pm);e.dlEf=addDays(e.vencEf,-90);e.ciclos++;}
+  }
+  e.ddDias=e.dlEf?diffDays(e.dlEf):null;
+  e.vencDias=e.vencEf?diffDays(e.vencEf):null;
+  let st;
+  if(!r.venc) st='A VERIFICAR';
+  else if(manualVencido) st='VENCIDO';
+  else if(!auto&&diffDays(r.venc)<0) st='SEM COBERTURA';
+  else if(e.ciclos>0) st=diffDays(r.venc)>=0?'PRAZO PERDIDO':'RENOVADO AUTO';
+  else if(!auto) st=e.vencDias<=120?'URGENTE':'OK';
+  else if(e.ddDias<=30) st='URGENTE';
+  else if(r.status==='PRAZO PERDIDO') st='PRAZO PERDIDO'; // travamento já registrado na planilha (datas já no novo ciclo)
+  else st='OK';
+  e.st=st;
+  e.alerta120=!!(e.vencEf&&e.vencDias>=0&&e.vencDias<=120&&st!=='PRAZO PERDIDO'&&st!=='RENOVADO AUTO');
+  e.travado=st==='PRAZO PERDIDO'||st==='RENOVADO AUTO';
+  return e;
+}
+const SC={"OK":"#16a34a","VENCIDO":"#dc2626","URGENTE":"#f97316","PRAZO PERDIDO":"#9333ea","RENOVADO AUTO":"#7c3aed","SEM COBERTURA":"#e11d48","A VERIFICAR":"#64748b","":"#3b82f6"};
+const SB={"OK":"#dcfce7","VENCIDO":"#fee2e2","URGENTE":"#ffedd5","PRAZO PERDIDO":"#f3e8ff","RENOVADO AUTO":"#ede9fe","SEM COBERTURA":"#ffe4e6","A VERIFICAR":"#f1f5f9","":"#dbeafe"};
+const ST_DESC={"OK":"Janela de notificação futura","URGENTE":"Janela fecha em até 30d (ou vence em ≤120d sem renovação automática)","PRAZO PERDIDO":"Deadline passou: travado até o próximo ciclo","RENOVADO AUTO":"Ciclo renovado automaticamente","SEM COBERTURA":"Prazo acabou e a renovação exige aditivo/manifestação","VENCIDO":"Marcado como vencido na planilha","A VERIFICAR":"Sem data de vencimento mapeada"};
 const GRUPOS=[
-  {label:"Vencido / Prazo perdido",min:-9999,max:-1,color:"#dc2626",bg:"#fee2e2"},
+  {label:"Vencido / Sem cobertura",min:-99999,max:-1,color:"#dc2626",bg:"#fee2e2"},
   {label:"Notificar AGORA (0–30d)",min:0,max:30,color:"#ea580c",bg:"#ffedd5"},
   {label:"Notificar em breve (31–90d)",min:31,max:90,color:"#d97706",bg:"#fef3c7"},
   {label:"Atenção (91–180d)",min:91,max:180,color:"#2563eb",bg:"#dbeafe"},
   {label:"OK (181–365d)",min:181,max:365,color:"#16a34a",bg:"#dcfce7"},
-  {label:"Seguro (>365d)",min:366,max:9999,color:"#6b7280",bg:"#f1f5f9"},
+  {label:"Seguro (>365d)",min:366,max:99999,color:"#6b7280",bg:"#f1f5f9"},
 ];
 let auth=false,tab='overview',search='',filtStatus='Todos';
+
+// ===================== OPORTUNIDADES =====================
+function leadScore(e){
+  if(e.st==='A VERIFICAR'||e.val<=0) return 0;
+  let m=0.5,why=[],acao='';
+  if(e.st==='SEM COBERTURA'){m=3;why.push('Contrato encerrado sem renovação formal');acao='Abordar já: cliente sem cobertura contratual — propor transição assistida.';}
+  else if(e.st==='VENCIDO'){m=1.2;why.push('Marcado como vencido');acao='Confirmar se ainda é cliente ALFA; se sim, está sem contrato.';}
+  else if(e.travado){m=0.3;why.push('Travado até '+fmtD(e.vencEf));acao='Próxima janela em '+fmtD(e.dlEf)+'. Manter relacionamento e preparar proposta.';}
+  else if(e.ddDias<=30){m=2.5;why.push('Janela fecha em '+e.ddDias+'d');acao='Apoiar notificação via AR antes de '+fmtD(e.dlEf)+'.';}
+  else if(e.ddDias<=90){m=2;why.push('Janela em '+e.ddDias+'d');acao='Diagnóstico do ambiente + proposta comparativa (TCO).';}
+  else if(e.ddDias<=180){m=1.5;why.push('Janela em '+e.ddDias+'d');acao='Nutrir: health-check e comparativo de custos.';}
+  else if(e.ddDias<=365){m=1;why.push('Janela em '+e.ddDias+'d');acao='Mapear decisor e insatisfações.';}
+  else {why.push('Janela distante');acao='Monitorar.';}
+  if(e.litigio){m*=e.st==='SEM COBERTURA'?1.3:2.5;why.unshift('⚖️ Litígio/risco jurídico');if(!acao.startsWith('Abordar'))acao='Relação desgastada — '+acao;}
+  if(e.renov&&e.renov!=='auto'&&!e.travado&&e.st!=='SEM COBERTURA'){m*=1.3;why.push('Sem renovação automática');}
+  if(e.alerta120&&!why.some(w=>w.includes('120')))why.push('⏰ Vence em ≤120d');
+  return {score:Math.round(e.val*m),why:why.join(' · '),acao};
+}
+
+// ===================== DADOS AGREGADOS =====================
+function getData(){
+  const E=raw.map(enrich);
+  const totalRec=E.reduce((s,r)=>s+r.val,0);
+  const comValor=E.filter(r=>r.val>0).length;
+  const vencidos=E.filter(r=>r.st==='VENCIDO'||r.st==='SEM COBERTURA').length;
+  const curvaA=E.filter(r=>r.curva==='A').length;
+  const sum=a=>a.reduce((s,r)=>s+r.val,0);
+  const T={
+    mrr:totalRec,arr:totalRec*12,
+    janela180:E.filter(r=>!r.travado&&r.ddDias!=null&&r.ddDias>=0&&r.ddDias<=180&&r.st!=='SEM COBERTURA'),
+    alerta120:E.filter(r=>r.alerta120),
+    semCob:E.filter(r=>r.st==='SEM COBERTURA'||r.st==='VENCIDO'),
+    travado:E.filter(r=>r.travado),
+    litigio:E.filter(r=>r.litigio),
+    verificar:E.filter(r=>r.st==='A VERIFICAR'),
+    ok:E.filter(r=>r.st==='OK'),
+  };
+  T.mrrJanela=sum(T.janela180);T.mrr120=sum(T.alerta120);T.mrrSemCob=sum(T.semCob);T.mrrTravado=sum(T.travado);T.mrrLit=sum(T.litigio);T.mrrVerif=sum(T.verificar);T.mrrOk=sum(T.ok);
+  const porSeg=(()=>{const m={};E.forEach(r=>{const s=r.seg||'Sem segmento';if(!m[s])m[s]={seg:s,val:0,count:0,janela:0};m[s].val+=r.val;m[s].count++;if(!r.travado&&r.ddDias!=null&&r.ddDias>=0&&r.ddDias<=180)m[s].janela+=r.val;});return Object.values(m).sort((a,b)=>b.val-a.val);})();
+  const maxSeg=porSeg[0]?.val||1;
+  const statusCount=(()=>{const m={};E.forEach(r=>{if(!m[r.st])m[r.st]={n:0,val:0};m[r.st].n++;m[r.st].val+=r.val;});return m;})();
+  const topC=[...E].filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,10);
+  const dlData=E.filter(r=>r.dlEf).sort((a,b)=>a.ddDias-b.ddDias);
+  const proximos=dlData.filter(r=>r.ddDias>=-60&&!r.travado).slice(0,25);
+  // recorrência por mês de notificação (próximos 12 meses)
+  const meses=[];for(let i=0;i<12;i++){const d=new Date(TODAY.getFullYear(),TODAY.getMonth()+i,1);meses.push({k:iso(d).slice(0,7),lbl:d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'}),val:0,n:0,nomes:[]});}
+  E.forEach(r=>{if(!r.dlEf||r.ddDias<0)return;const mm=meses.find(x=>x.k===r.dlEf.slice(0,7));if(mm){mm.val+=r.val;mm.n++;mm.nomes.push(r.c);}});
+  const leads=E.map(e=>({...e,...leadScore(e)})).filter(e=>e.score>0).sort((a,b)=>b.score-a.score);
+  const pend=E.map(e=>{const p=[];if(!e.venc)p.push('Sem vencimento');if(e.val<=0)p.push('Sem MRR');if(e.renovPres&&e.venc)p.push('Renovação presumida');if(e.obs&&/inconsistente|Faltam|confirmar|Verificar|não localizad/i.test(e.obs))p.push('Ver observação');return {...e,pend:p};}).filter(e=>e.pend.length&&(e.pend.length>1||!e.pend.includes('Renovação presumida')));
+  const lista=E.filter(r=>{
+    const q=search.toLowerCase();
+    const ms=q===''||r.c.toLowerCase().includes(q)||(r.seg||'').toLowerCase().includes(q)||(r.contrato||'').toLowerCase().includes(q);
+    const mf=filtStatus==='Todos'||r.st===filtStatus||(filtStatus==='Litígio'&&r.litigio)||(filtStatus==='Alerta 120d'&&r.alerta120);
+    return ms&&mf;
+  });
+  return{E,T,totalRec,comValor,vencidos,curvaA,porSeg,maxSeg,statusCount,topC,dlData,proximos,meses,leads,pend,lista};
+}
+
+// ===================== MODAL =====================
 function showClientModal(cname){
-  const r=raw.find(x=>x.c===cname);
-  if(!r)return;
+  const r0=raw.find(x=>x.c===cname);
+  if(!r0)return;
+  const r=enrich(r0);
+  const old=document.getElementById('client-modal');if(old)old.remove();
   const comps=[
     {label:'☁️ Cloud',val:r.cloud,color:'#06b6d4'},
     {label:'📄 Licenças SAP',val:r.lic,color:'#8b5cf6'},
     {label:'🔧 Add-ons',val:r.addon,color:'#f59e0b'},
     {label:'🛠️ Suporte',val:r.sup,color:'#10b981'},
   ];
-  const rows=comps.map(c=>`
+  const hasComp=comps.some(c=>c.val>0);
+  const rows=hasComp?comps.map(c=>`
     <div class="modal-row">
-      <span class="modal-row-label">
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color}"></span>
-        ${c.label}
-      </span>
+      <span class="modal-row-label"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.color}"></span>${c.label}</span>
       <span class="modal-row-val" style="color:${c.val>0?c.color:'#334155'}">${c.val>0?fmt(c.val):'—'}</span>
-    </div>`).join('');
-  const litigioBadge=r.litigio?`<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;margin-top:4px;display:inline-block">⚖️ POSSÍVEL LITÍGIO</span>`:'';
-  const statusBadge=r.status?`<span class="badge" style="color:${SC[r.status]||'#3b82f6'};background:${SC[r.status]||'#3b82f6'}20;margin-top:4px">${r.status}</span>`:'';
+    </div>`).join(''):`<div class="modal-note" style="color:#64748b">Composição não detalhada nos contratos mapeados.</div>`;
+  const litigioBadge=r.litigio?`<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;display:inline-block">⚖️ POSSÍVEL LITÍGIO</span>`:'';
+  const statusBadge=`<span class="badge" style="color:${SC[r.st]};background:${SC[r.st]}20">${r.st}</span>`;
+  const plan=r.status&&r.status!==r.st?`<span class="badge" style="color:#94a3b8;background:#33415560">Planilha: ${esc(r.status)}</span>`:'';
+  const kv=(k,v)=>`<div class="modal-row"><span class="modal-row-label">${k}</span><span class="modal-row-val" style="font-size:12px">${v}</span></div>`;
+  const ciclo=r.ciclos>0?`<div class="modal-note" style="border:1px solid #7c3aed60;margin-top:6px">🔒 Deadline original (${fmtD(r.deadline||addDays(r.venc,-90))}) perdido. Renovado ${r.ciclos}x por ${prazoMeses(r)} meses → novo vencimento <b>${fmtD(r.vencEf)}</b>, próxima janela <b>${fmtD(r.dlEf)}</b>.</div>`:'';
   const html=`<div class="modal-overlay" id="client-modal">
     <div class="modal-box">
       <div class="modal-header">
         <div>
-          <div class="modal-title">${r.c}</div>
-          <div class="modal-seg">${r.seg||'—'} · ${r.prazo}</div>
-          <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${statusBadge}${litigioBadge}</div>
+          <div class="modal-title">${esc(r.c)}</div>
+          <div class="modal-seg">${esc(r.seg||'—')} · ${esc(r.prazo)}${r.contrato?' · Contrato '+esc(r.contrato):''}</div>
+          <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">${statusBadge}${plan}${litigioBadge}${r.alerta120?'<span class="badge" style="color:#f97316;background:#f9731620">⏰ ≤120d do vencimento</span>':''}</div>
         </div>
         <button class="modal-close" id="modal-close-btn">✕</button>
       </div>
-      <div style="font-size:11px;color:#64748b;margin-bottom:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Composição do MRR</div>
+      <div class="modal-sec">Composição do MRR</div>
       ${rows}
-      <div class="modal-total">
-        <span class="modal-total-label">💰 MRR Total</span>
-        <span class="modal-total-val">${r.val>0?fmt(r.val):'—'}</span>
-      </div>
-      ${r.venc?`<div style="margin-top:12px;font-size:11px;color:#64748b;text-align:center">Vencimento: <strong style="color:#e2e8f0">${fmtD(r.venc)}</strong>${r.deadline?' · Deadline: <strong style="color:#f59e0b">'+fmtD(r.deadline)+'</strong>':''}</div>`:''}
+      <div class="modal-total"><span class="modal-total-label">💰 MRR Total</span><span class="modal-total-val">${r.val>0?fmt(r.val):'—'}</span></div>
+      <div style="text-align:right;font-size:11px;color:#64748b;margin-top:4px">ARR ${r.val>0?fmt(r.val*12):'—'}</div>
+      <div class="modal-sec">Prazos</div>
+      ${kv('Vencimento contratual',fmtD(r.venc))}
+      ${kv('Data de notificação (deadline)',r.venc?`<span style="color:#f59e0b">${fmtD(r.deadline||addDays(r.venc,-90))}</span>`:'—')}
+      ${r.ciclos>0?kv('Próximo vencimento / janela',`${fmtD(r.vencEf)} · <span style="color:#f59e0b">${fmtD(r.dlEf)}</span>`):''}
+      ${kv('Dias p/ notificação',r.ddDias==null?'—':(r.ddDias<0?'<span style="color:#dc2626">'+r.ddDias+'d</span>':r.ddDias+'d'))}
+      ${kv('Renovação',r.renov?RENOV_LBL[r.renov]:'Automática (presumida — padrão ALFA)')}
+      ${ciclo}
+      ${r.litTipo?`<div class="modal-sec">Risco jurídico</div><div class="modal-note" style="border:1px solid #dc262660">${esc(r.litTipo)}</div>`:''}
+      ${r.obs?`<div class="modal-sec">Observações</div><div class="modal-note">${esc(r.obs)}</div>`:''}
+      ${r.fonte?`<div style="margin-top:10px;font-size:10px;color:#475569">Fonte: ${esc(r.fonte)}</div>`:''}
     </div>
   </div>`;
   const el=document.createElement('div');
@@ -281,54 +411,17 @@ function showClientModal(cname){
   document.getElementById('modal-close-btn').addEventListener('click',()=>document.getElementById('client-modal').remove());
   document.getElementById('client-modal').addEventListener('click',e=>{if(e.target.id==='client-modal')document.getElementById('client-modal').remove();});
 }
-function renderLitigioBanner(){
-  const litigios:raw.filter(r=>r.litigio);
-  if(!litigios.length)return'';
-  const cards=litigios.map(r=>`
-    <div class="litigio-card">
-      <div>
-        <div class="litigio-card-name">⚠️ ${r.c}</div>
-        <div class="litigio-card-seg">${r.seg||'—'} · ${r.prazo}</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="litigio-card-val">${r.val>0?fmtK(r.val):'—'}</div>
-        <div class="litigio-pill">POSSÍVEL LITÍGIO</div>
-      </div>
-    </div>`).join('');
-  return `<div class="litigio-banner">
-    <div class="litigio-header">
-      <span class="litigio-icon">⚖️</span>
-      <span class="litigio-title">POSSÍVEL LITÍGIO</span>
-      <span class="litigio-badge">${litigios.length}</span>
-      <span style="font-size:11px;color:#64748b;margin-left:8px">Clientes com risco jurídico identificado — atenção redobrada</span>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:8px">${cards}</div>
-  </div>`;
-}
-function getData(){
-  const totalRec=raw.reduce((s,r)=>s+r.val,0);
-  const comValor=raw.filter(r=>r.val>0).length;
-  const vencidos=raw.filter(r=>r.status==='VENCIDO').length;
-  const curvaA=raw.filter(r=>r.curva==='A').length;
-  const porSeg=(()=>{const m={};raw.forEach(r=>{const s=r.seg||'Sem segmento';if(!m[s])m[s]={seg:s,val:0,count:0};m[s].val+=r.val;m[s].count++;});return Object.values(m).sort((a,b)=>b.val-a.val).slice(0,10);})();
-  const maxSeg=porSeg[0]?.val||1;
-  const statusCount=(()=>{const m={};raw.forEach(r=>{const s=r.status||'Ativo';m[s]=(m[s]||0)+1;});return m;})();
-  const topC=[...raw].filter(r=>r.val>0).sort((a,b)=>b.val-a.val).slice(0,10);
-  const dlData=raw.filter(r=>r.deadline).map(r=>({...r,ddDias:diffDays(r.deadline),vencDias:r.venc?diffDays(r.venc):null})).sort((a,b)=>a.ddDias-b.ddDias);
-  const proximos=dlData.filter(r=>r.ddDias>=-60).slice(0,20);
-  const lista=raw.filter(r=>{
-    const ms=search===''||r.c.toLowerCase().includes(search.toLowerCase())||(r.seg||'').toLowerCase().includes(search.toLowerCase());
-    const mf=filtStatus==='Todos'||r.status===filtStatus||(filtStatus==='Ativo'&&r.status==='');
-    return ms&&mf;
-  });
-  return{totalRec,comValor,vencidos,curvaA,porSeg,maxSeg,statusCount,topC,dlData,proximos,lista};
-}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.getElementById('client-modal');if(m)m.remove();}});
+
+// ===================== RENDER =====================
 function render(){
   const root=document.getElementById('root');
   if(!auth){root.innerHTML=renderLogin();bindLogin();return;}
+  const ae=document.activeElement,refocus=ae&&ae.id==='inp-search',pos=refocus?ae.selectionStart:0;
   const d=getData();
   root.innerHTML=renderApp(d);
   bindApp();
+  if(refocus){const si=document.getElementById('inp-search');if(si){si.focus();si.setSelectionRange(pos,pos);}}
 }
 function renderLogin(err){
   return `
@@ -360,129 +453,240 @@ function bindLogin(){
   document.getElementById('btn-login').addEventListener('click',doLogin);
   document.getElementById('inp-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 }
+function renderLitigioBanner(d){
+  const litigios=d.T.litigio;
+  if(!litigios.length)return'';
+  const cards=litigios.map(r=>`
+    <div class="litigio-card" data-client="${esc(r.c)}">
+      <div>
+        <div class="litigio-card-name">⚠️ ${esc(r.c)}</div>
+        <div class="litigio-card-seg">${esc(r.seg||'—')} · ${esc(r.prazo)}${r.litTipo?' · '+esc(r.litTipo):''}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="litigio-card-val">${r.val>0?fmtK(r.val):'—'}</div>
+        <div class="litigio-pill">${esc(r.st)}</div>
+      </div>
+    </div>`).join('');
+  return `<div class="litigio-banner">
+    <div class="litigio-header">
+      <span class="litigio-icon">⚖️</span>
+      <span class="litigio-title">POSSÍVEL LITÍGIO</span>
+      <span class="litigio-badge">${litigios.length}</span>
+      <span style="font-size:11px;color:#94a3b8;margin-left:8px">MRR envolvido: <b style="color:#fca5a5">${fmtK(d.T.mrrLit)}</b> · clientes com risco jurídico identificado</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">${cards}</div>
+  </div>`;
+}
 function kpiCards(d){
-  const litigioCount=raw.filter(r=>r.litigio).length;
+  const T=d.T;
   const items=[
-    {label:'MRR Total',val:fmtK(d.totalRec),color:'#3b82f6',icon:'💰'},
-    {label:'Com Valor',val:String(d.comValor),sub:`de ${raw.length}`,color:'#06b6d4',icon:'📋'},
-    {label:'Curva A',val:String(d.curvaA),color:'#8b5cf6',icon:'⭐'},
-    {label:'Vencidos',val:String(d.vencidos),color:'#ef4444',icon:'⚠️'},
-    {label:'Clientes',val:String(raw.length),color:'#f59e0b',icon:'🏢'},
-    {label:'Litígio',val:String(litigioCount),color:'#dc2626',icon:'⚖️',pulse:true},
+    {label:'MRR Total',val:fmtK(T.mrr),sub:`ARR ${fmtM(T.arr)}`,color:'#3b82f6',icon:'💰'},
+    {label:'MRR em janela (≤180d)',val:fmtK(T.mrrJanela),sub:`${T.janela180.length} clientes`,color:'#f59e0b',icon:'🎯'},
+    {label:'Alerta 120d do vencimento',val:String(T.alerta120.length),sub:fmtK(T.mrr120),color:'#f97316',icon:'⏰'},
+    {label:'Sem cobertura / vencidos',val:String(T.semCob.length),sub:fmtK(T.mrrSemCob),color:'#e11d48',icon:'🚨'},
+    {label:'Travados (prazo perdido)',val:String(T.travado.length),sub:fmtK(T.mrrTravado),color:'#9333ea',icon:'🔒'},
+    {label:'Curva A',val:String(d.curvaA),sub:`${d.comValor} com valor de ${raw.length}`,color:'#8b5cf6',icon:'⭐'},
+    {label:'A verificar (sem vencimento)',val:String(T.verificar.length),sub:fmtK(T.mrrVerif),color:'#64748b',icon:'🔎'},
+    {label:'Litígio',val:String(T.litigio.length),sub:fmtK(T.mrrLit),color:'#dc2626',icon:'⚖️',pulse:true},
   ];
   return items.map(k=>`
-    <div class="kpi" style="border-left:3px solid ${k.color}${k.pulse?';border:2px solid #dc2626;background:#1a0808;animation:pulse-red 2.5s infinite':''}">
+    <div class="kpi" style="border-left:3px solid ${k.color}${k.pulse&&T.litigio.length?';border:2px solid #dc2626;background:#1a0808;animation:pulse-red 2.5s infinite':''}">
       <div class="kpi-icon">${k.icon}</div>
       <div class="kpi-val" style="color:${k.color}">${k.val}</div>
       ${k.sub?`<div class="kpi-sub">${k.sub}</div>`:''}
-      <div class="kpi-label" style="${k.pulse?'color:#fca5a5;font-weight:700':''}">⚖️ ${k.label}</div>
+      <div class="kpi-label" style="${k.pulse?'color:#fca5a5;font-weight:700':''}">${k.label}</div>
     </div>`).join('');
 }
 function tabButtons(){
-  const tabs=[{id:'overview',label:'Visão Geral'},{id:'deadlines',label:'Deadlines'},{id:'segments',label:'Segmentos'},{id:'status',label:'Status'},{id:'lista',label:'Clientes'}];
+  const tabs=[{id:'overview',label:'Visão Geral'},{id:'opps',label:'Oportunidades'},{id:'deadlines',label:'Deadlines'},{id:'segments',label:'Segmentos'},{id:'status',label:'Status'},{id:'lista',label:'Clientes'}];
   return tabs.map(t=>`<button class="tab-btn${tab===t.id?' active':''}" data-tab="${t.id}">${t.label}</button>`).join('');
+}
+function totCard(d){
+  const T=d.T;
+  const it=(l,v,s,c)=>`<div class="tot-item"><div class="tot-label">${l}</div><div class="tot-val" style="color:${c}">${v}</div><div class="tot-sub">${s}</div></div>`;
+  return `<div class="card"><div class="card-title">🧮 Totalizadores de recorrência</div>
+    <div class="tot-grid">
+      ${it('MRR total',fmt(T.mrr),`ARR ${fmt(T.arr)}`,'#3b82f6')}
+      ${it('Janela aberta ≤180d',fmt(T.mrrJanela),`${T.janela180.length} clientes · ARR ${fmtM(T.mrrJanela*12)}`,'#f59e0b')}
+      ${it('Alerta 120d do vencimento',fmt(T.mrr120),`${T.alerta120.length} clientes`,'#f97316')}
+      ${it('Sem cobertura / vencidos',fmt(T.mrrSemCob),`${T.semCob.length} clientes`,'#e11d48')}
+      ${it('Travado (renovou automático)',fmt(T.mrrTravado),`${T.travado.length} clientes`,'#9333ea')}
+      ${it('OK (janela futura)',fmt(T.mrrOk),`${T.ok.length} clientes`,'#16a34a')}
+      ${it('Em litígio',fmt(T.mrrLit),`${T.litigio.length} clientes`,'#dc2626')}
+      ${it('Sem vencimento mapeado',fmt(T.mrrVerif),`${T.verificar.length} clientes`,'#64748b')}
+    </div></div>`;
+}
+function mesesCard(d){
+  const mx=Math.max(...d.meses.map(m=>m.val),1);
+  const rows=d.meses.map(m=>`
+    <div style="display:grid;grid-template-columns:60px 1fr 90px;gap:8px;align-items:center;margin-bottom:6px" title="${esc(m.nomes.join(', '))}">
+      <span style="font-size:11px;color:#94a3b8;text-transform:capitalize">${m.lbl}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${m.val/mx*100}%;background:#f59e0b"></div></div>
+      <span style="font-size:11px;color:#e2e8f0;text-align:right">${m.val>0?fmtK(m.val):'—'} <span style="color:#64748b">(${m.n})</span></span>
+    </div>`).join('');
+  return `<div class="card"><div class="card-title">📅 MRR por mês de notificação</div><div class="card-sub">Próximos 12 meses · passe o mouse para ver os clientes</div>${rows}</div>`;
 }
 function renderOverview(d){
   const topCRows=d.topC.map((r,i)=>`
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
       <div style="width:20px;font-size:11px;color:#64748b;text-align:right">${i+1}</div>
       <div style="flex:1">
-        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-          <span style="font-size:12px;font-weight:600;color:#e2e8f0;cursor:pointer" data-client="${r.c}">${r.c}</span>
-          <span style="font-size:12px;color:#3b82f6;font-weight:700">${fmtK(r.val)}</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px;gap:8px">
+          <span class="clk" style="font-size:12px;font-weight:600;color:#e2e8f0" data-client="${esc(r.c)}">${esc(r.c)} ${r.litigio?'⚖️':''}</span>
+          <span style="font-size:12px;color:#3b82f6;font-weight:700">${fmtK(r.val)} <span class="badge" style="color:${SC[r.st]};background:${SC[r.st]}20;margin-left:4px">${r.st}</span></span>
         </div>
         <div class="bar-track"><div class="bar-fill" style="width:${(r.val/d.topC[0].val)*100}%;background:#3b82f6"></div></div>
       </div>
     </div>`).join('');
-  const compRows=raw.filter(r=>r.cloud>0||r.lic>0||r.addon>0||r.sup>0).slice(0,12).map(r=>{
+  const compData=d.E.filter(r=>r.curva==='A'&&(r.cloud>0||r.lic>0||r.addon>0||r.sup>0)).sort((a,b)=>b.val-a.val).slice(0,14);
+  const compRows=compData.map(r=>{
     const mx=Math.max(r.cloud,r.lic,r.addon,r.sup,1);
-    return [r.cloud,r.lic,r.addon,r.sup].map(v=>`
-      <div class="comp-cell" style="background:${v===0?'#0f172a':`rgba(59,130,246,${0.15+(v/mx)*0.85})`};color:${v>0?'#fff':'#334155'}">
-        ${v>0?fmtK(v):'—'}
-      </div>`).join('');
-  }).map(cells=>`<div class="comp-grid">${cells}</div>`).join('');
-  return `<div class="grid2">
-    <div class="card"><div class="card-title">🏆 Top 10 por MRR</div>${topCRows}</div>
-    <div class="card">
-      <div class="card-title">🔥 Componentes (Curva A)</div>
-      <div class="comp-grid" style="margin-bottom:8px">
-        ${['Cloud','Lic.','Addon','Sup.'].map(l=>`<div style="text-align:center;font-size:11px;color:#64748b;font-weight:600">${l}</div>`).join('')}
+    return `<div class="comp-grid"><div class="comp-name" data-client="${esc(r.c)}" title="${esc(r.c)}">${esc(r.c)}</div>`+[r.cloud,r.lic,r.addon,r.sup].map(v=>`
+      <div class="comp-cell" style="background:${v===0?'#0f172a':`rgba(59,130,246,${0.15+(v/mx)*0.85})`};color:${v>0?'#fff':'#334155'}">${v>0?fmtK(v):'—'}</div>`).join('')+`</div>`;
+  }).join('');
+  return `<div class="stack">
+    <div class="grid2">${totCard(d)}${mesesCard(d)}</div>
+    <div class="grid2">
+      <div class="card"><div class="card-title">🏆 Top 10 por MRR</div>${topCRows}</div>
+      <div class="card">
+        <div class="card-title">🔥 Componentes (Curva A)</div>
+        <div class="comp-grid" style="margin-bottom:8px">
+          ${['Cliente','Cloud','Lic.','Addon','Sup.'].map(l=>`<div style="text-align:center;font-size:11px;color:#64748b;font-weight:600">${l}</div>`).join('')}
+        </div>
+        ${compRows||'<div style="font-size:12px;color:#64748b">Sem composição detalhada.</div>'}
       </div>
-      ${compRows}
+    </div>
+  </div>`;
+}
+function renderOpps(d){
+  const rows=d.leads.slice(0,40).map((r,i)=>`
+    <tr style="border-bottom:1px solid #0f172a20;background:${i%2===0?'#1e293b':'#172033'}">
+      <td style="color:#64748b">${i+1}</td>
+      <td style="font-weight:700;color:#e2e8f0" class="clk" data-client="${esc(r.c)}">${esc(r.c)}<div style="font-size:10px;color:#64748b;font-weight:400">${esc(r.seg||'—')}</div></td>
+      <td class="num" style="color:#3b82f6;font-weight:700">${fmtK(r.val)}<div style="font-size:10px;color:#64748b;font-weight:400">ARR ${fmtK(r.val*12)}</div></td>
+      <td><span class="badge" style="color:${SC[r.st]};background:${SC[r.st]}20">${r.st}</span></td>
+      <td style="color:#f59e0b;white-space:nowrap">${fmtD(r.dlEf)}<div style="font-size:10px;color:#64748b">${r.ddDias<0?'-'+Math.abs(r.ddDias)+'d':r.ddDias+'d'} · venc. ${fmtD(r.vencEf)}</div></td>
+      <td style="color:#cbd5e1;font-size:11px">${esc(r.why)}</td>
+      <td style="color:#94a3b8;font-size:11px">${esc(r.acao)}</td>
+    </tr>`).join('');
+  const pend=d.pend.sort((a,b)=>b.val-a.val).map(r=>`
+    <tr style="border-bottom:1px solid #0f172a20">
+      <td class="clk" style="font-weight:600;color:#e2e8f0" data-client="${esc(r.c)}">${esc(r.c)}</td>
+      <td class="num" style="color:#3b82f6">${r.val>0?fmtK(r.val):'—'}</td>
+      <td>${r.pend.map(p=>`<span class="badge" style="color:#94a3b8;background:#33415580;margin:0 4px 4px 0">${p}</span>`).join('')}</td>
+    </tr>`).join('');
+  const inat=INATIVOS.map(r=>`
+    <tr style="border-bottom:1px solid #0f172a20">
+      <td style="font-weight:600;color:#e2e8f0">${esc(r.c)}</td>
+      <td class="num" style="color:#3b82f6">${r.mrr>0?fmtK(r.mrr):'—'}</td>
+      <td style="color:#94a3b8;font-size:11px">${esc(r.info)}</td>
+    </tr>`).join('');
+  return `<div class="stack">
+    <div class="card">
+      <div class="card-title">🎯 Ranking de oportunidades</div>
+      <div class="card-sub">Score = MRR × urgência da janela × sinais (sem cobertura, litígio, sem renovação automática). Clientes travados aparecem com peso baixo e a próxima janela.</div>
+      <div style="overflow-x:auto"><table>
+        <thead><tr>${['#','Cliente','MRR','Situação','Notificação','Gatilho','Ação sugerida'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">🔎 Pendências de mapeamento (${d.pend.length})</div>
+        <div class="card-sub">O que falta levantar para transformar em oportunidade qualificada</div>
+        <div style="max-height:420px;overflow-y:auto"><table><thead><tr><th>Cliente</th><th class="num">MRR</th><th>Falta</th></tr></thead><tbody>${pend}</tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-title">♻️ Ex-clientes ALFA (pasta Inativos)</div>
+        <div class="card-sub">Base para win-back — confirmar quem atende hoje</div>
+        <table><thead><tr><th>Cliente</th><th class="num">MRR conhecido</th><th>Contexto</th></tr></thead><tbody>${inat}</tbody></table>
+      </div>
     </div>
   </div>`;
 }
 function renderDeadlines(d){
   const collapsed=window._hmCollapsed||{};
-  function makeGroup(gid,dotStyle,titleHtml,count,cardsHtml){
+  function makeGroup(gid,dotStyle,titleHtml,list,cardsHtml){
     const isOpen=collapsed[gid]===undefined?true:!collapsed[gid];
-    const arrow=isOpen?'▾':'▸';
+    const tot=list.reduce((s,r)=>s+r.val,0);
     return `<div class="hm-group">
       <div class="hm-header" style="cursor:pointer;user-select:none" data-hmg="${gid}">
         ${dotStyle}
         ${titleHtml}
-        <span style="font-size:11px;color:#64748b">(${count})</span>
-        <span style="font-size:13px;color:#64748b;margin-left:auto;padding-right:4px">${arrow}</span>
+        <span style="font-size:11px;color:#64748b">(${list.length})</span>
+        <span class="hm-tot">MRR ${fmtK(tot)} · ARR ${fmtM(tot*12)}</span>
+        <span class="hm-arrow" style="font-size:13px;color:#64748b;margin-left:auto;padding-right:4px">${isOpen?'▾':'▸'}</span>
       </div>
-      <div class="hm-cards" id="hmg-${gid}" style="display:${isOpen?'flex':'none'};flex-wrap:wrap;gap:6px">${cardsHtml}</div>
+      <div class="hm-cards" id="hmg-${gid}" style="display:${isOpen?'flex':'none'}">${cardsHtml}</div>
     </div>`;
   }
   const litigioSection=(()=>{
-    const cl=raw.filter(r=>r.litigio);
+    const cl=d.T.litigio;
     if(!cl.length)return'';
     const cards=cl.map(r=>`
-      <div class="hm-card" style="background:#2d0a0a;border:2px solid #dc2626" data-client="${r.c}">
-        <div style="font-size:11px;font-weight:800;color:#fca5a5">⚖️ ${r.c}</div>
-        <div style="font-size:10px;color:#94a3b8">${r.seg||'—'}</div>
-        ${r.deadline?`<div style="font-size:10px;color:#dc2626;font-weight:700">Deadline: ${fmtD(r.deadline)}</div>`:''}
-        ${r.venc?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.venc)}</div>`:''}
+      <div class="hm-card" style="background:#2d0a0a;border:2px solid #dc2626" data-client="${esc(r.c)}">
+        <div style="font-size:11px;font-weight:800;color:#fca5a5">⚖️ ${esc(r.c)}</div>
+        <div style="font-size:10px;color:#94a3b8">${esc(r.seg||'—')}</div>
+        ${r.dlEf?`<div style="font-size:10px;color:#dc2626;font-weight:700">Notificação: ${fmtD(r.dlEf)}</div>`:''}
+        ${r.vencEf?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.vencEf)}</div>`:''}
         ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
         <div style="margin-top:4px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;background:#dc262620;color:#dc2626;border:1px solid #dc2626;display:inline-block">POSSÍVEL LITÍGIO</div>
       </div>`).join('');
-    const dot=`<div class="dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626"></div>`;
-    const title=`<span style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:0.5px">⚖️ Possível Litígio</span>`;
-    return makeGroup('litigio',dot,title,cl.length,cards);
+    return makeGroup('litigio',`<div class="dot" style="background:#dc2626;box-shadow:0 0 6px #dc2626"></div>`,`<span style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:0.5px">⚖️ Possível Litígio</span>`,cl,cards);
   })();
-  const heatmap=GRUPOS.map((g,gi)=>{
-    const cl=d.dlData.filter(r=>r.ddDias>=g.min&&r.ddDias<=g.max);
+  const travSection=(()=>{
+    const cl=d.dlData.filter(r=>r.travado);
     if(!cl.length)return'';
     const cards=cl.map(r=>`
-      <div class="hm-card" style="background:${g.bg};border:1px solid ${g.color}40" data-client="${r.c}">
-        <div style="font-size:11px;font-weight:700;color:#1e293b">${r.c}</div>
-        <div style="font-size:10px;color:#475569">Deadline: ${fmtD(r.deadline)}</div>
-        <div style="font-size:10px;color:${g.color};font-weight:600">${r.ddDias<0?'Atrasado '+Math.abs(r.ddDias)+'d':r.ddDias+'d p/ notif.'}</div>
-        ${r.venc?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.venc)}</div>`:''}
+      <div class="hm-card" style="background:#ede9fe;border:1px solid #7c3aed40" data-client="${esc(r.c)}">
+        <div style="font-size:11px;font-weight:700;color:#1e293b">🔒 ${esc(r.c)}</div>
+        <div style="font-size:10px;color:#475569">Próx. notificação: ${fmtD(r.dlEf)}</div>
+        <div style="font-size:10px;color:#7c3aed;font-weight:600">${r.ddDias}d · travado até ${fmtD(r.vencEf)}</div>
         ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
       </div>`).join('');
-    const dot=`<div class="dot" style="background:${g.color}"></div>`;
-    const title=`<span style="font-size:12px;font-weight:700;color:${g.color}">${g.label}</span>`;
-    return makeGroup('g'+gi,dot,title,cl.length,cards);
+    return makeGroup('trav',`<div class="dot" style="background:#7c3aed"></div>`,`<span style="font-size:12px;font-weight:700;color:#a78bfa">🔒 Prazo perdido — renovados automaticamente</span>`,cl,cards);
+  })();
+  const ativos=d.dlData.filter(r=>!r.travado);
+  const heatmap=GRUPOS.map((g,gi)=>{
+    const cl=ativos.filter(r=>{const ref=r.st==='SEM COBERTURA'||r.st==='VENCIDO'?-1:r.ddDias;return ref>=g.min&&ref<=g.max;});
+    if(!cl.length)return'';
+    const cards=cl.map(r=>`
+      <div class="hm-card" style="background:${g.bg};border:1px solid ${g.color}40" data-client="${esc(r.c)}">
+        <div style="font-size:11px;font-weight:700;color:#1e293b">${esc(r.c)}${r.alerta120?' ⏰':''}</div>
+        <div style="font-size:10px;color:#475569">Notificação: ${fmtD(r.dlEf)}</div>
+        <div style="font-size:10px;color:${g.color};font-weight:600">${r.st==='SEM COBERTURA'?'Sem cobertura desde '+fmtD(r.vencEf):r.ddDias<0?'Atrasado '+Math.abs(r.ddDias)+'d':r.ddDias+'d p/ notif.'}</div>
+        ${r.vencEf?`<div style="font-size:10px;color:#64748b">Vence: ${fmtD(r.vencEf)}</div>`:''}
+        ${r.val>0?`<div style="font-size:10px;color:#64748b">${fmtK(r.val)}</div>`:''}
+      </div>`).join('');
+    return makeGroup('g'+gi,`<div class="dot" style="background:${g.color}"></div>`,`<span style="font-size:12px;font-weight:700;color:${g.color}">${g.label}</span>`,cl,cards);
   }).join('');
   const tableRows=d.proximos.map((r,i)=>{
     const g=GRUPOS.find(g=>r.ddDias>=g.min&&r.ddDias<=g.max)||GRUPOS[5];
     const nc=r.ddDias<=0?'#dc2626':r.ddDias<=30?'#ea580c':r.ddDias<=90?'#d97706':'#16a34a';
     return `<tr style="border-bottom:1px solid #0f172a20;background:${i%2===0?'#1e293b':'#172033'}">
       <td style="color:#64748b">${i+1}</td>
-      <td style="font-weight:700;color:#e2e8f0;cursor:pointer" data-client="${r.c}">${r.c}</td>
+      <td style="font-weight:700;color:#e2e8f0" class="clk" data-client="${esc(r.c)}">${esc(r.c)}${r.litigio?' ⚖️':''}</td>
       <td style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</td>
-      <td style="color:#94a3b8">${fmtD(r.deadline)}</td>
+      <td style="color:#94a3b8">${fmtD(r.dlEf)}</td>
       <td style="color:${g.color};font-weight:700">${r.ddDias<0?'-'+Math.abs(r.ddDias)+'d':r.ddDias+'d'}</td>
-      <td style="color:#94a3b8">${r.venc?fmtD(r.venc):'—'}</td>
+      <td style="color:#94a3b8">${fmtD(r.vencEf)}</td>
+      <td style="color:#94a3b8;font-size:11px">${r.renov?RENOV_LBL[r.renov]:'Auto (pres.)'}</td>
       <td><span class="badge" style="color:${nc};background:${nc}20">${r.ddDias<=0?'⚡ AGORA':r.ddDias+'d'}</span></td>
     </tr>`;
   }).join('');
   return `<div style="display:flex;flex-direction:column;gap:16px">
     <div class="card">
-      <div class="card-title">🗓 Mapa de Calor b�� Deadline de Notificação</div>
-      <div style="font-size:11px;color:#64748b;margin-bottom:14px">Calculado dinamicamente pela data de hoje</div>
+      <div class="card-title">🗓 Mapa de Calor — Deadline de Notificação</div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:14px">Calculado dinamicamente pela data de hoje. Contratos com renovação automática que perderam a janela são projetados para o próximo ciclo. ⏰ = vence em até 120 dias.</div>
       ${litigioSection}
       ${heatmap}
+      ${travSection}
     </div>
     <div class="card">
       <div class="card-title">🎯 Próximos a Atacar</div>
       <div style="overflow-x:auto">
         <table>
-          <thead><tr>${['#','Cliente','MRR','Deadline','Dias','Vencimento','Urgência'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <thead><tr>${['#','Cliente','MRR','Notificação','Dias','Vencimento','Renovação','Urgência'].map(h=>`<th>${h}</th>`).join('')}</tr></thead>
           <tbody>${tableRows}</tbody>
         </table>
       </div>
@@ -492,84 +696,89 @@ function renderDeadlines(d){
 function renderSegments(d){
   const bars=d.porSeg.map((s,i)=>`
     <div style="margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-        <span style="font-size:13px;color:#e2e8f0;font-weight:600">${s.seg}</span>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;gap:8px">
+        <span style="font-size:13px;color:#e2e8f0;font-weight:600">${esc(s.seg)}</span>
         <div style="display:flex;gap:16px">
           <span style="font-size:11px;color:#64748b">${s.count} clientes</span>
+          ${s.janela>0?`<span style="font-size:11px;color:#f59e0b">janela ≤180d ${fmtK(s.janela)}</span>`:''}
           <span style="font-size:13px;color:#3b82f6;font-weight:700">${fmtK(s.val)}</span>
         </div>
       </div>
       <div class="bar-track" style="height:8px">
-        <div class="bar-fill" style="height:8px;width:${(s.val/d.maxSeg)*100}%;background:hsl(${210+i*15},80%,${55-i*3}%)"></div>
+        <div class="bar-fill" style="height:8px;width:${(s.val/d.maxSeg)*100}%;background:hsl(${210+(i%12)*15},80%,${Math.max(35,55-i*2)}%)"></div>
       </div>
     </div>`).join('');
   return `<div class="card"><div class="card-title">📊 MRR por Segmento</div>${bars}</div>`;
 }
 function renderStatus(d){
-  const statusItems=Object.entries(d.statusCount).map(([s,n])=>`
-    <div class="status-item" style="background:${SB[s]||'#0f172a'};border:1px solid ${SC[s]||'#334155'}40">
+  const ordem=['SEM COBERTURA','VENCIDO','URGENTE','OK','PRAZO PERDIDO','RENOVADO AUTO','A VERIFICAR'];
+  const statusItems=ordem.filter(s=>d.statusCount[s]).map(s=>`
+    <div class="status-item" style="background:${SB[s]};border:1px solid ${SC[s]}40" title="${esc(ST_DESC[s])}">
       <div style="display:flex;align-items:center;gap:8px">
-        <div style="width:10px;height:10px;border-radius:50%;background:${SC[s]||'#3b82f6'}"></div>
-        <span style="font-size:13px;color:#1e293b;font-weight:600">${s||'Ativo'}</span>
+        <div style="width:10px;height:10px;border-radius:50%;background:${SC[s]}"></div>
+        <div><span style="font-size:13px;color:#1e293b;font-weight:600">${s}</span><div style="font-size:10px;color:#475569">${esc(ST_DESC[s])}</div></div>
       </div>
-      <span style="font-size:16px;font-weight:700;color:${SC[s]||'#3b82f6'}">${n}</span>
+      <div style="text-align:right"><span style="font-size:16px;font-weight:700;color:${SC[s]}">${d.statusCount[s].n}</span><div style="font-size:10px;color:#475569">${fmtK(d.statusCount[s].val)}</div></div>
     </div>`).join('');
-  const attnItems=raw.filter(r=>r.status==='VENCIDO'||r.status==='URGENTE'||r.status==='PRAZO PERDIDO').map(r=>`
-    <div class="attn-item" style="background:${SB[r.status]};border:1px solid ${SC[r.status]}40">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:13px;font-weight:700;color:#1e293b">${r.c}</span>
-        <span class="badge" style="color:${SC[r.status]};background:${SC[r.status]}20">${r.status}</span>
+  const attn=d.E.filter(r=>r.st==='SEM COBERTURA'||r.st==='VENCIDO'||r.st==='URGENTE'||r.litigio).sort((a,b)=>b.val-a.val);
+  const attnItems=attn.map(r=>`
+    <div class="attn-item" style="background:${SB[r.st]};border:1px solid ${SC[r.st]}40" data-client="${esc(r.c)}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#1e293b">${esc(r.c)}${r.litigio?' ⚖️':''}</span>
+        <span class="badge" style="color:${SC[r.st]};background:${SC[r.st]}20">${r.st}</span>
       </div>
-      <div style="font-size:11px;color:#475569;margin-top:2px">${r.val>0?fmt(r.val):'Sem valor'} · ${r.seg||'—'}</div>
+      <div style="font-size:11px;color:#475569;margin-top:2px">${r.val>0?fmt(r.val):'Sem valor'} · ${esc(r.seg||'—')} · notificação ${fmtD(r.dlEf)}</div>
     </div>`).join('');
   return `<div class="grid2">
-    <div class="card"><div class="card-title">📌 Por Status</div>${statusItems}</div>
-    <div class="card"><div class="card-title">🚨 Atenção Imediata</div>${attnItems}</div>
+    <div class="card"><div class="card-title">📌 Por Status (calculado)</div>${statusItems}</div>
+    <div class="card"><div class="card-title">🚨 Atenção Imediata (${attn.length})</div><div style="max-height:70vh;overflow-y:auto">${attnItems}</div></div>
   </div>`;
 }
 function renderLista(d){
+  const tot=d.lista.reduce((s,r)=>s+r.val,0);
   const rows=d.lista.map((r,i)=>`
     <div class="table-row" style="background:${i%2===0?'#1e293b':'#172033'}">
-      <span style="font-weight:600;color:#e2e8f0;cursor:pointer;text-decoration:underline dotted" data-client="${r.c}">${r.c}</span>
-      <span style="color:#94a3b8">${r.seg||'—'}</span>
+      <span class="clk" style="font-weight:600;color:#e2e8f0;text-decoration:underline dotted" data-client="${esc(r.c)}">${esc(r.c)}${r.litigio?' ⚖️':''}</span>
+      <span style="color:#94a3b8" class="hide-sm">${esc(r.seg||'—')}</span>
       <span style="color:#3b82f6;font-weight:700">${r.val>0?fmtK(r.val):'—'}</span>
-      <span style="color:#8b5cf6;font-weight:700">${r.curva||'—'}</span>
-      <span class="badge" style="color:${SC[r.status]||'#3b82f6'};background:${SC[r.status]||'#3b82f6'}20">${r.status||'Ativo'}</span>
-      <span style="color:#f59e0b;font-size:11px">${r.deadline?fmtD(r.deadline):'—'}</span>
+      <span style="color:#8b5cf6;font-weight:700" class="hide-sm">${r.curva||'—'}</span>
+      <span><span class="badge" style="color:${SC[r.st]};background:${SC[r.st]}20">${r.st}</span></span>
+      <span style="color:#94a3b8;font-size:11px" class="hide-sm">${fmtD(r.vencEf)}</span>
+      <span style="color:#f59e0b;font-size:11px">${fmtD(r.dlEf)}</span>
+      <span style="color:#64748b;font-size:11px" class="hide-sm">${r.renov?RENOV_LBL[r.renov]:'Auto (pres.)'}</span>
     </div>`).join('');
+  const opts=['Todos','OK','URGENTE','SEM COBERTURA','VENCIDO','PRAZO PERDIDO','RENOVADO AUTO','A VERIFICAR','Alerta 120d','Litígio'];
   return `<div>
     <div class="search-row">
-      <input id="inp-search" class="search-input" placeholder="🔍 Buscar..." value="${search}"/>
-      <select id="sel-status" class="filter-sel">
-        <option${filtStatus==='Todos'?' selected':''}>Todos</option>
-        <option${filtStatus==='OK'?' selected':''}>OK</option>
-        <option${filtStatus==='VENCIDO'?' selected':''}>VENCIDO</option>
-        <option${filtStatus==='URGENTE'?' selected':''}>URGENTE</option>
-        <option${filtStatus==='PRAZO PERDIDO'?' selected':''}>PRAZO PERDIDO</option>
-        <option${filtStatus==='Ativo'?' selected':''}>Ativo</option>
-      </select>
+      <input id="inp-search" class="search-input" placeholder="🔍 Buscar cliente, segmento ou nº de contrato..." value="${esc(search)}"/>
+      <select id="sel-status" class="filter-sel">${opts.map(o=>`<option${filtStatus===o?' selected':''}>${o}</option>`).join('')}</select>
     </div>
     <div class="table-wrap">
-      <div class="table-head"><span>CLIENTE</span><span>SEGMENTO</span><span>MRR</span><span>CURVA</span><span>STATUS</span><span>DEADLINE</span></div>
+      <div class="table-head"><span>CLIENTE</span><span class="hide-sm">SEGMENTO</span><span>MRR</span><span class="hide-sm">CURVA</span><span>STATUS</span><span class="hide-sm">VENCIMENTO</span><span>NOTIFICAÇÃO</span><span class="hide-sm">RENOVAÇÃO</span></div>
       <div class="table-body">${rows}</div>
-      <div class="table-foot">${d.lista.length} registros</div>
+      <div class="table-foot"><span>${d.lista.length} registros</span><span>MRR ${fmt(tot)} · ARR ${fmt(tot*12)}</span></div>
     </div>
   </div>`;
 }
 function renderApp(d){
   let tabContent='';
   if(tab==='overview')tabContent=renderOverview(d);
+  else if(tab==='opps')tabContent=renderOpps(d);
   else if(tab==='deadlines')tabContent=renderDeadlines(d);
   else if(tab==='segments')tabContent=renderSegments(d);
   else if(tab==='status')tabContent=renderStatus(d);
   else if(tab==='lista')tabContent=renderLista(d);
   return `<div class="app">
     <div class="header">
-      <div class="header-title">Dashboard Leads</div>
-      <div class="header-sub">${raw.length} clientes</div>
+      <div>
+        <div class="header-title">Dashboard Leads</div>
+        <div class="header-sub">${raw.length} clientes · base de contratos revisada em ${ATUALIZADO} · hoje ${TODAY.toLocaleDateString('pt-BR')}</div>
+      </div>
+      <div style="font-size:12px;color:#94a3b8">MRR <b style="color:#3b82f6">${fmt(d.T.mrr)}</b> · ARR <b style="color:#3b82f6">${fmtM(d.T.arr)}</b></div>
     </div>
     <div class="tabs">${tabButtons()}</div>
     <div class="content">
+      ${tab==='overview'?renderLitigioBanner(d):''}
       <div class="kpis">${kpiCards(d)}</div>
       ${tabContent}
     </div>
@@ -586,10 +795,10 @@ function bindApp(){
   document.querySelectorAll('[data-hmg]').forEach(hdr=>{
     hdr.addEventListener('click',()=>{
       const gid=hdr.dataset.hmg;
-      if('window._hmCollapsed)window._hmCollapsed={};
+      if(!window._hmCollapsed)window._hmCollapsed={};
       window._hmCollapsed[gid]=!window._hmCollapsed[gid];
       const body=document.getElementById('hmg-'+gid);
-      const arrow=hdr.querySelector('span:last-child');
+      const arrow=hdr.querySelector('.hm-arrow');
       if(body){
         const open=!window._hmCollapsed[gid];
         body.style.display=open?'flex':'none';
@@ -605,7 +814,6 @@ document.addEventListener('click',function(e){
 });
 
 render();
-
 </script>
 </body>
 </html>
